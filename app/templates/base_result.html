@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/danfojs@1.0.5/lib/bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+{% endblock%}
+
+{% block body %} 
+    <div class=" flex flex-col items-center justify-evenly h-full">
+        <div class="bg-white bg-opacity-75 items-center justify-evenly mx-4 my-2  px-4 py-2 border-2 rounded-md shadow-lg w-11/12">
+            
+            <label class="peer bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute tracking-wide ">
+                <span class="font-bold text-1xl text-gray-700 select-none" >"{{process_id}}"</span>
+            </label>
+        </div>
+        {% block difference %}{% endblock %}
+    </div>
+{% endblock %}
+
+{%block scripts%}
+    <script src="{{url_for('static',filename='js/consts.js')}}"></script>
+    <script src="{{url_for('static',filename='js/colors.js')}}"></script>
+    {% block diff_scripts %}{% endblock %}
+{% endblock %}

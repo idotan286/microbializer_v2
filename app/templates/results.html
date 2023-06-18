@@ -1,0 +1,12 @@
+{% extends 'base_result.html' %}
+
+{% block difference %}
+
+{% endblock %}
+
+{%block diff_scripts%}
+    <script src="{{url_for('static',filename='js/results.js')}}"></script>
+    <script>
+        initResultsScript('{{ process_id|safe }}');
+    </script>
+{% endblock %}

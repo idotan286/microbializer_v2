@@ -1,0 +1,4 @@
+
+*.pyc
+app\__pycache__
+wsgi.py
