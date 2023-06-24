@@ -60,37 +60,67 @@
               </div>
             </div>
             <div id="file_div" class="hidden flex flex-col justify-center">
-                <div class="flex flex-row justify-between items-center ">
-                    <p class="text-2xl mx-8 select-none">Are your reads paired?&nbsp</p>
-                    <div>
-                        <input class="hidden peer" id="isNotPaired" type="radio" name="isPaired" value="isNotPaired" checked/>
-                        <label for="isNotPaired" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">No</span>
-                        </label>
-                    </div>
-                    <div>
-                        <input class="hidden peer" id="isPaired" type="radio" name="isPaired" value="isPaired"/>
-                        <label for="isPaired" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">Yes</span>
-                        </label>
-                    </div>
-                </div>
                 <div class="flex flex-row justify-start items-center ">
-                  <p class="text-2xl mx-8 select-none">Select a valid reads file:</p>
+                  <p class="text-2xl mx-8 select-none">Select a zipped / tar.gz folder:</p>
                   <label for="theFile" id="upload_button0" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white  text-black hover:bg-green-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
                     <span class="select-none"><i id="file_icon0" class="fa fa-upload" style="font-size:24px"></i></span>
                     <span id="file_name0" class="select-none text-white text-xs"></span>
                     <input  class="hidden" id="theFile" type="file" name=file accept="{{extensions}}" required/>
                     
                   </label>
-                  </label>
-                  <label for="theFile2" id="upload_button1" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white  text-black hover:bg-green-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
-                    <span class="select-none"><i id="file_icon1" class="fa fa-upload" style="font-size:24px"></i></span>
-                    <span id="file_name1" class="select-none text-white text-xs"></span>
-                    <input  class="hidden" id="theFile2" type="file" name=file accept="{{extensions}}"/>
-                  </label>  
                 </div>
+            </div>
+            <div id="is_advanced_div" class="hidden flex flex-row justify-center">
+                <div>
+                    <label id="defaultSetting" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-green-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
+                        <span class="select-none">Default setting</span>
+                </div>
+                <div>
+                    <label id="advancedSetting" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-green-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
+                        <span class="select-none">Advanced setting</span>
+                    </label>
+                </div>
+            </div>
+            <div id="paramaters_div" class="hidden flex flex-col justify-center">
+                <div   class="flex flex-row justify-between items-center">
+                  <p class="text-2xl mx-8 select-none">Maximal permitted e-value: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="maxEValue" name="maxEValue" placeholder="0.01" value="0.01" maxlength="10" max="1" min="0" step="0.01" required>
+  
+                  <label for="maxEValue" id="continue_after_parameters" class="w-16  flex flex-col items-center rounded-md py-3 bg-white shadow-lg tracking-wide uppercase border border-blue-700  bg-white  text-black hover:bg-green-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
+                    <span class="text-base font-bold text-2xl leading-normal select-none ">➔</span>
+                  </label>
               </div>
+              <div   class="flex flex-row justify-between items-center">
+                  <p class="text-2xl mx-8 select-none">Minimal percent of identity:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="minIdentity" name="minIdentity" maxlength="10" placeholder="80.0" value="80.0" max="100" min="0" step="1" required>
+                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
+              </div>
+              <div   class="flex flex-row justify-between items-center">
+                  <p class="text-2xl mx-8 select-none">Minimal percent of orthologs to be considered as a core gene: &nbsp</p>
+                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="orthologsPercent" name="orthologsPercent" maxlength="10" placeholder="100.0" value="100.0" max="200" min="0" step="1" required>
+                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
+              </div>
+              <div   class="flex flex-row justify-between items-center">
+                  <p class="text-2xl mx-8 select-none">Root the species tree according to this outgroup: &nbsp</p>
+                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="text" id="outgroup" name="outgroup" maxlength="70" placeholder="No outgroup" value="No outgroup" required>
+                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
+              </div>
+              <div class="flex flex-row justify-between items-center ">
+                    <p class="text-2xl mx-8 select-none">Apply bootstrap over the species tree?&nbsp</p>
+                    <div>
+                        <input class="hidden peer" id="isNotApplyBootstrap" type="radio" name="isBootstrap" value="isNotApplyBootstrap" checked/>
+                        <label for="isNotApplyBootstrap" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
+                            <span class="select-none">No</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input class="hidden peer" id="isApplyBootstrap" type="radio" name="isBootstrap" value="isApplyBootstrap"/>
+                        <label for="isApplyBootstrap" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
+                            <span class="select-none">Yes</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
             <div id="summary_div" class="hidden flex flex-col justify-center items-center">
             <p class="text-2xl mx-16 select-none">Please verify the following input values.</p>
             <p class="text-2xl mx-8 select-none">If the data inserted is wrong, please press the reset button</p>
@@ -108,21 +138,39 @@
                 </label>
             </div>
             <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-2xl mx-2 select-none">Paired files:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_is_paired" class="select-none text-white"></span>
-                </label>
-            </div>
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-2xl mx-2 select-none">File name 1:</p>
+                <p class="w-48 text-2xl mx-2 select-none">File name:</p>
                 <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
                   <span id="user_file0" class="select-none text-white"></span>
                 </label>
             </div>
             <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-2xl mx-2 select-none">File name 2:</p>
+                <p class="w-48 text-2xl mx-2 select-none">Maximal permitted e-value:</p>
                 <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_file1" class="select-none text-white"></span>
+                  <span id="user_e_value" class="select-none text-white"></span>
+                </label>
+            </div>
+            <div class="flex flex-row justify-between items-center ">
+                <p class="w-48 text-2xl mx-2 select-none">Minimal percent of identity:</p>
+                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                  <span id="user_identity" class="select-none text-white"></span>
+                </label>
+            </div>
+            <div class="flex flex-row justify-between items-center ">
+                <p class="w-48 text-2xl mx-2 select-none">Minimal percent of orthologs to be considered as a core gene:</p>
+                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                  <span id="user_core_gene" class="select-none text-white"></span>
+                </label>
+            </div>
+            <div class="flex flex-row justify-between items-center ">
+                <p class="w-48 text-2xl mx-2 select-none">Root the species tree according to this outgroup:</p>
+                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                  <span id="user_outgroup" class="select-none text-white"></span>
+                </label>
+            </div>
+            <div class="flex flex-row justify-between items-center ">
+                <p class="w-48 text-2xl mx-2 select-none">Apply bootstrap over the species tree:</p>
+                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                  <span id="user_is_bootstrap" class="select-none text-white"></span>
                 </label>
             </div>
             <!---<div 
@@ -164,8 +212,8 @@
         </div>
         
         <cite class="absolute bottom-0 left-0 text-black m-8 font-bold bg-white bg-opacity-75 p-5">
-            <p class="select-none text-sm"><strong><a href="https://doi.org/10.1093/nar/gkad410">GenomeFLTR</a></strong>: Filtering Reads Made Easy</p>
-            <p class="text-sm">Dotan, E., Alburquerque, M., Wygoda, E.,<a href="https://www.tau.ac.il/~huchond/" target="_blank"> Huchon, D. </a>, <a href="https://www.tau.ac.il/~talp/" target="_blank"> Pupko, T.</a></p>
+            <p class="select-none text-sm"><strong><a href="https://doi.org/10.1093/nar/gkad410">Microbialize</a></strong>: microbialize Made Easy</p>
+            <p class="text-sm">XXX, x., YYY, y., ZZZ, z.,<a href="https://www.tau.ac.il/~huchond/" target="_blank"> PPP, p. </a>, <a href="https://www.tau.ac.il/~talp/" target="_blank"> Pupko, T.</a></p>
         </cite>
 
         <cite class="absolute bottom-0 right-0 text-black m-8 font-bold bg-white bg-opacity-75 p-5">

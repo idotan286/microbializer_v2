@@ -4,6 +4,13 @@ let ACCESSION_FORM_PREFIX = ''
 const help_text = document.getElementById("help_text");
 help_text.innerText = HELP_TEXT_INSERTING_MAIL.trim()
 
+const PageStates = {
+  Mail: 0,
+  File: 1,
+  SettingConfiguration: 2,
+  Parameters: 3,
+  Summary: 4
+}
 
 function initScript(){
   //MAX_CUSTOM_SPECIES = max_custom;
@@ -15,29 +22,20 @@ const job_form = document.getElementById("theForm")
 
 
 const theFile = document.getElementById("theFile");
-const theFile2 = document.getElementById("theFile2");
-const isPaired = document.getElementById("isPaired");
-const isNotPaired = document.getElementById("isNotPaired");
-
-isPaired.checked = false;
-isNotPaired.checked = true;
-
 
 const resetHome = () => {
   job_form.reset();
   document.getElementById("mail_div").classList.remove("hidden");
   document.getElementById("file_div").classList.add("hidden");
   document.getElementById("summary_div").classList.add("hidden");
-  isPaired.checked = false;
-  isNotPaired.checked = true;
+  document.getElementById("paramaters_div").classList.add("hidden");
+  document.getElementById("is_advanced_div").classList.add("hidden");
 
   reset_continue_after_mail();
   checkMail({"target": document.getElementById("theMail")})
 
-  showTheFile2();
   return true;
 }
-
 
 const buttonClick = () => {
   document.getElementById("page_title").classList.add("hidden");
@@ -61,13 +59,12 @@ const buttonClick = () => {
 
 }
 
-
 const reset_continue_after_mail = () => {
     const continue_button_mail = document.getElementById("continue_after_mail");
 
     continue_button_mail.classList.remove("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
     continue_button_mail.classList.add("bg-gray-600","text-white")
-    continue_button_mail.removeEventListener("click", formForward)
+    continue_button_mail.removeEventListener("click", () => formForward(PageStates.File))
 
 }
 
@@ -98,7 +95,7 @@ const checkMail = (event) => {
         continue_button_mail.classList.remove("bg-gray-600","text-white")
         continue_button_mail.classList.add("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
         theFile.disabled = false;
-        continue_button_mail.addEventListener("click", formForward)
+        continue_button_mail.addEventListener("click", () => formForward(PageStates.File))
         return true;
     }
 
@@ -114,7 +111,7 @@ email.addEventListener("keypress", (e) => {
     flag = checkMail(e);
   }
   if (flag === true){
-    formForward();
+    formForward(PageStates.File);
   }
 });
 
@@ -157,17 +154,27 @@ const checkFile = (target,file_num) => {
     return true;
 }
 
-
-
-const formForward = () => {
-    if (job_form[0].value == "" || job_form[0].value) {
+const formForward = (state) => {
+    console.log('formForward ', state)
+    if (state == PageStates.File && (job_form[0].value == "" || job_form[0].value)) {
         document.getElementById("mail_div").classList.add("hidden");
         document.getElementById("file_div").classList.remove("hidden");
         help_text.innerText = HELP_TEXT_UPLOADING_FILE.trim()
     }
-    if(isPaired.checked && theFile.valid && theFile2.valid ||
-        !isPaired.checked && theFile.valid){
+    if (state == PageStates.SettingConfiguration && theFile.valid){
         document.getElementById("file_div").classList.add("hidden");
+        document.getElementById("is_advanced_div").classList.remove("hidden");
+        document.getElementById("defaultSetting").addEventListener("click", () => formForward(PageStates.Summary))
+        document.getElementById("advancedSetting").addEventListener("click", () => formForward(PageStates.Parameters))
+    }
+    if (state == PageStates.Parameters){
+        document.getElementById("is_advanced_div").classList.add("hidden");
+        document.getElementById("paramaters_div").classList.remove("hidden");
+        document.getElementById("continue_after_parameters").addEventListener("click", () => formForward(PageStates.Summary))
+    }
+    if (state == PageStates.Summary){
+        document.getElementById("is_advanced_div").classList.add("hidden");
+        document.getElementById("paramaters_div").classList.add("hidden");
         showSummaryPage();
     }
 }
@@ -178,12 +185,14 @@ function showSummaryPage() {
   
   document.getElementById("user_job_name").innerText = job_form[1].value;
   document.getElementById("user_email_adress").innerText = job_form[0].value;
-  document.getElementById("user_is_paired").innerText = isPaired.checked;
   document.getElementById("user_file0").classList.add("text-xs");
-  document.getElementById("user_file1").classList.add("text-xs");
 
   document.getElementById("user_file0").innerText = document.getElementById("file_name" + "0").innerText;
-  document.getElementById("user_file1").innerText = document.getElementById("file_name" + "1").innerText;
+  document.getElementById("user_e_value").innerText = document.getElementById("maxEValue").value;
+  document.getElementById("user_identity").innerText = document.getElementById("minIdentity").value;
+  document.getElementById("user_core_gene").innerText = document.getElementById("orthologsPercent").value;
+  document.getElementById("user_outgroup").innerText = document.getElementById("outgroup").value;
+  document.getElementById("user_is_bootstrap").innerText = document.getElementById("isApplyBootstrap").checked;
   
   const submit_button = document.getElementById("submit_button");
   submit_button.classList.remove("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
@@ -247,29 +256,12 @@ function postForm() {
 
 }
 
-const showTheFile2 = () => {
-    theFile2_button = document.getElementById('upload_button1');
-
-    isPaired.checked ? theFile2_button.classList.remove('hidden') : theFile2_button.classList.add('hidden');
-    resetFile(theFile,0)
-    resetFile(theFile2,1)
-}
-
-isPaired.addEventListener('click', showTheFile2);
-isNotPaired.addEventListener('click', showTheFile2);
-
 theFile.value = null
-theFile2.value = null
 
 theFile.addEventListener('input', (event) => {
     checkFile(event.target, 0);
-    formForward();
-});
-theFile2.addEventListener('input', (event) => {
-    checkFile(event.target, 1);
-    formForward();
+    formForward(PageStates.SettingConfiguration);
 });
 
-document.getElementById("custom_button").addEventListener("click", customDBSelector)
-document.getElementById("cont_summary_button").addEventListener("click", showSummaryPage)
+
 
