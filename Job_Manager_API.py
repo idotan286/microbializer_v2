@@ -251,7 +251,7 @@ class Job_Manager_API:
             # adding the process
             self.__j_manager.add_process(process_id, email_address, job_name)
             self.__build_and_send_mail(process_id, EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name), EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id), email_address)
-            self.__build_and_send_mail(process_id, 'GenomeFLTR: JOB SUBMITTED', EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id) + f'\nemail adress is: {email_address}', 'edodotan@mail.tau.ac.il')
+            self.__build_and_send_mail(process_id, 'Microbializer: JOB SUBMITTED', EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id) + f'\nemail adress is: {email_address}', 'edodotan@mail.tau.ac.il')
             return True
         logger.warning(f'process_id = {process_id}, can\'t add process: is_valid_email = {is_valid_email}')
         return False
@@ -359,6 +359,13 @@ class Job_Manager_API:
         """
         email_address = form_dict.get('email', None)
         job_name = form_dict.get('job_name', "")
+        max_e_value = form_dict.get('maxEValue', "")
+        min_identity = form_dict.get('minIdentity', "")
+        orthologs_percent = form_dict.get('orthologsPercent', "")
+        outgroup = form_dict.get('outgroup', "")
+        is_bootstrap = form_dict.get('isBootstrap', "")
+        print(f'email_address = {email_address} job_name = {job_name} max_e_value = {max_e_value}')
+        print(f'min_identity = {min_identity} orthologs_percent = {orthologs_percent} outgroup = {outgroup} is_bootstrap = {is_bootstrap}')
         return email_address, job_name
 
     def clean_internal_state(self):

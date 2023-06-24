@@ -223,11 +223,9 @@ function postForm() {
     request.upload.addEventListener('progress', (event) => {
 
         var file1Size = document.getElementById('theFile').files[0].size;
-        var file2Size = document.getElementById('theFile2');
-        file2Size = file2Size.valid ? file2Size.files[0].size : 0;
-        console.log(file1Size, file2Size, event.loaded)
+        console.log(file1Size, event.loaded)
         if (event.loaded <= file1Size) {
-            var percent = Math.round(event.loaded / (file1Size+file2Size) * 100);
+            var percent = Math.round(event.loaded / (file1Size) * 100);
         //   document.getElementById('progress-bar').style.width = percent + '%';
             document.getElementById('progress-bar').innerHTML = 'Your sequences are being uploaded. Do not close this window. Uploaded: ' + percent + '%';
         }
