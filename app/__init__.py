@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, redirect, url_for, render_template, Response, jsonify, send_file
+from flask import Flask, flash, request, redirect, url_for, render_template, Response, jsonify, send_file, json
 from werkzeug.utils import secure_filename
 from Job_Manager_API import Job_Manager_API
 from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME, MAX_NUMBER_PROCESS
@@ -236,8 +236,29 @@ def results(process_id):
     #if df is None:
     #    logger.error(f'process_id = {process_id}, df = {df}')
     #    return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.RESULTS_DF_IS_NONE.name))
-    logger.info(f'process_id = {process_id}')
-    return render_template_wrapper('results.html', process_id=process_id)
+    data = [
+        {
+            'label': 'genome1',
+            'data': [0.1, 0.2, 0.3, 0.7],
+        },
+        {
+            'label': 'genome2',
+            'data': [0.3, 0.4, 0.5, 0.8],
+        },
+        {
+            'label': 'genome3',
+            'data': [0.5, 0.6, 0.7, 0.01],
+        },
+    ]
+    summary_stats = {
+        'job_name': 'example'
+    }
+    logger.info(f'data = {data}')
+    return render_template_wrapper('results.html', 
+        data=json.dumps(data), 
+        columns_name=json.dumps(['parameter1', 'parameter2', 'parameter3', 'parameter3']), 
+        summary_stats=summary_stats
+    )
 
 @app.route('/error/<error_type>')
 def error(error_type):
