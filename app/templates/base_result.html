@@ -6,9 +6,54 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0/dist/chartjs-plugin-annotation.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/danfojs@1.0.5/lib/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://unpkg.com/3d-force-graph@1.70.2/dist/3d-force-graph.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js"></script>
 {% endblock%}
 
 {% block body %} 
+    <style>
+    
+    body_val {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: 0;
+    }
+    
+    #show-length {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+    
+    .links {
+      fill: none;
+      stroke: #000;
+    }
+    
+    .link-extensions {
+      fill: none;
+      stroke: #000;
+      stroke-opacity: .25;
+    }
+    
+    .labels {
+      font: 10px sans-serif;
+    }
+    
+    .link--active {
+      stroke: #000 !important;
+      stroke-width: 1.5px;
+    }
+    
+    .link-extension--active {
+      stroke-opacity: .6;
+    }
+    
+    .label--active {
+      font-weight: bold;
+    }
+    
+    </style>
     <div class=" flex flex-col items-center justify-evenly h-full">
         <div class="bg-white bg-opacity-75 flex flex-col items-center justify-evenly mx-4 my-2  px-4 py-2 border-2 rounded-md shadow-lg w-11/12">
             <div class="flex w-full flex-row my-3">
@@ -27,8 +72,10 @@
             </div>
             <div  class="flex w-full flex-row items-center my-3 justify-between"  style="height: 560px;">
                 <div class="w-5/12 relative border-2 flex flex-col h-full rounded mx-2 py-2 shadow-lg bg-white min-max-div-size-side" >
-                    <h1 class="text-center text-4xl select-none">Contaminated reads by threshold k-mer</h1>
-                    <canvas style="height: 360px; width: 480px" id="radar_chart" ></canvas>
+                    <h1 class="text-center text-4xl select-none">Choose histogram to show</h1>
+                    <div class="flex w-full flex-row my-3" id="parameters_option_bar_chart">
+                    </div>
+                    <canvas style="height: 360px; width: 480px" id="bar_chart" ></canvas>
                     <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
                         <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
                     </label>
@@ -41,47 +88,9 @@
                     </a>
                 </div>
                 <div class="w-4/12 relative flex-col h-full border-2 rounded mx-2 px-2 py-2 shadow-lg bg-white min-max-div-size-center">
-                    <h1 class="text-center text-4xl select-none">Species to be filtered</h1>
-                    <div id="species_container" class="flex flex-1 flex-col  mx-3 my-3 px-1 border-2" style="height: 480px;">
-                        <div class="flex flex-row align-center border-b-4 py-2 justify-between mx-3 static">
-                            <p class="font-bold self-center">Species</p>
-                            <div class="flex flex-row justify-center">
-                                <label id="select_button" class="
-                                w-26
-                                px-1
-                                mx-1
-                                text-center
-                                bg-white
-                                rounded-md
-                                shadow-md
-                                tracking-wide
-                                border-2 border-orange-600 bg-orange-100 cursor-pointer
-                                hover:bg-orange-600 hover:text-white
-                                ease-linear
-                                transition-all
-                                duration-150">
-                                <span class="text-base font-bold leading-normal text-sm select-none ">Select all</span></label>
-                                <label id="unselect_button" class="
-                                w-26
-                                px-1
-                                mx-1
-        
-                                text-center
-                                bg-white
-                                rounded-md
-                                shadow-md
-                                tracking-wide
-                                border-2 border-blue-600 bg-blue-100 cursor-pointer
-                                hover:bg-blue-600 hover:text-white
-                                ease-linear
-                                transition-all
-                                duration-150">
-                                <span class="text-base font-bold leading-normal text-sm select-none ">Unselect all</span></label>
-                            </div>
-                            <p class="font-bold self-center">Number of reads</p>
-                        </div>
-                        <div id="species_list" class="flex flex-col py-2 overflow-auto">
-                        </div>
+                    <h1 class="text-center text-4xl select-none">Phelogenetic Tree</h1>
+                    <div id="body_val" class="flex flex-1 flex-col  mx-3 my-3 px-1 border-2" style="height: 480px;">
+                        <div id="3d-graph"></div>
                     </div>
                     <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
                         <span class="font-bold text-1xl text-gray-700 select-none" >?</span>

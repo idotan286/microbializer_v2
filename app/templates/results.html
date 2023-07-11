@@ -7,6 +7,6 @@
 {%block diff_scripts%}
     <script src="{{url_for('static',filename='js/results.js')}}"></script>
     <script>
-        initResultsScript('{{ data|safe }}', '{{ columns_name|safe }}');
+        initResultsScript('{{ data|safe }}');
     </script>
 {% endblock %}

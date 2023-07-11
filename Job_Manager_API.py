@@ -6,7 +6,7 @@ import pandas as pd
 from InputValidator import InputValidator
 from Job_Manager_Thread_Safe_Microbializer import Job_Manager_Thread_Safe_Microbializer
 from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
-from MicrobializerConsts import MICROBIALIZER_PROCESSOR_JOB_PREFIX
+from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, INPUTS_ARE_ANNOTATED_PROTEOMES
 from SharedConsts import K_MER_COUNTER_MATRIX_FILE_NAME, \
     FINAL_OUTPUT_FILE_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME, EMAIL_CONSTS, UI_CONSTS, CUSTOM_DB_NAME, State, POSTPROCESS_JOB_PREFIX, GENOME_DOWNLOAD_SUMMARY_RESULTS_FILE_NAME, FINAL_OUTPUT_FILE_CONTAMINATED_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES_NEW_CONTAMINATED
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
@@ -226,7 +226,7 @@ class Job_Manager_API:
         """
         return str(uuid.uuid4())
 
-    def add_process(self, process_id: str, email_address: str, job_name: str):
+    def add_process(self, process_id: str, email_address: str, job_name: str, job_arguemnts: dict):
         """Creates a new kraken process based on the user parameters
 
         Parameters
@@ -237,7 +237,9 @@ class Job_Manager_API:
             email adress
         job_name: str
             The job name (optional) inserted by the user
-        
+        job_arguemnts: dict
+            Job arguemnts to run with
+            
         Returns
         -------
         is_process_added: bool
@@ -249,7 +251,7 @@ class Job_Manager_API:
         if is_valid_email:
             logger.info(f'email address')
             # adding the process
-            self.__j_manager.add_process(process_id, email_address, job_name)
+            self.__j_manager.add_process(process_id, email_address, job_name, job_arguemnts)
             self.__build_and_send_mail(process_id, EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name), EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id), email_address)
             self.__build_and_send_mail(process_id, 'Microbializer: JOB SUBMITTED', EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id) + f'\nemail adress is: {email_address}', 'edodotan@mail.tau.ac.il')
             return True
@@ -359,14 +361,14 @@ class Job_Manager_API:
         """
         email_address = form_dict.get('email', None)
         job_name = form_dict.get('job_name', "")
-        max_e_value = form_dict.get('maxEValue', "")
-        min_identity = form_dict.get('minIdentity', "")
-        orthologs_percent = form_dict.get('orthologsPercent', "")
-        outgroup = form_dict.get('outgroup', "")
-        is_bootstrap = form_dict.get('isBootstrap', "")
-        print(f'email_address = {email_address} job_name = {job_name} max_e_value = {max_e_value}')
-        print(f'min_identity = {min_identity} orthologs_percent = {orthologs_percent} outgroup = {outgroup} is_bootstrap = {is_bootstrap}')
-        return email_address, job_name
+        job_arguemnts = {
+            E_VALUE_CUTOFF: form_dict.get('maxEValue', ""),
+            IDENTITY_CUTOFF: form_dict.get('minIdentity', ""),
+            CORE_MINIMAL_PERCENTAGE: form_dict.get('orthologsPercent', ""),
+            OUTGROUP: form_dict.get('outgroup', ""),
+            BOOTSTRAP: form_dict.get('isBootstrap', ""),
+        }
+        return email_address, job_name, job_arguemnts
 
     def clean_internal_state(self):
         """clean job state dictionary

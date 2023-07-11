@@ -25,7 +25,8 @@ GENOME_DOWNLOAD_SUMMARY_RESULTS_FILE_NAME = Path('genome_download_summary.txt')
 RANK_KRAKEN_TRANSLATIONS = {'U': 'Unclassified', 'R': 'Root', 'D': 'Domain', 'K': 'Kingdom', 'P': 'Phylum',
                             'C': 'Class', 'O': 'Order', 'F': 'Family', 'G': 'Genus', 'S': 'Species'}
 
-USER_FILE_NAME = ['reads.fasta', 'reads2.fasta'] #names of the files to be downloaded
+USER_FILE_NAME_ZIP = "genomes.zip" #names of the files to be downloaded
+USER_FILE_NAME_TAR = "genomes.tar.gz" #names of the files to be downloaded
 MAX_NUMBER_PROCESS = 15 #number of process to run in parallel
 
 PATH_TO_OUTPUT_PROCESSOR_SCRIPT = Path("/bioseq/genome_fltr_backend/OutputProcessor.py")
@@ -228,7 +229,7 @@ class UI_CONSTS:
     }
     
     global allowed_files_str  # todo: Edo, do we have to use a global var?
-    ALLOWED_EXTENSIONS = {'fasta', 'fastq', 'gz', 'txt', 'fna', 'faa'}
+    ALLOWED_EXTENSIONS = {'zip', 'tar.gz'}
     allowed_files_str = ', '.join(ALLOWED_EXTENSIONS) #better to path string than list
 
     class UI_Errors(Enum):

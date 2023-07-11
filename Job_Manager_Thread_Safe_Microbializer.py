@@ -1,6 +1,6 @@
 import os
 import SharedConsts as sc
-import MicrobializerConsts as mc
+import flask_interface_consts as mc
 from Handlers.JobHandler import Handler
 from Job_Manager_Thread_Safe import Job_Manager_Thread_Safe
 from utils import logger
@@ -102,9 +102,9 @@ class Job_Manager_Thread_Safe_Microbializer:
                 files_list.append(file2fltr)
         return files_list
     
-    def __add_process(self, process_folder_path: str, email_address, job_name):
+    def __add_process(self, process_folder_path: str, email_address, job_name, job_arguemnts):
         """
-        Creates a kraken process
+        Creates a microbilzer process
         ** Specific to this webserver
 
         Parameters
@@ -115,7 +115,9 @@ class Job_Manager_Thread_Safe_Microbializer:
             email address
         job_name: str
             The job name (optional) inserted by the user. If none is inserted then job_name = ""
-
+        job_arguemnts: dict
+            Job arguemnts to run with
+        
         Returns
         -------
         pbs_id: str
@@ -123,7 +125,7 @@ class Job_Manager_Thread_Safe_Microbializer:
         """
         logger.info(f'process_folder_path = {process_folder_path}')
         files2fltr = self.__get_files_in_folder(process_folder_path)
-        pbs_id, _ = self.__handler.submit_micro_job(files2fltr)
+        pbs_id, _ = self.__handler.submit_micro_job(files2fltr, job_arguemnts)
         return pbs_id
         
     def __get_state(self, process_id, job_prefix):
@@ -182,7 +184,7 @@ class Job_Manager_Thread_Safe_Microbializer:
         """
         return self.__job_manager.get_job_name(process_id)
     
-    def add_process(self, process_id: str, email_address, job_name: str):
+    def add_process(self, process_id: str, email_address, job_name: str, job_arguemnts):
         """
         adds a kraken process
         ** Specific to this webserver
@@ -195,12 +197,14 @@ class Job_Manager_Thread_Safe_Microbializer:
             email address
         job_name: str
             The job name (optional) inserted by the user. If none is inserted then job_name = ""
+        job_arguemnts: dict
+            Job arguemnts to run with
 
         Returns
         -------
         """
         logger.info(f'process_id = {process_id}, email_address = {email_address}, job_name = {job_name}')
-        self.__job_manager.add_process(process_id, mc.MICROBIALIZER_PROCESSOR_JOB_PREFIX, email_address, job_name)
+        self.__job_manager.add_process(process_id, mc.MICROBIALIZER_PROCESSOR_JOB_PREFIX, email_address, job_name, job_arguemnts)
     
     
     def add_example_postprocess(self, email_address: str, job_name:str, process_id: str, k_threshold, species_list):

@@ -1,7 +1,7 @@
 from flask import Flask, flash, request, redirect, url_for, render_template, Response, jsonify, send_file, json
 from werkzeug.utils import secure_filename
 from Job_Manager_API import Job_Manager_API
-from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME, MAX_NUMBER_PROCESS
+from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, MAX_NUMBER_PROCESS
 from utils import logger
 import os
 import warnings
@@ -76,7 +76,7 @@ def update_process_page(process_id):
     return ""
 
 
-manager = Job_Manager_API(MAX_NUMBER_PROCESS, UPLOAD_FOLDERS_ROOT_PATH, USER_FILE_NAME, update_html)
+manager = Job_Manager_API(MAX_NUMBER_PROCESS, UPLOAD_FOLDERS_ROOT_PATH, [USER_FILE_NAME_ZIP, USER_FILE_NAME_TAR], update_html)
 
 
 def allowed_file(filename):
@@ -236,27 +236,28 @@ def results(process_id):
     #if df is None:
     #    logger.error(f'process_id = {process_id}, df = {df}')
     #    return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.RESULTS_DF_IS_NONE.name))
-    data = [
-        {
-            'label': 'genome1',
-            'data': [0.1, 0.2, 0.3, 0.7],
-        },
-        {
-            'label': 'genome2',
-            'data': [0.3, 0.4, 0.5, 0.8],
-        },
-        {
-            'label': 'genome3',
-            'data': [0.5, 0.6, 0.7, 0.01],
-        },
-    ]
+    import random
+    data = {
+        'Core ': {f'genome_{key}': random.random() for key in range(150)},
+        'ORF': {
+            'genome1': 0.1,
+            'genome2': 0.2,
+            'genome3': 0.3,
+            'genome4': 0.4,
+         },
+         'GC content': {
+            'genome1': 0.4,
+            'genome2': 0.5,
+            'genome3': 0.6,
+            'genome4': 0.7,
+         },
+    }
     summary_stats = {
         'job_name': 'example'
     }
     logger.info(f'data = {data}')
     return render_template_wrapper('results.html', 
         data=json.dumps(data), 
-        columns_name=json.dumps(['parameter1', 'parameter2', 'parameter3', 'parameter3']), 
         summary_stats=summary_stats
     )
 
@@ -309,7 +310,7 @@ def home():
         for file in files:
             if file.filename == '' or not file or not allowed_file(file.filename):
                 return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.INVALID_FILE_EXTENTION.name))
-        email_address, job_name = manager.parse_form_inputs(request.form)
+        email_address, job_name, job_arguemnts = manager.parse_form_inputs(request.form)
         if email_address == None:
             logger.warning(f'email_address not available')
             return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.INVALID_MAIL.name))
@@ -319,12 +320,12 @@ def home():
         for file_idx, file in enumerate(files):
             logger.info(f'file number = {file_idx} uploaded = {file}, email_address = {email_address}')
             filename = secure_filename(file.filename)
-            if not filename.endswith('gz'): #zipped file
-                file.save(os.path.join(folder2save_file, USER_FILE_NAME[file_idx]))
-            else:
-                file.save(os.path.join(folder2save_file, USER_FILE_NAME[file_idx] + '.gz'))
+            if filename.endswith('zip'): #zipped file
+                file.save(os.path.join(folder2save_file, USER_FILE_NAME_ZIP))
+            elif filename.endswith('tar.gz'):
+                file.save(os.path.join(folder2save_file, USER_FILE_NAME_TAR))
             logger.info(f'file number = {file_idx} saved = {file}')
-        man_results = manager.add_process(new_process_id, email_address, job_name)
+        man_results = manager.add_process(new_process_id, email_address, job_name, job_arguemnts)
         if not man_results:
             logger.warning(f'job_manager_api can\'t add process')
             return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.CORRUPTED_FILE.name))

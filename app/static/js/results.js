@@ -13,47 +13,75 @@ let checked_all = true;
 blue_color = "#2563eb" // blue-600 in tailwind
 orange_color = "#f59e0b" // amber-500 in tailwind
 
-let species_list = [];
-let checkbox_list = [];
-// dataframe of threshold by species
-let df = "";
-let sum_total = 0;
-let sum_cols_df = 0;
-
-
-
-const initResultsScript = (data, columns_name) => {
-    console.log(data)
-    const json_data = JSON.parse(data);
-    const json_columns_name = JSON.parse(columns_name);
-    console.log(data)
-    console.log(columns_name)
-    runResultsScript(json_data, json_columns_name)
-};
-
-radar_chart = new Chart('radar_chart', {
-    type: "radar",
+bar_chart = new Chart('bar_chart', {
+    type: "bar",
     data: {},
     options: {
-        plugins: {
-           filler: {
-               propagate: false
-           },
-           'samples-filler-analyser': {
-               target: 'chart-analyser'
-           }
-        },
-        interaction: {
-           intersect: false
-        },
-        scale: {
-           ticks: {
-               display: false,
-               maxTicksLimit: 1
-           }
-        }
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Bar Chart'
+      }
+    }
   }
 });
+
+
+function updateBarPlot(genomes_data){
+    let labels = []
+    let data = []
+    Object.keys(genomes_data).forEach((key) => {
+        labels.push(key)
+        data.push(genomes_data[key])
+    });
+    let datasets = [{
+        data: data,
+        borderColor: colors[0],
+        backgroundColor: addAlpha(colors[0]),
+        borderWidth: 2,
+        borderRadius: Number.MAX_VALUE,
+        borderSkipped: false,
+    }]
+    bar_chart.data.labels = labels
+    bar_chart.data.datasets = datasets
+    bar_chart.update()
+}
+
+
+function makeRadioButton(group, text, is_default, genomes_data) {
+    var label = document.createElement("label")
+    var radio = document.createElement("input")
+    radio.type = "radio"
+    radio.name = group
+    radio.id = text
+    //radio.group = group
+    if (is_default) {
+        radio.checked = "checked"
+        updateBarPlot(genomes_data)
+    }
+    label.appendChild(radio)
+
+    label.appendChild(document.createTextNode(text))
+    label.addEventListener("click", (change) => {
+        updateBarPlot(genomes_data)
+    });
+    return label;
+}
+
+const initResultsScript = (data) => {
+    const json_data = JSON.parse(data);
+    const radio_bar_plot_parameters = document.getElementById("parameters_option_bar_chart")
+    Object.keys(json_data).forEach((key, index) => {
+        var radio_btn = makeRadioButton("bar_plot_options", key, index === 0, json_data[key])
+        radio_bar_plot_parameters.appendChild(radio_btn)
+    });
+    runResultsScript(json_data)
+};
+
 
 //set functions
 //const update_species_list = (item) => {
@@ -84,19 +112,17 @@ const addAlpha = (color) => {
     return color + _opacity.toString(16).toUpperCase();
 }
 
-const runResultsScript = (json_data, columns_name) => {
+const runResultsScript = (json_data) => {
     console.log('inside runResultsScript')
-    datasets = json_data.map((val, idx) => {
-        val.backgroundColor = addAlpha(colors[idx])
-        val.borderColor = colors[idx]
-        //val.fill = false
-        return val
-    });
-    console.log('datasets', datasets)
-    radar_chart.data.datasets = datasets
-    console.log(columns_name)
-    radar_chart.data.labels = columns_name
-    radar_chart.update()
+    //datasets = json_data.map((val, idx) => {
+    //    val.backgroundColor = addAlpha(colors[0])
+    //    val.borderColor = colors[0]
+    //    //val.fill = false
+    //    return val
+    //});
+    //console.log('datasets', datasets)
+    //bar_chart.data.datasets = datasets
+    bar_chart.update()
 }
 //
 //const createResultsCharts = () => {
@@ -384,4 +410,341 @@ const runResultsScript = (json_data, columns_name) => {
 //
 //document.getElementById("download_matrix").addEventListener("click", () => {
 //    df.toCSV({ fileName: "matrix.csv", download: true})
+//});
+
+
+// all code below from: https://gist.github.com/mitchac/7aa120d1ef89b737d1f3fcee8698fbdd
+
+// parse Newick format phylogeny source file
+// adapted from https://github.com/jasondavies/newick.js and https://gist.github.com/git-ashish/3aa81521f96e48198c80b4e2742bb6bc
+function parseNewick(a){for(var e=[],r={},s=a.split(/\s*(;|\(|\)|,|:)\s*/),t=0;t<s.length;t++){var n=s[t];switch(n){case"(":var c={};r.branchset=[c],e.push(r),r=c;break;case",":var c={};e[e.length-1].branchset.push(c),r=c;break;case")":r=e.pop();break;case":":break;default:var h=s[t-1];")"==h||"("==h||","==h?r.name=n:":"==h&&(r.length=parseFloat(n))}}return r}
+
+// import source file
+// url for original source file is..
+// https://gist.githubusercontent.com/mbostock/c034d66572fd6bd6815a/raw/98778537e42f5605d9eddae5fba3329d969b813c/life.txt
+
+// here importing local copy with slight modifications. 
+
+let innerRadius = 307
+let width = 954
+let outerRadius = 477
+
+let color = d3.scaleOrdinal()
+    .domain(["Bacteria", "Eukaryota", "Archaea"])
+    .range(d3.schemeCategory10)
+
+let legend = svg => {
+    const g = svg
+        .selectAll("g")
+        .data(color.domain())
+        //.join("g")
+        //    .attr("transform", (d, i) => `translate(${-outerRadius},${-outerRadius + i * 20})`);
+
+    g.append("rect")
+        .attr("width", 18)
+        .attr("height", 18)
+        .attr("fill", color);
+
+    g.append("text")
+        .attr("x", 24)
+        .attr("y", 9)
+        .attr("dy", "0.35em")
+        .text(d => d);
+}
+
+function linkStep(startAngle, startRadius, endAngle, endRadius) {
+    const c0 = Math.cos(startAngle = (startAngle - 90) / 180 * Math.PI);
+    const s0 = Math.sin(startAngle);
+    const c1 = Math.cos(endAngle = (endAngle - 90) / 180 * Math.PI);
+    const s1 = Math.sin(endAngle);
+    return "M" + startRadius * c0 + "," + startRadius * s0
+        + (endAngle === startAngle ? "" : "A" + startRadius + "," + startRadius + " 0 0 " + (endAngle > startAngle ? 1 : 0) + " " + startRadius * c1 + "," + startRadius * s1)
+        + "L" + endRadius * c1 + "," + endRadius * s1;
+}
+
+
+// Compute the maximum cumulative length of any node in the tree.
+function maxLength(d) {
+    return d.data.length + (d.children ? d3.max(d.children, maxLength) : 0);
+}
+
+// Set the radius of each node by recursively summing and scaling the distance from the root.
+function setRadius(d, y0, k) {
+    d.radius = (y0 += d.data.length) * k;
+    if (d.children) d.children.forEach(d => setRadius(d, y0, k));
+}
+
+// Set the color of each node by recursively inheriting.
+function setColor(d) {
+    var name = d.data.name;
+    d.color = color.domain().indexOf(name) >= 0 ? color(name) : d.parent ? d.parent.color : null;
+    //d.color = colors[2]
+    if (d.children) d.children.forEach(setColor);
+}
+
+function linkExtensionConstant(d) {
+  return linkStep(d.target.x, d.target.y, d.target.x, innerRadius);
+}
+
+function linkExtensionVariable(d) {
+  return linkStep(d.target.x, d.target.radius, d.target.x, innerRadius);
+}
+
+function linkConstant(d) {
+  return linkStep(d.source.x, d.source.y, d.target.x, d.target.y);
+}
+
+function linkVariable(d) {
+  return linkStep(d.source.x, d.source.radius, d.target.x, d.target.radius);
+}
+
+
+function createChart () {
+    
+    const root = d3.hierarchy(parseNewick("(B:0.2,(C:0.3,D:0.4):0.5);"), function (d) {
+        return d.branchset;
+        })
+        .sum(function (d) {
+            return d.branchset ? 0 : 1;
+        })
+        .sort(function (a, b) {
+            return (a.value - b.value) || d3.ascending(a.data.length, b.data.length);
+        });
+
+    d3.cluster(root);
+    setRadius(root, root.data.length = 0, innerRadius / maxLength(root));
+    setColor(root);
+
+    const svg = d3.create("svg")
+        .attr("viewBox", [-outerRadius, -outerRadius, width, width])
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 10);
+
+    svg.append("g")
+        .call(legend);
+
+    svg.append("style").text(`
+
+      .link--active {
+          stroke: #000 !important;
+          stroke-width: 1.5px;
+      }
+
+      .link-extension--active {
+          stroke-opacity: .6;
+      }
+
+      .label--active {
+          font-weight: bold;
+      }
+
+      `);
+
+    const linkExtension = svg.append("g")
+        .attr("fill", "none")
+        .attr("stroke", "#000")
+        .attr("stroke-opacity", 0.25)
+        .selectAll("path")
+        .data(root.links().filter(d => !d.target.children))
+        //.join("path")
+        .each(function(d) { d.target.linkExtensionNode = this; })
+        .attr("d", linkExtensionConstant);
+
+    const link = svg.append("g")
+        .attr("fill", "none")
+        .attr("stroke", "#000")
+        .selectAll("path")
+        .data(root.links())
+        //.join("path")
+        .each(function(d) { d.target.linkNode = this; })
+        .attr("d", linkConstant)
+        .attr("stroke", d => d.target.color);
+
+    svg.append("g")
+        .selectAll("text")
+        .data(root.leaves())
+        //.join("text")
+            .attr("dy", ".31em")
+            .attr("transform", d => `rotate(${d.x - 90}) translate(${innerRadius + 4},0)${d.x < 180 ? "" : " rotate(180)"}`)
+            .attr("text-anchor", d => d.x < 180 ? "start" : "end")
+            .text(d => d.data.name.replace(/_/g, " "))
+            .on("mouseover", mouseovered(true))
+            .on("mouseout", mouseovered(false));
+
+    function update(checked) {
+        const t = d3.transition().duration(750);
+        linkExtension.transition(t).attr("d", checked ? linkExtensionVariable : linkExtensionConstant);
+        link.transition(t).attr("d", checked ? linkVariable : linkConstant);
+    }
+
+    function mouseovered(active) {
+        return function(event, d) {
+            d3.select(this).classed("label--active", active);
+            d3.select(d.linkExtensionNode).classed("link-extension--active", active).raise();
+            do d3.select(d.linkNode).classed("link--active", active).raise();
+            while (d = d.parent);
+        };
+    }
+    
+    return Object.assign(svg.node(), {update});
+}
+
+chart = createChart()
+update = chart.update(true)
+
+cluster = d3.cluster()
+    .size([360, innerRadius])
+    .separation((a, b) => 1)
+
+
+color = d3.scaleOrdinal()
+    .domain(["Bacteria", "Eukaryota", "Archaea"])
+    .range(d3.schemeCategory10)
+
+
+//d3.text("tree-of-life.txt", function (error, life) {
+//    if (error) throw error;
+//    
+//    // parse imported data and convert to d3 hierarchy 
+//    var root = d3.hierarchy(parseNewick("(B:0.2,(C:0.3,D:0.4):0.5);"), function (d) {
+//            return d.branchset;
+//        })
+//        .sum(function (d) {
+//            return d.branchset ? 0 : 1;
+//        })
+//        .sort(function (a, b) {
+//            return (a.value - b.value) || d3.ascending(a.data.length, b.data.length);
+//        });
+//    
+//    // color descendent nodes of each of three main domains of life. Ie Bacteria, Eukarya and Archaea. 
+//    function colorEntireChilderen(node, color) {
+//        node.color = color
+//        if(!node.children) {
+//            return;
+//        }
+//        node.children.forEach(function(d) {
+//            console.log(d)
+//            colorEntireChilderen(d, color);
+//        }) 
+//        return;
+//    }
+//
+//    colorEntireChilderen(root.children[0], "#ff3333")
+//    colorEntireChilderen(root.children[1], "#0092cc")
+//    
+//    //root.children[1].each(function (d) {
+//    //    d.color = "#0092cc";
+//    //});
+//    
+//    
+//    // convert d3 hierarchy data structure to list of links and list of nodes
+//    var links = [];
+//    var nodes = [];
+//    
+//    // func for adding only unique objects to array 
+//    function addUnique(object, array) {
+//        if (object) {
+//            if (array.filter(x => x.id === object.id).length === 0) {
+//                array.push(object)
+//            }
+//        }
+//    }
+//    
+//    // add only unique nodes to node list from link list 
+//    root.links().forEach(function (value) {
+//        var source = value.source.data.name;
+//        var sourceColor = (value.source.color ? value.source.color : "#9e9e9e");
+//        var sourceHeight = value.source.height;
+//        
+//        var target = value.target.data.name;
+//        var targetColor = value.target.color;
+//        var targetHeight = value.target.height;
+//        
+//        var length = value.target.data.length;
+//        
+//        links.push({
+//            source: source,
+//            target: target,
+//            length: length,
+//            color: sourceColor
+//        });
+//        
+//        // add only unique nodes to node list from link list 
+//        addUnique({
+//            id: source,
+//            color: sourceColor,
+//            height: sourceHeight
+//        }, nodes);
+//        
+//        addUnique({
+//            id: target,
+//            color: targetColor,
+//            height: targetHeight
+//        }, nodes);
+//    
+//    });
+//    
+//    // combine node and link info 
+//    const gData = {
+//        nodes: nodes,
+//        links: links
+//    };
+//    
+//    console.log(gData);
+//    
+//    // create graph and set attributes
+//    const Graph = ForceGraph3D()
+//        (document.getElementById('3d-graph'))
+//        .graphData(gData)
+//        .nodeThreeObject((d) => {
+//            return new THREE.Mesh(
+//                new THREE.SphereGeometry((d.height/2)+3),
+//                new THREE.MeshLambertMaterial({
+//                    color: d.color,
+//                    //wireframe: true,
+//                    opacity: 1
+//                }))
+//        })
+//        .nodeLabel(d =>
+//            `<span style="color: #505050; background-color: #FFFFFF">${d.id.replace(/\d+/g, '').replace(/_/g, ' ')}</span>`
+//        )
+//        //.nodeColor(node => node.color)
+//        //.linkColor(link => link.color)
+//        .linkOpacity(0.5)
+//        .linkWidth(3)
+//        //.nodeRelSize(6.5)
+//        .warmupTicks(600)
+//        .cooldownTicks(200)
+//        .cameraPosition({
+//            "x": -875.5037383561942,
+//            "y": 1442.0922937307018,
+//            "z": 427.8755760856578,
+//        }, {
+//            "x": -378.9171700100701,
+//            "y": 606.9388718746914,
+//            "z": 191.40032981151415
+//        })
+//        .onNodeClick(node => {
+//            // Aim at node from outside it
+//            const distance = 850;
+//            const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+//        
+//            Graph.cameraPosition({
+//                    x: node.x * distRatio,
+//                    y: node.y * distRatio,
+//                    z: node.z * distRatio
+//                }, // new position
+//                node, // lookAt ({ x, y, z })
+//                3000 // ms transition duration
+//            );
+//        });
+//    
+//    // set forces on graph 
+//    const linkForce = Graph
+//        .d3AlphaDecay(0.015)
+//        .d3VelocityDecay(0.015)
+//        .d3Force('link')
+//        .distance(link => link.length * 800)
+//        .iterations(50)
+//        .strength(1)
 //});
