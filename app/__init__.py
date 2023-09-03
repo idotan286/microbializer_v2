@@ -236,28 +236,20 @@ def results(process_id):
     #if df is None:
     #    logger.error(f'process_id = {process_id}, df = {df}')
     #    return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.RESULTS_DF_IS_NONE.name))
-    import random
-    data = {
-        'Core ': {f'genome_{key}': random.random() for key in range(150)},
-        'ORF': {
-            'genome1': 0.1,
-            'genome2': 0.2,
-            'genome3': 0.3,
-            'genome4': 0.4,
-         },
-         'GC content': {
-            'genome1': 0.4,
-            'genome2': 0.5,
-            'genome3': 0.6,
-            'genome4': 0.7,
-         },
-    }
+    #import random
+    histogram_data = manager.get_historgram_data(process_id)
     summary_stats = {
         'job_name': 'example'
     }
-    logger.info(f'data = {data}')
+    if histogram_data == None:
+        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.HISTOGRAM_DATA_IS_NULL.name))
+    orthologous_data = manager.get_orthologous_data(process_id)
+    if orthologous_data == None:
+        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
+    logger.info(f'histogram_data = {histogram_data}, orthologous_data = {orthologous_data}')
     return render_template_wrapper('results.html', 
-        data=json.dumps(data), 
+        histogram_data=json.dumps(histogram_data), 
+        orthologous_data=json.dumps(orthologous_data),
         summary_stats=summary_stats
     )
 

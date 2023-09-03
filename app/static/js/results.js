@@ -31,7 +31,7 @@ bar_chart = new Chart('bar_chart', {
 });
 
 
-function updateBarPlot(genomes_data){
+function updateBarPlot(genomes_data, index){
     let labels = []
     let data = []
     Object.keys(genomes_data).forEach((key) => {
@@ -40,8 +40,8 @@ function updateBarPlot(genomes_data){
     });
     let datasets = [{
         data: data,
-        borderColor: colors[0],
-        backgroundColor: addAlpha(colors[0]),
+        borderColor: colors[index],
+        backgroundColor: addAlpha(colors[index]),
         borderWidth: 2,
         borderRadius: Number.MAX_VALUE,
         borderSkipped: false,
@@ -52,7 +52,7 @@ function updateBarPlot(genomes_data){
 }
 
 
-function makeRadioButton(group, text, is_default, genomes_data) {
+function makeRadioButton(group, text, is_default, genomes_data, index) {
     var label = document.createElement("label")
     var radio = document.createElement("input")
     radio.type = "radio"
@@ -61,27 +61,22 @@ function makeRadioButton(group, text, is_default, genomes_data) {
     //radio.group = group
     if (is_default) {
         radio.checked = "checked"
-        updateBarPlot(genomes_data)
+        updateBarPlot(genomes_data, index)
     }
     label.appendChild(radio)
 
     label.appendChild(document.createTextNode(text))
     label.addEventListener("click", (change) => {
-        updateBarPlot(genomes_data)
+        updateBarPlot(genomes_data, index)
     });
     return label;
 }
 
-const initResultsScript = (data) => {
-    const json_data = JSON.parse(data);
-    const radio_bar_plot_parameters = document.getElementById("parameters_option_bar_chart")
-    Object.keys(json_data).forEach((key, index) => {
-        var radio_btn = makeRadioButton("bar_plot_options", key, index === 0, json_data[key])
-        radio_bar_plot_parameters.appendChild(radio_btn)
-    });
-    runResultsScript(json_data)
+const initResultsScript = (histogram_data, orthologous_data) => {
+    const json_histogram_data = JSON.parse(histogram_data);
+    const json_orthologous_data = JSON.parse(orthologous_data);
+    runResultsScript(json_histogram_data, json_orthologous_data)
 };
-
 
 //set functions
 //const update_species_list = (item) => {
@@ -112,8 +107,54 @@ const addAlpha = (color) => {
     return color + _opacity.toString(16).toUpperCase();
 }
 
-const runResultsScript = (json_data) => {
+const runResultsScript = (histogram_data, orthologous_data) => {
     console.log('inside runResultsScript')
+    const radio_bar_plot_parameters = document.getElementById("parameters_option_bar_chart")
+    Object.keys(histogram_data).forEach((key, index) => {
+        var radio_btn = makeRadioButton("bar_plot_options", key, index === 0, histogram_data[key], index)
+        radio_bar_plot_parameters.appendChild(radio_btn)
+    });
+    console.log(orthologous_data)
+    var table = document.getElementById('ortologic_table');
+    var headers_tr = document.createElement('tr');
+    var th = document.createElement('th');
+    var text = document.createTextNode('ortologic group');
+    th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99;'; // = 'rotate(90.0deg)'
+    th.appendChild(text)
+    headers_tr.appendChild(th)
+    Object.values(orthologous_data.columns).forEach((key, index) => {
+        console.log(key, index)
+        var th = document.createElement('th');
+        var text = document.createTextNode(key);
+        th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99;'
+        th.appendChild(text)
+        headers_tr.appendChild(th)
+    });
+    table.appendChild(headers_tr);
+    
+    Object.values(orthologous_data.index).forEach((key, index) => {
+        var tr = document.createElement('tr');
+        var th = document.createElement('th');
+        th.style.position = 'sticky';
+        th.style.left = '0';
+        var text = document.createTextNode(key);
+        th.appendChild(text)
+        tr.appendChild(th)
+        Object.values(orthologous_data.data[index]).forEach((key, index) => {
+            var td = document.createElement('td');
+            td.style.cssText = 'text-align:center;'
+            if (key === 0){
+                td.style.cssText += 'background-color:red;'
+            } else if (key === 1){
+                td.style.cssText += 'background-color:green;'
+            }
+            var text = document.createTextNode(key);
+            td.appendChild(text);
+            tr.appendChild(td);
+        })
+        table.appendChild(tr);
+    })
+    // document.body.appendChild(table);
     //datasets = json_data.map((val, idx) => {
     //    val.backgroundColor = addAlpha(colors[0])
     //    val.borderColor = colors[0]

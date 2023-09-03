@@ -6,7 +6,7 @@ import pandas as pd
 from InputValidator import InputValidator
 from Job_Manager_Thread_Safe_Microbializer import Job_Manager_Thread_Safe_Microbializer
 from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
-from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, INPUTS_ARE_ANNOTATED_PROTEOMES
+from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, INPUTS_ARE_ANNOTATED_PROTEOMES, DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE
 from SharedConsts import K_MER_COUNTER_MATRIX_FILE_NAME, \
     FINAL_OUTPUT_FILE_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME, EMAIL_CONSTS, UI_CONSTS, CUSTOM_DB_NAME, State, POSTPROCESS_JOB_PREFIX, GENOME_DOWNLOAD_SUMMARY_RESULTS_FILE_NAME, FINAL_OUTPUT_FILE_CONTAMINATED_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES_NEW_CONTAMINATED
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
@@ -369,6 +369,65 @@ class Job_Manager_API:
             BOOTSTRAP: form_dict.get('isBootstrap', ""),
         }
         return email_address, job_name, job_arguemnts
+    
+    def get_historgram_data(self, process_id: str):
+        """Return the data to display histogram
+
+        Parameters
+        ----------
+        process_id: str
+            The ID of the process
+        
+        Returns
+        -------
+        data: dict
+            dict of dict were key is the tilte of the data and the data is a dict:
+                    were the key is the genomes and the value are scalars
+        """
+        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        if not os.path.isdir(parent_folder):
+            return None
+        
+        data = {}
+        for key, value in DATA_2_VIEW_IN_HISTOGRAM.items():
+            data_path = os.path.join(parent_folder, value)
+            if os.path.isfile(data_path):
+                with open(data_path, 'r') as f:
+                    data[key] = json.load(f)
+        
+        if len(data.items()):
+            return data
+        return None
+        
+    def get_orthologous_data(self, process_id: str):
+        """Return the data to display histogram
+
+        Parameters
+        ----------
+        process_id: str
+            The ID of the process
+        
+        Returns
+        -------
+        data: dict
+            dict of dict were key is the tilte of the data and the data is a dict:
+                    were the key is the genomes and the value are scalars
+        """
+        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        if not os.path.isdir(parent_folder):
+            return None
+        
+        data = {}
+        data_path = os.path.join(parent_folder, OG_TABLE)
+        if os.path.isfile(data_path):
+            df = pd.read_csv(data_path, index_col=0)
+            # convert not nan values to 1 and nan values to 0
+            df = df.notnull().astype("int")
+            data = df.to_dict('split')
+        
+        if len(data.items()):
+            return data
+        return None
 
     def clean_internal_state(self):
         """clean job state dictionary

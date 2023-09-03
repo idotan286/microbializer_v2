@@ -242,6 +242,8 @@ class UI_CONSTS:
         CORRUPTED_FILE = f'please upload a valid fasta file, the file you uploaded is corrupted'
         INVALID_FILES_NUMBER = f'please insert one or two files'
         EXPORT_FILE_UNAVAILABLE = f'failed to export file, try to rerun the file'
+        HISTOGRAM_DATA_IS_NULL = f'cannot find the data for histogram, make sure the process id is correct and finished'
+        ORTHOLOGOUS_DATA_IS_NULL = f'cannot find the data for orthologous, make sure the process id is correct and finished'
         EXPORT_FILE_CONTAMINATED_UNAVAILABLE = f'failed to export the contaminated file, this may be because the process run before the update of the contaminated file'
         PAGE_NOT_FOUND = 'The requested page does not exist'
         INVALID_SPECIES_LIST = 'Some of the species inserted to the custom DB are invalid'

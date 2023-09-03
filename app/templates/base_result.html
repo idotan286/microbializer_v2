@@ -9,6 +9,7 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://unpkg.com/3d-force-graph@1.70.2/dist/3d-force-graph.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js"></script>
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 {% endblock%}
 
 {% block body %} 
@@ -100,12 +101,10 @@
                     </p>
                     </div>
                 </div>
-                <div class="w-3/12 relative border-2 flex flex-col h-full rounded mx-2 py-2 shadow-lg bg-white min-max-div-size-side" >
-                    <h1 class="text-center text-4xl select-none">Filtered reads percent</h1>
-                    <canvas style="height: 480px; width: 480px" id="pie_chart"> </canvas>
-                    <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
-                        <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
-                    </label>
+                <div class="w-3/12 relative border-2 flex flex-col h-full rounded mx-2 py-2 shadow-lg bg-white min-max-div-size-side" style="overflow-y:scroll; overflow-x:scroll;" >
+                    <h1 class="text-center text-4xl select-none" style="position:sticky; top:0; background-color:white">Ortologic Groups</h1>
+                    <table id="ortologic_table"> <!--- class="sortable" --->
+                    </table>
                     <div class="opacity-0 absolute bottom-0 left-0 w-auto h-11/12 bg-teal-800 text-white rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-5 pointer-events-none border-black shadow-xl">
                     <p id="help_text_pie_chart" class="p-3 text-xl text-justify select-none">
                     </p>
