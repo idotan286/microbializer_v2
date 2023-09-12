@@ -238,18 +238,25 @@ def results(process_id):
     #    return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.RESULTS_DF_IS_NONE.name))
     #import random
     histogram_data = manager.get_historgram_data(process_id)
-    summary_stats = {
-        'job_name': 'example'
-    }
     if histogram_data == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.HISTOGRAM_DATA_IS_NULL.name))
+    
     orthologous_data = manager.get_orthologous_data(process_id)
     if orthologous_data == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
+    
+    newick_tree_str = manager.get_newick_tree(process_id)
+    if newick_tree_str == None:
+        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
+
+    summary_stats = {
+        'job_name': 'example'
+    }
     logger.info(f'histogram_data = {histogram_data}, orthologous_data = {orthologous_data}')
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
         orthologous_data=json.dumps(orthologous_data),
+        tree_str=json.dumps(newick_tree_str),
         summary_stats=summary_stats
     )
 

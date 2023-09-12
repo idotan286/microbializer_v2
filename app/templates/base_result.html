@@ -4,12 +4,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js"></script>
 <script src="https://www.chartjs.org/samples/2.9.4/utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0/dist/chartjs-plugin-annotation.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/danfojs@1.0.5/lib/bundle.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/danfojs@1.0.5/lib/bundle.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script src="https://unpkg.com/3d-force-graph@1.70.2/dist/3d-force-graph.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js"></script>
-<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<!-- <script src="https://unpkg.com/3d-force-graph@1.70.2/dist/3d-force-graph.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js"></script> -->
+<!-- <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script> -->
 {% endblock%}
 
 {% block body %} 
@@ -91,7 +91,7 @@
                 <div class="w-4/12 relative flex-col h-full border-2 rounded mx-2 px-2 py-2 shadow-lg bg-white min-max-div-size-center">
                     <h1 class="text-center text-4xl select-none">Phelogenetic Tree</h1>
                     <div id="body_val" class="flex flex-1 flex-col  mx-3 my-3 px-1 border-2" style="height: 480px;">
-                        <div id="3d-graph"></div>
+                        <div id="phylo_tree_container"></div>
                     </div>
                     <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
                         <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
