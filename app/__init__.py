@@ -1,8 +1,8 @@
 from flask import Flask, flash, request, redirect, url_for, render_template, Response, jsonify, send_file, json
 from werkzeug.utils import secure_filename
+from utils import logger
 from Job_Manager_API import Job_Manager_API
 from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, MAX_NUMBER_PROCESS
-from utils import logger
 import os
 import warnings
 import time
@@ -17,7 +17,7 @@ def render_template_wrapper(*args, **kwargs):
 #TODO think about it
 warnings.filterwarnings("ignore")
 
-UPLOAD_FOLDERS_ROOT_PATH = '/bioseq/data/results/microbializer_v2/' # path to folder to save results
+UPLOAD_FOLDERS_ROOT_PATH = '/lsweb/pupko/microbializer/user_results/' # path to folder to save results
 
 # force use of HTTPS protocol, should be removed once the server is developed
 class ReverseProxied(object):
