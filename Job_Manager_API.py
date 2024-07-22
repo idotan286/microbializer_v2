@@ -6,7 +6,10 @@ import pandas as pd
 from InputValidator import InputValidator
 from Job_Manager_Thread_Safe_Microbializer import Job_Manager_Thread_Safe_Microbializer
 from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
-from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, INPUTS_ARE_ANNOTATED_PROTEOMES, DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE
+from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, \
+    E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \ 
+    INPUTS_ARE_ANNOTATED_PROTEOMES, DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE, \
+    COVERAGE_CUTOFF, FILTER_OUT_PLASMIDS
 from SharedConsts import K_MER_COUNTER_MATRIX_FILE_NAME, \
     FINAL_OUTPUT_FILE_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME, EMAIL_CONSTS, UI_CONSTS, CUSTOM_DB_NAME, State, POSTPROCESS_JOB_PREFIX, GENOME_DOWNLOAD_SUMMARY_RESULTS_FILE_NAME, FINAL_OUTPUT_FILE_CONTAMINATED_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES_NEW_CONTAMINATED
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
@@ -367,6 +370,9 @@ class Job_Manager_API:
             CORE_MINIMAL_PERCENTAGE: form_dict.get('orthologsPercent', ""),
             OUTGROUP: form_dict.get('outgroup', ""),
             BOOTSTRAP: form_dict.get('isBootstrap', ""),
+            COVERAGE_CUTOFF: form_dict.get('coverageCutoff', ""),
+            FILTER_OUT_PLASMIDS: form_dict.get('isApplyFilter', ""),
+            ADD_ORPHAN_GENES_TO_OGS: form_dict.get('isAddOrphan', ""),
         }
         return email_address, job_name, job_arguemnts
     
