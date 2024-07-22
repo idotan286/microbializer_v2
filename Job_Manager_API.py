@@ -364,6 +364,7 @@ class Job_Manager_API:
         """
         email_address = form_dict.get('email', None)
         job_name = form_dict.get('job_name', "")
+        logger.info(f"email_address = {email_address}, job_name = {job_name}, form_dict = {form_dict}")
         job_arguemnts = {
             E_VALUE_CUTOFF: form_dict.get('maxEValue', ""),
             IDENTITY_CUTOFF: form_dict.get('minIdentity', ""),
@@ -374,6 +375,7 @@ class Job_Manager_API:
             FILTER_OUT_PLASMIDS: form_dict.get('isApplyFilter', ""),
             ADD_ORPHAN_GENES_TO_OGS: form_dict.get('isAddOrphan', ""),
         }
+        logger.info(f"job_arguemnts = {job_arguemnts}")
         return email_address, job_name, job_arguemnts
     
     def get_historgram_data(self, process_id: str):
