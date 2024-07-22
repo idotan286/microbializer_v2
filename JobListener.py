@@ -36,7 +36,6 @@ class PbsListener:
         :return: None
         """
         #get running jobs data
-        logger.info(f'in run')
         current_job_state = self.get_server_job_stats()
         logger.info(f'current_job_state = {current_job_state}')
         # check state diff, act accordingly
@@ -98,18 +97,11 @@ class PbsListener:
         gets the users current job statistics (running and queued) and parses them
         :return: a data frame of all current jobs
         """
-        logger.info(f'ACCOUNT_NAME = {ACCOUNT_NAME}')
         results_df = pd.DataFrame(get_jobs(account=ACCOUNT_NAME, logger=logger))
-        logger.info(f'1 results_df = {results_df}')
-        logger.info(f'1 results_df = {results_df.columns}')
         results_df = results_df[[JOB_NUMBER_COL, JOB_NAME_COL, 'state']]
-        logger.info(f'2 results_df = {results_df}')
         results_df = results_df[results_df[JOB_NAME_COL].str.startswith(self.job_prefixes)]
-        logger.info(f'3 results_df = {results_df}')
         results_df[['state', 'reason']] = results_df['state'].apply(pd.Series)
-        logger.info(f'4 results_df = {results_df}')
         results_df['current_state'] = results_df['state'].apply(lambda x: ','.join(map(str, x)))
-        logger.info(f'5 results_df = {results_df}')
         return results_df
 
     def get_changed_job_state(self, current_job_state):
