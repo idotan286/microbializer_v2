@@ -100,6 +100,7 @@ class PbsListener:
         logger.info(f'ACCOUNT_NAME = {ACCOUNT_NAME}')
         results_df = pd.DataFrame(get_jobs(account=ACCOUNT_NAME, logger=logger))
         logger.info(f'1 results_df = {results_df}')
+        logger.info(f'1 results_df = {results_df.columns}')
         results_df = results_df[[JOB_NUMBER_COL, JOB_NAME_COL, 'state']]
         logger.info(f'2 results_df = {results_df}')
         results_df = results_df[results_df[JOB_NAME_COL].str.startswith(self.job_prefixes)]
