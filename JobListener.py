@@ -2,6 +2,7 @@ import re
 import subprocess
 import os
 import pandas as pd
+from get_jobs import get_jobs
 
 from SharedConsts import QstatDataColumns, SRVER_USERNAME, JOB_CHANGE_COLS, JOB_ELAPSED_TIME, \
     JOB_RUNNING_TIME_LIMIT_IN_HOURS, JOB_NUMBER_COL, LONG_RUNNING_JOBS_NAME, QUEUE_JOBS_NAME, NEW_RUNNING_JOBS_NAME, \
@@ -36,7 +37,10 @@ class PbsListener:
         #get running jobs data
         current_job_state = self.get_server_job_stats()
         # check state diff, act accordingly
-        self.handle_job_state(current_job_state)
+        try:
+            self.handle_job_state(current_job_state)
+        except Exception as e:
+            logger.exception(f'Error with handle_job_state, with error {e}')
         # update job status
         self.previous_state = current_job_state[JOB_CHANGE_COLS]
         self.previous_state.to_csv(PATH2SAVE_PREVIOUS_DF, index=False)
@@ -55,7 +59,7 @@ class PbsListener:
         # if len(new_job_state.index) == 0:
         #    return
         # check for long running jobs:
-        self.handle_long_running_jobs(new_job_state)
+        # self.handle_long_running_jobs(new_job_state)
 
         # find jobs who have changed status and act accordingly
         changed_jobs = self.get_changed_job_state(new_job_state)
@@ -63,53 +67,37 @@ class PbsListener:
         if len(changed_jobs.index) == 0:
             return
         for job_prefix in self.job_prefixes:
-            relevant_df = changed_jobs[changed_jobs['job_name'].str.startswith(job_prefix)]
+            relevant_df = changed_jobs[changed_jobs[JOB_NAME_COL].str.startswith(job_prefix)]
             for index, job_row in relevant_df.iterrows():
                 job_number = job_row[JOB_NUMBER_COL]
                 job_status = job_row[JOB_STATUS_COL]
                 try:
-                    # case of running jobs
-                    if job_status == 'R':
-                        # case where job finished
-                        if job_row['origin'] == 'P':
-                            # check to see that the fact the it exited Running doesn't mean it moved to another state
-                            if len(relevant_df[relevant_df[JOB_NUMBER_COL] == job_row[JOB_NUMBER_COL]][
-                                       JOB_STATUS_COL].unique()) != 1:
-                                continue
-                            logger.debug(f'job_row = {job_row} finished')
-                            self.job_prefix_to_function_mapping[job_prefix][FINISHED_JOBS_NAME](job_number)
-                        # case of newly running job
-                        elif job_row['origin'] == 'N':
-                            logger.debug(f'job_row = {job_row} running')
-                            self.job_prefix_to_function_mapping[job_prefix][NEW_RUNNING_JOBS_NAME](job_number)
-                        else:
-                            self.job_prefix_to_function_mapping[job_prefix][WEIRD_BEHAVIOR_JOB_TO_CHECK](job_number)
-                    elif job_status == 'Q' and job_row['origin'] == 'N':
-                        logger.info(f'job_row = {job_row} queue')
-                        self.job_prefix_to_function_mapping[job_prefix][QUEUE_JOBS_NAME](job_number)
-                    elif job_status == 'E':
+                    if job_status == 'RUNNING':
+                        logger.debug(f'job_row = {job_row} running')
+                        self.job_prefix_to_function_mapping[job_prefix][NEW_RUNNING_JOBS_NAME](job_number)
+                    elif job_status == 'COMPLETED':
+                        logger.debug(f'job_row = {job_row} finished')
+                        self.job_prefix_to_function_mapping[job_prefix][FINISHED_JOBS_NAME](job_number)
+                    elif job_status == 'FAILED':
                         logger.warning(f'job_row = {job_row} error')
                         self.job_prefix_to_function_mapping[job_prefix][ERROR_JOBS_NAME](job_number)
                     else:
                         logger.warning(f'job_row = {job_row} weird behavior')
+                        logger.warning(f'job_status = {job_status}')
                         self.job_prefix_to_function_mapping[job_prefix][WEIRD_BEHAVIOR_JOB_TO_CHECK](job_number)
                 except Exception as e:
-                    logger.error(f'There was an error with job {job_number}, with error {e}')
+                    logger.exception(f'There was an error with job {job_number}, with error {e}')
 
     def get_server_job_stats(self):
         """
         gets the users current job statistics (running and queued) and parses them
         :return: a data frame of all current jobs
         """
-        result = subprocess.Popen(['/opt/pbs/bin/qstat', f'-u {SRVER_USERNAME}'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        output, err = result.communicate()
-        result_lines = (str(output).split('\\n'))[5:-1]  # irrelevant text from qstat
-        tmp_results_params = [re.sub('\s+', ' ', x).split(' ') for x in result_lines]  # remove spaces and turn to data
-        results_params = [i[:11] for i in tmp_results_params]
-        results_df = pd.DataFrame(results_params, columns=QstatDataColumns)
-        results_df['cpus'] = results_df['cpus'].astype(int)
-        results_df = results_df[results_df['job_name'].str.startswith(self.job_prefixes)]
-
+        results_df = pd.DataFrame(get_jobs(account=ACCOUNT_NAME, logger=logger))
+        results_df = results_df[[JOB_NUMBER_COL, JOB_NAME_COL, 'state']]
+        results_df = results_df[results_df[JOB_NAME_COL].str.startswith(self.job_prefixes)]
+        results_df[['state', 'reason']] = results_df['state'].apply(pd.Series)
+        results_df['current_state'] = results_df['state'].apply(lambda x: ','.join(map(str, x)))
         return results_df
 
     def get_changed_job_state(self, current_job_state):
@@ -130,7 +118,8 @@ class PbsListener:
         current_job_state = current_job_state[JOB_CHANGE_COLS]
         current_job_state['origin'] = 'N'
         temp_df = temp_df.append(current_job_state)
-        return temp_df.drop_duplicates(JOB_CHANGE_COLS, keep=False)
+        after_drop_duplicates = temp_df.drop_duplicates(JOB_CHANGE_COLS, keep=False)
+        return after_drop_duplicates
 
     def handle_long_running_jobs(self, current_job_state):
         """
