@@ -372,8 +372,8 @@ class Job_Manager_API:
             OUTGROUP: form_dict.get('outgroup', ""),
             BOOTSTRAP: form_dict.get('isBootstrap', ""),
             COVERAGE_CUTOFF: form_dict.get('coverageCutoff', ""),
-            FILTER_OUT_PLASMIDS: form_dict.get('isApplyFilter', ""),
-            ADD_ORPHAN_GENES_TO_OGS: form_dict.get('isAddOrphan', ""),
+            FILTER_OUT_PLASMIDS: form_dict.get('isFilter', ""),
+            ADD_ORPHAN_GENES_TO_OGS: form_dict.get('isAddOrphanGenes', ""),
         }
         logger.info(f"job_arguemnts = {job_arguemnts}")
         return email_address, job_name, job_arguemnts
