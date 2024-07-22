@@ -242,7 +242,7 @@ class Job_Manager_Thread_Safe:
         process_id: str
             the process_id of this pbs_id, if not found, returns None
         """
-        clean_pbs_id = pbs_id.split('.')[0]
+        clean_pbs_id = pbs_id
         process_id2return = None
         self.__mutex_processes_state_dict.acquire()
         for process_id in self.__processes_state_dict:
