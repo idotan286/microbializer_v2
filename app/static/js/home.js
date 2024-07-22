@@ -189,10 +189,14 @@ function showSummaryPage() {
 
   document.getElementById("user_file0").innerText = document.getElementById("file_name" + "0").innerText;
   document.getElementById("user_e_value").innerText = document.getElementById("maxEValue").value;
+  document.getElementById("user_coverage_cutoff").innerText = document.getElementById("coverageCutoff").value;
   document.getElementById("user_identity").innerText = document.getElementById("minIdentity").value;
   document.getElementById("user_core_gene").innerText = document.getElementById("orthologsPercent").value;
   document.getElementById("user_outgroup").innerText = document.getElementById("outgroup").value;
   document.getElementById("user_is_bootstrap").innerText = document.getElementById("isApplyBootstrap").checked;
+  document.getElementById("user_is_filter").innerText = document.getElementById("isApplyFilter").checked;
+  document.getElementById("user_is_orpan").innerText = document.getElementById("isAddOrphan").checked;
+
   
   const submit_button = document.getElementById("submit_button");
   submit_button.classList.remove("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
