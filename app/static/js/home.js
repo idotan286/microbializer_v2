@@ -196,6 +196,11 @@ function showSummaryPage() {
   document.getElementById("user_is_bootstrap").innerText = document.getElementById("isApplyBootstrap").checked;
   document.getElementById("user_is_filter").innerText = document.getElementById("isApplyFilter").checked;
   document.getElementById("user_is_orpan").innerText = document.getElementById("isAddOrphan").checked;
+  if (document.getElementById("genomeFastaType").checked){
+        document.getElementById("user_is_orpan").innerText = "Genomes"
+  } else {
+        document.getElementById("user_is_orpan").innerText = "ORFs"
+  }
 
   
   const submit_button = document.getElementById("submit_button");
