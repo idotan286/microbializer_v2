@@ -197,9 +197,9 @@ function showSummaryPage() {
   document.getElementById("user_is_filter").innerText = document.getElementById("isApplyFilter").checked;
   document.getElementById("user_is_orpan").innerText = document.getElementById("isAddOrphan").checked;
   if (document.getElementById("genomeFastaType").checked){
-        document.getElementById("user_is_orpan").innerText = "Genomes"
+        document.getElementById("user_fasta_type").innerText = "Genomes"
   } else {
-        document.getElementById("user_is_orpan").innerText = "ORFs"
+        document.getElementById("user_fasta_type").innerText = "ORFs"
   }
 
   
