@@ -83,33 +83,69 @@
             </div>
             <div id="paramaters_div" class="hidden flex flex-col justify-center">
                 <div   class="flex flex-row justify-between items-center">
-                  <p class="text-2xl mx-8 select-none">Maximal permitted e-value: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+                  <p class="text-2xl mx-8 select-none">Maximal e-value for orthologs detection: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
                   <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="maxEValue" name="maxEValue" placeholder="0.01" value="0.01" maxlength="10" max="1" min="0" step="0.01" required>
   
                   <label for="maxEValue" id="continue_after_parameters" class="w-16  flex flex-col items-center rounded-md py-3 bg-white shadow-lg tracking-wide uppercase border border-blue-700  bg-white  text-black hover:bg-green-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
                     <span class="text-base font-bold text-2xl leading-normal select-none ">➔</span>
                   </label>
               </div>
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="text-2xl mx-8 select-none">Inputs fasta files type?&nbsp</p>
+                  <div>
+                        <input class="hidden peer" id="genomeFastaType" type="radio" name="inputFastaType" value="genomes" checked/>
+                        <label for="genomeFastaType" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
+                            <span class="select-none">No</span>
+                        </label>
+                  </div>
+                  <div>
+                        <input class="hidden peer" id="orfsFastaType" type="radio" name="inputFastaType" value="orfs"/>
+                        <label for="orfsFastaType" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
+                            <span class="select-none">Yes</span>
+                        </label>
+                  </div>
+              </div>
+                
+              <div class="flex flex-row justify-between items-center ">
+                    <p class="text-2xl mx-8 select-none">Filter out contigs / orfs of plasmids?&nbsp</p>
+                    <div>
+                        <input class="hidden peer" id="isNotApplyFilter" type="radio" name="isFilter" value="False" checked/>
+                        <label for="isNotApplyFilter" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
+                            <span class="select-none">No</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input class="hidden peer" id="isApplyFilter" type="radio" name="isFilter" value="True"/>
+                        <label for="isApplyFilter" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
+                            <span class="select-none">Yes</span>
+                        </label>
+                    </div>
+                </div>
+                
               <div   class="flex flex-row justify-between items-center">
-                  <p class="text-2xl mx-8 select-none">Minimal percent of identity:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+                  <p class="text-2xl mx-8 select-none">Minimum sequence identity for orthologs detection:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
                   <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="minIdentity" name="minIdentity" maxlength="10" placeholder="80.0" value="80.0" max="100" min="0" step="1" required>
                     <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
               </div>
-              <div   class="flex flex-row justify-between items-center">
-                  <p class="text-2xl mx-8 select-none">Minimal percent of orthologs to be considered as a core gene: &nbsp</p>
-                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="orthologsPercent" name="orthologsPercent" maxlength="10" placeholder="100.0" value="100.0" max="200" min="0" step="1" required>
-                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
-              </div>
+                
               <div   class="flex flex-row justify-between items-center">
                   <p class="text-2xl mx-8 select-none">Minimum sequence coverage for orthologs detection: &nbsp</p>
                   <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="coverageCutoff" name="coverageCutoff" maxlength="10" placeholder="70" value="70.0" max="100" min="0" step="1" required>
                     <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
               </div>
+                
+              <div   class="flex flex-row justify-between items-center">
+                  <p class="text-2xl mx-8 select-none">Minimum percent of strains required to consider a gene as part of the core genome: &nbsp</p>
+                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="orthologsPercent" name="orthologsPercent" maxlength="10" placeholder="100.0" value="100.0" max="100" min="0" step="1" required>
+                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
+              </div>
+
               <div   class="flex flex-row justify-between items-center">
                   <p class="text-2xl mx-8 select-none">Root the species tree according to this outgroup: &nbsp</p>
                   <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="text" id="outgroup" name="outgroup" maxlength="70" placeholder="No outgroup" value="No outgroup" required>
                     <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
               </div>
+                
               <div class="flex flex-row justify-between items-center ">
                     <p class="text-2xl mx-8 select-none">Apply bootstrap over the species tree?&nbsp</p>
                     <div>
@@ -125,22 +161,8 @@
                         </label>
                     </div>
                 </div>
-                <div class="flex flex-row justify-between items-center ">
-                    <p class="text-2xl mx-8 select-none">Filter out contigs / orfs of plasmids?&nbsp</p>
-                    <div>
-                        <input class="hidden peer" id="isNotApplyFilter" type="radio" name="isFilter" value="False" checked/>
-                        <label for="isNotApplyFilter" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">No</span>
-                        </label>
-                    </div>
-                    <div>
-                        <input class="hidden peer" id="isApplyFilter" type="radio" name="isFilter" value="True"/>
-                        <label for="isApplyFilter" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">Yes</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="flex flex-row justify-between items-center ">
+                                
+              <div class="flex flex-row justify-between items-center ">
                     <p class="text-2xl mx-8 select-none">Add orphan genes to orthologs table?&nbsp</p>
                     <div>
                         <input class="hidden peer" id="isNotAddOrphan" type="radio" name="isAddOrphanGenes" value="False" checked/>
@@ -157,8 +179,8 @@
                 </div>
             </div>
             <div id="summary_div" class="hidden flex flex-col justify-center items-center">
-            <p class="text-2xl mx-16 select-none">Please verify the following input values.</p>
-            <p class="text-2xl mx-8 select-none">If the data inserted is wrong, please press the reset button</p>
+            <p class="text-1xl mx-32 select-none">Please verify the following input values.</p>
+            <p class="text-1xl mx-8 select-none">If the data inserted is wrong, please press the reset button</p>
             <div class="flex flex-row justify-between items-center ">
                 <p class="w-48 text-2xl mx-2 select-none">Job name:</p>
                 <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
@@ -185,33 +207,9 @@
                 </label>
             </div>
             <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-2xl mx-2 select-none">Minimum sequence coverage for orthologs detection:</p>
+                <p class="w-48 text-2xl mx-2 select-none">Inputs fasta files type:</p>
                 <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_coverage_cutoff" class="select-none text-white"></span>
-                </label>
-            </div>
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-2xl mx-2 select-none">Minimal percent of identity:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_identity" class="select-none text-white"></span>
-                </label>
-            </div>
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-2xl mx-2 select-none">Minimal percent of orthologs to be considered as a core gene:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_core_gene" class="select-none text-white"></span>
-                </label>
-            </div>
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-2xl mx-2 select-none">Root the species tree according to this outgroup:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_outgroup" class="select-none text-white"></span>
-                </label>
-            </div>
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-2xl mx-2 select-none">Apply bootstrap over the species tree:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_is_bootstrap" class="select-none text-white"></span>
+                  <span id="user_fasta_type" class="select-none text-white"></span>
                 </label>
             </div>
             <div class="flex flex-row justify-between items-center ">
@@ -220,6 +218,42 @@
                   <span id="user_is_filter" class="select-none text-white"></span>
                 </label>
             </div>
+
+            <div class="flex flex-row justify-between items-center ">
+                <p class="w-48 text-2xl mx-2 select-none">Minimal percent of identity:</p>
+                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                  <span id="user_identity" class="select-none text-white"></span>
+                </label>
+            </div>
+            
+            <div class="flex flex-row justify-between items-center ">
+                <p class="w-48 text-2xl mx-2 select-none">Minimum sequence coverage for orthologs detection:</p>
+                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                  <span id="user_coverage_cutoff" class="select-none text-white"></span>
+                </label>
+            </div>
+            
+            <div class="flex flex-row justify-between items-center ">
+                <p class="w-48 text-2xl mx-2 select-none">Minimal percent of orthologs to be considered as a core gene:</p>
+                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                  <span id="user_core_gene" class="select-none text-white"></span>
+                </label>
+            </div>
+                
+            <div class="flex flex-row justify-between items-center ">
+                <p class="w-48 text-2xl mx-2 select-none">Apply bootstrap over the species tree:</p>
+                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                  <span id="user_is_bootstrap" class="select-none text-white"></span>
+                </label>
+            </div>
+                
+            <div class="flex flex-row justify-between items-center ">
+                <p class="w-48 text-2xl mx-2 select-none">Root the species tree according to this outgroup:</p>
+                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                  <span id="user_outgroup" class="select-none text-white"></span>
+                </label>
+            </div>
+            
             <div class="flex flex-row justify-between items-center ">
                 <p class="w-48 text-2xl mx-2 select-none">Add orphan genes to orthologs table: </p>
                 <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
