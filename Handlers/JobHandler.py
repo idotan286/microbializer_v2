@@ -8,7 +8,7 @@ from SharedConsts import PATH_TO_OUTPUT_PROCESSOR_SCRIPT, RESULTS_SUMMARY_FILE_N
     INPUT_CLASSIFIED_FILE_NAME_PAIRED, INPUT_UNCLASSIFIED_FILE_NAME_PAIRED, USER_FILE_NAME_ZIP, USER_FILE_NAME_TAR
 from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_QUEUE_NAME, NUBMER_OF_CPUS_MICROBIALIZER_PROCESSOR_JOB, \
     MICROBIALIZER_PROCESSOR_JOB_PREFIX, MICROBIALIZER_PROCESSOR_RESULTS_FILE_NAME, MICROBIALIZER_JOB_TEMPLATE, \
-    ARGS_JSON_PATH_KEY, JOB_PARAMETERS_FILE_NAME
+    ARGS_JSON_PATH_KEY, JOB_PARAMETERS_FILE_NAME, CONTIGS_DIR
 import glob
 from slurm_example import submit_job
 import datetime
@@ -39,6 +39,7 @@ class Handler:
         temp_script_path = input_path_parent / f'temp_micro_search_running_file_{job_unique_id}.sh'
         results_file_path = input_path_parent / MICROBIALIZER_PROCESSOR_RESULTS_FILE_NAME
         job_name = f'{MICROBIALIZER_PROCESSOR_JOB_PREFIX}_{job_unique_id}'
+        job_arguemnts[CONTIGS_DIR] = input_path_parent
         json_parameters_file_path = os.path.join(input_path_parent, JOB_PARAMETERS_FILE_NAME)
         with open(json_parameters_file_path, 'w') as fp:
             json.dump(job_arguemnts, fp)
