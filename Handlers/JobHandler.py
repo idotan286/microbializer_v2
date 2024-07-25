@@ -39,7 +39,7 @@ class Handler:
         temp_script_path = input_path_parent / f'temp_micro_search_running_file_{job_unique_id}.sh'
         results_file_path = input_path_parent / MICROBIALIZER_PROCESSOR_RESULTS_FILE_NAME
         job_name = f'{MICROBIALIZER_PROCESSOR_JOB_PREFIX}_{job_unique_id}'
-        job_arguemnts[CONTIGS_DIR] = input_path_parent
+        job_arguemnts[CONTIGS_DIR] = str(input_path_parent)
         json_parameters_file_path = os.path.join(input_path_parent, JOB_PARAMETERS_FILE_NAME)
         with open(json_parameters_file_path, 'w') as fp:
             json.dump(job_arguemnts, fp)
