@@ -278,8 +278,8 @@ let createChart = (data) => {
       .attr("font-family", "sans-serif")
       .attr("font-size", 16);
 
-  svg.append("g")
-      .call(legend);
+  //svg.append("g")
+  //    .call(legend);
 
   svg.append("style").text(`
 
