@@ -9,7 +9,7 @@ from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
 from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, \
     E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, \
-    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE
+    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED_FORMAT
 from SharedConsts import K_MER_COUNTER_MATRIX_FILE_NAME, \
     FINAL_OUTPUT_FILE_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME, EMAIL_CONSTS, UI_CONSTS, CUSTOM_DB_NAME, State, POSTPROCESS_JOB_PREFIX, GENOME_DOWNLOAD_SUMMARY_RESULTS_FILE_NAME, FINAL_OUTPUT_FILE_CONTAMINATED_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES_NEW_CONTAMINATED
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
@@ -463,6 +463,29 @@ class Job_Manager_API:
         
         return None
 
+    def get_all_outputs_path(self, process_id: str):
+        """get path to all outputs
+
+        Parameters
+        ----------
+        process_id: str
+            The ID of the process
+        
+        Returns
+        -------
+        tree: path
+            path to zip file
+        """
+        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        if not os.path.isdir(parent_folder):
+            return None
+        
+        data_path = os.path.join(parent_folder, ALL_OUTPUTS_ZIPPED_FORMAT)
+        if os.path.isfile(data_path):
+            return data_path
+        
+        return None
+    
     def clean_internal_state(self):
         """clean job state dictionary
 
