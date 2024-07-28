@@ -456,7 +456,7 @@ class Job_Manager_API:
             return None
         
         data = {}
-        data_path = os.path.join(parent_folder, SPECIES_TREE)
+        data_path = os.path.join(parent_folder, SPECIES_TREE_NEWICK)
         if os.path.isfile(data_path):
             with open(data_path, 'r') as f:
                 data =  f.read().replace('\n', '')
