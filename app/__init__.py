@@ -235,21 +235,15 @@ def results(process_id):
     #    logger.error(f'process_id = {process_id}, df = {df}')
     #    return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.RESULTS_DF_IS_NONE.name))
     #import random
-    logger.info(f'call get_historgram_data')
     histogram_data = manager.get_historgram_data(process_id)
-    logger.info(histogram_data)
     if histogram_data == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.HISTOGRAM_DATA_IS_NULL.name))
 
-    logger.info(f'call get_orthologous_data')
     orthologous_data = manager.get_orthologous_data(process_id)
-    logger.info(orthologous_data)
     if orthologous_data == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
 
-    logger.info(f'call get_newick_tree')
     newick_tree_str = manager.get_newick_tree(process_id)
-    logger.info(newick_tree_str)
     if newick_tree_str == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
 
