@@ -82,10 +82,7 @@
                 </div>
             </div>
             <div id="paramaters_div" class="hidden flex flex-col justify-center">
-                <div   class="flex flex-row justify-between items-center">
-                  <p class="text-l mx-8 select-none">Maximal e-value for orthologs detection: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
-                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="maxEValue" name="maxEValue" placeholder="0.01" value="0.01" maxlength="10" max="1" min="0" step="0.01" required>
-  
+                <div   class="flex flex-row justify-between items-center">  
                   <label for="maxEValue" id="continue_after_parameters" class="w-16  flex flex-col items-center rounded-md py-3 bg-white shadow-lg tracking-wide uppercase border border-blue-700  bg-white  text-black hover:bg-green-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
                     <span class="text-base font-bold text-2xl leading-normal select-none ">➔</span>
                   </label>
@@ -131,6 +128,12 @@
               <div   class="flex flex-row justify-between items-center">
                   <p class="text-l mx-8 select-none">Minimum sequence coverage for orthologs detection: &nbsp</p>
                   <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="coverageCutoff" name="coverageCutoff" maxlength="10" placeholder="70" value="70.0" max="100" min="0" step="1" required>
+                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
+              </div>
+
+              <div   class="flex flex-row justify-between items-center">
+                  <p class="text-l mx-8 select-none">Maximal e-value for orthologs detection: &nbsp</p>
+                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="maxEValue" name="maxEValue" placeholder="0.01" value="0.01" maxlength="10" max="1" min="0" step="0.01" required>
                     <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
               </div>
                 
@@ -194,24 +197,21 @@
                   <span id="user_email_adress" class="select-none text-white"></span>
                 </label>
             </div>
+            
             <div class="flex flex-row justify-between items-center ">
                 <p class="w-48 text-l mx-2 select-none">File name:</p>
                 <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
                   <span id="user_file0" class="select-none text-white"></span>
                 </label>
             </div>
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Maximal permitted e-value:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_e_value" class="select-none text-white"></span>
-                </label>
-            </div>
+            
             <div class="flex flex-row justify-between items-center ">
                 <p class="w-48 text-l mx-2 select-none">Inputs fasta files type:</p>
                 <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
                   <span id="user_fasta_type" class="select-none text-white"></span>
                 </label>
             </div>
+            
             <div class="flex flex-row justify-between items-center ">
                 <p class="w-48 text-l mx-2 select-none">Filter out contigs / orfs of plasmids: </p>
                 <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
@@ -232,7 +232,14 @@
                   <span id="user_coverage_cutoff" class="select-none text-white"></span>
                 </label>
             </div>
-            
+
+            <div class="flex flex-row justify-between items-center ">
+                <p class="w-48 text-l mx-2 select-none">Maximal permitted e-value:</p>
+                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                  <span id="user_e_value" class="select-none text-white"></span>
+                </label>
+            </div>
+                
             <div class="flex flex-row justify-between items-center ">
                 <p class="w-48 text-l mx-2 select-none">Minimal percent of orthologs to be considered as a core gene:</p>
                 <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
