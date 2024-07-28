@@ -459,10 +459,8 @@ class Job_Manager_API:
         data_path = os.path.join(parent_folder, SPECIES_TREE_NEWICK)
         if os.path.isfile(data_path):
             with open(data_path, 'r') as f:
-                data =  f.read().replace('\n', '')
+                return f.read().replace('\n', '')
         
-        if len(data):
-            return data
         return None
 
     def clean_internal_state(self):
