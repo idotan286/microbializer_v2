@@ -346,3 +346,16 @@ let createChart = (data) => {
 
   return Object.assign(svg.node(), {update});
 };
+
+document.getElementById("download_page").addEventListener("click", () => {
+    let request = new XMLHttpRequest();
+    request.open('POST', '');
+    var data = JSON.stringify({"action": "redirect_page"});
+    request.send(data);
+})
+document.getElementById("download_all").addEventListener("click", () => {
+    let request = new XMLHttpRequest();
+    request.open('POST', '');
+    var data = JSON.stringify({"action": "download_all"});
+    request.send(data);
+})
