@@ -33,11 +33,10 @@ bar_chart = new Chart('bar_chart', {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
+          display: false
       },
       title: {
-        display: true,
-        text: 'Chart.js Bar Chart'
+          display: false
       }
     }
   }
