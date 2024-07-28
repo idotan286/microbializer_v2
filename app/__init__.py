@@ -146,24 +146,10 @@ def download_page(process_id):
     results: file
         When using the POST request type
     """
-    filtered_file, contaminated_file = manager.export_file(process_id)
-    if filtered_file == None and contaminated_file == None:
+    list_of_files_to_export = manager.export_files(process_id)
+    if list_of_files_to_export == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
-    if request.method == 'POST':
-        if request.form.get("download_filtered") != None:
-            if filtered_file == None:
-                logger.warning(f'failed to export file exporting, process_id = {process_id}, filtered_file = {filtered_file}')
-                return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.EXPORT_FILE_UNAVAILABLE.name))
-            logger.info(f'exporting, process_id = {process_id}, filtered_file = {filtered_file}')
-            return send_file(filtered_file, mimetype='application/octet-stream')
-        elif request.form.get("download_contaminated") != None:
-            if contaminated_file == None:
-                logger.warning(f'failed to export file exporting, process_id = {process_id}, contaminated_file = {contaminated_file}')
-                return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.EXPORT_FILE_CONTAMINATED_UNAVAILABLE.name))
-            logger.info(f'exporting, process_id = {process_id}, contaminated_file = {contaminated_file}')
-            return send_file(contaminated_file, mimetype='application/octet-stream')
-        logger.error(f'post request doesn\'t include if the file to download is filtered or contaminated')
-    return render_template_wrapper('export_file.html')
+    return render_template_wrapper('export_file.html', list_of_files_to_export=json.dumps(list_of_files_to_export))
 
 @app.route('/post_process_state/<process_id>')
 def post_process_state(process_id):
@@ -217,16 +203,16 @@ def results(process_id):
         if the analysis is finished (by sending the POST request)
     """
     if request.method == 'POST':
-        logger.info(f'request = {request.data}')
         data = json.loads(request.data.decode())
-        logger.info(f'data = {data}')
         if "action" not in data:
             redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
         if "page" in data["action"]:
+            logger.info(f'redirect to doanload_page')
             return redirect(url_for('download_page', process_id=process_id))
         elif "all" in data["action"]:
             all_outputs_path = manager.get_all_outputs_path(process_id)
             if all_outputs_path:
+                logger.info(f'send all outputs file to user')
                 return send_file(all_outputs_path, mimetype='application/octet-stream')
             else:
                 redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
