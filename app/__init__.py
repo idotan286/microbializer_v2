@@ -132,8 +132,8 @@ def process_state(process_id):
     else:
         return redirect(url_for('results', process_id=process_id))
 
-@app.route('/download_file/<process_id>', methods=['GET', 'POST'])
-def download_file(process_id):
+@app.route('/download_page/<process_id>', methods=['GET', 'POST'])
+def download_page(process_id):
     """Endpoint to download the results file
     Parameters
     ----------
@@ -217,20 +217,14 @@ def results(process_id):
         if the analysis is finished (by sending the POST request)
     """
     if request.method == 'POST':
-        data = request.form
-        try:
-            species_list, k_threshold = data['species_list'].split(','), float(data['k_mer_threshold'])
-        except Exception as e:
-            logger.error(f'{e}')
-            #TODO what about the df??
-            return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.INVALID_EXPORT_PARAMS.name))
-        logger.info(f'exporting, process_id = {process_id}, k_threshold = {k_threshold}, species_list = {species_list}')
-        man_results = manager.add_postprocess(process_id, species_list, k_threshold)
-        if man_results == None:
-            #TODO what about the df??
-            return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.POSTPROCESS_CRASH.name))
-        logger.info(f'process_id = {process_id}, post_process added')
-        return redirect(url_for('post_process_state', process_id=process_id))
+        data = request.action
+        logger.info(f'data = {data}')
+        if "page" in data:
+            return redirect(url_for('download_page', process_id=process_id))
+        elif "all" in data:
+            all_outputs_path = manager.get_all_outputs_path(process_id)
+            return send_file(all_outputs_path, mimetype='application/octet-stream')            
+        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
     # results
     #df, summary_json = manager.get_UI_matrix(process_id)
     #if df is None:
