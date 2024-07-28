@@ -73,7 +73,7 @@
             </div>
             <div  class="flex w-full flex-row items-center my-3 justify-between"  style="height: 560px;">
                 <div class="w-5/12 relative border-2 flex flex-col h-full rounded mx-2 py-2 shadow-lg bg-white min-max-div-size-side" >
-                    <h1 class="text-center text-4xl select-none">Choose histogram to show</h1>
+                    <h1 class="text-center text-4xl select-none">Histograms:</h1>
                     <div class="flex w-full flex-row my-3" id="parameters_option_bar_chart">
                     </div>
                     <canvas style="height: 360px; width: 480px" id="bar_chart" ></canvas>
@@ -89,7 +89,7 @@
                     </a>
                 </div>
                 <div class="w-4/12 relative flex-col h-full border-2 rounded mx-2 px-2 py-2 shadow-lg bg-white min-max-div-size-center">
-                    <h1 class="text-center text-4xl select-none">Phelogenetic Tree</h1>
+                    <h1 class="text-center text-4xl select-none">Phelogenetic Tree:</h1>
                     <div id="body_val" class="flex flex-1 flex-col  mx-3 my-3 px-1 border-2" style="height: 480px;">
                         <div id="phylo_tree_container"></div>
                     </div>
@@ -115,32 +115,38 @@
                 </div>
             </div>
             <div class="flex flex-row ">
-                <label id="download_matrix" class="
-                w-42
-                px-2
-                py-2
-                mx-1
-                text-center
-                bg-white
-                rounded-md
-                shadow-md
-                tracking-wide
-                border-2 border-green-600 bg-green-100 cursor-pointer
-                hover:bg-green-600 hover:text-white
-                ease-linear
-                transition-all
-                duration-150">
-                <span class=" text-base font-bold leading-normal text-sm select-none">Download matrix</span></label>
-                <div class="flex  flex-row rounded p-2 shadow-lg bg-white border-black border-2 select-none">
-                    <div class="flex flex-row mx-2">
-                        <label class="bg-amber-500 w-6 rounded-full mx-2 border-2 border-black"></label>
-                        <p class="font-bold">Reads that will be filtered</p>
-                    </div>
-                    <div class="flex flex-row mx-2">
-                        <label class="bg-blue-600 w-6 rounded-full mx-2  border-2 border-black"></label>
-                        <p class="font-bold">Reads that will be retained</p>
-                    </div>
-                </div>
+                <label id="download_all" class="
+                    w-42
+                    px-2
+                    py-2
+                    mx-1
+                    text-center
+                    bg-white
+                    rounded-md
+                    shadow-md
+                    tracking-wide
+                    border-2 border-green-600 bg-green-100 cursor-pointer
+                    hover:bg-green-600 hover:text-white
+                    ease-linear
+                    transition-all
+                    duration-150">
+                <span class=" text-base font-bold leading-normal text-sm select-none">Download Everything</span></label>
+                <label id="download_page" class="
+                    w-42
+                    px-2
+                    py-2
+                    mx-1
+                    text-center
+                    bg-white
+                    rounded-md
+                    shadow-md
+                    tracking-wide
+                    border-2 border-green-600 bg-green-100 cursor-pointer
+                    hover:bg-orange-600 hover:text-white
+                    ease-linear
+                    transition-all
+                    duration-150">
+                <span class=" text-base font-bold leading-normal text-sm select-none">Download Page</span></label>
             </div>
         </div>
         {% block difference %}{% endblock %}
