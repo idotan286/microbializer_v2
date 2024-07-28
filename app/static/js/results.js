@@ -112,11 +112,11 @@ const runResultsScript = (histogram_data, orthologous_data, tree_str) => {
         var radio_btn = makeRadioButton("bar_plot_options", " " + key, index === 0, histogram_data[key], index)
         radio_bar_plot_parameters.appendChild(radio_btn)
     });
-    console.log(orthologous_data)
+    //console.log(orthologous_data)
     
     // middle panel (phylo tree )
     const tree_data = parseNewick(tree_str);
-    console.log(tree_data)
+    //console.log(tree_data)
     // only if tree data is have items
     if (tree_data.length > 0) {
         const treeChart = createChart(tree_data)
@@ -271,7 +271,7 @@ let createChart = (data) => {
 
   cluster(root);
   setRadius(root, root.data.length = 0, innerRadius / maxLength(root));
-  setColor(root);
+  //setColor(root);
 
   const svg = d3.create("svg")
       .attr("viewBox", [-outerRadius, -outerRadius, width, width])
