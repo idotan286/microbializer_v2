@@ -261,7 +261,7 @@ class Job_Manager_API:
         logger.warning(f'process_id = {process_id}, can\'t add process: is_valid_email = {is_valid_email}')
         return False
         
-    def export_file(self, process_id: str):
+    def export_files(self, process_id: str):
         """After the post process has finished (and the user already filtred his reads), this will return the path to the result file
 
         Parameters
@@ -271,40 +271,12 @@ class Job_Manager_API:
         
         Returns
         -------
-        filtered_file: str
-            Path to the filtered result file, or None if file doesn't exists
-        contaminated_file: str
-            Path to the contaminated result file, or None if file doesn't exists
+        list_of_files_to_export: list
+            list of (title, path) for files to download
         """
         parent_folder = os.path.join(self.__upload_root_path, process_id)
-        filtered_file = None
-        contaminated_file = None
-        if os.path.isdir(parent_folder):
-            # try the result of one file
-            filtered_file_single = os.path.join(parent_folder, FINAL_OUTPUT_FILE_NAME)
-            if os.path.isfile(filtered_file_single):
-                filtered_file = filtered_file_single
-            # try the result of paired files
-            else:
-                filtered_file_zipped = os.path.join(parent_folder, FINAL_OUTPUT_ZIPPED_BOTH_FILES)
-                if os.path.isfile(filtered_file_zipped):
-                    filtered_file = filtered_file_zipped
-            
-            # try the contmianted of one file
-            contaminated_file_single = os.path.join(parent_folder, FINAL_OUTPUT_FILE_CONTAMINATED_NAME)
-            if os.path.isfile(contaminated_file_single):
-                contaminated_file = contaminated_file_single
-            # try the result of paired files
-            else:
-                contaminated_file_zipped = os.path.join(parent_folder, FINAL_OUTPUT_ZIPPED_BOTH_FILES_NEW_CONTAMINATED)
-                if os.path.isfile(contaminated_file_zipped):
-                    contaminated_file = contaminated_file_zipped
-            
-        if filtered_file == None:
-            logger.warning(f'process_id = {process_id} doen\'t have a filtered result file')
-        if contaminated_file == None:
-            logger.warning(f'process_id = {process_id} doen\'t have a contaminated result file')
-        return filtered_file, contaminated_file
+        list_of_files_to_export = []
+        return list_of_files_to_export
     
     def get_process_state(self, process_id):
         """Given process_id returns the kraken process state
