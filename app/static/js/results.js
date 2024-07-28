@@ -110,7 +110,7 @@ const runResultsScript = (histogram_data, orthologous_data, tree_str) => {
     // create leftmost panel (histogram)
     const radio_bar_plot_parameters = document.getElementById("parameters_option_bar_chart")
     Object.keys(histogram_data).forEach((key, index) => {
-        var radio_btn = makeRadioButton("bar_plot_options", key, index === 0, histogram_data[key], index)
+        var radio_btn = makeRadioButton("bar_plot_options", " " + key, index === 0, histogram_data[key], index)
         radio_bar_plot_parameters.appendChild(radio_btn)
     });
     console.log(orthologous_data)
