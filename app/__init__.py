@@ -218,11 +218,13 @@ def results(process_id):
     """
     if request.method == 'POST':
         logger.info(f'request = {request.data}')
-        data = request.data
+        data = jsonify(request.data)
         logger.info(f'data = {data}')
-        if "page" in data:
+        if "action" not in data:
+            redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
+        if "page" in data["action"]:
             return redirect(url_for('download_page', process_id=process_id))
-        elif "all" in data:
+        elif "all" in data["action"]:
             all_outputs_path = manager.get_all_outputs_path(process_id)
             if all_outputs_path:
                 return send_file(all_outputs_path, mimetype='application/octet-stream')
