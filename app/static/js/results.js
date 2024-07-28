@@ -118,11 +118,12 @@ const runResultsScript = (histogram_data, orthologous_data, tree_str) => {
     // middle panel (phylo tree )
     const tree_data = parseNewick(tree_str);
     console.log(tree_data)
-    const treeChart = createChart(tree_data)
-    let container = document.getElementById("phylo_tree_container")
-    container.append(treeChart);
-
-
+    // only if tree data is have items
+    if (tree_data.length > 0) {
+        const treeChart = createChart(tree_data)
+        let container = document.getElementById("phylo_tree_container")
+        container.append(treeChart);
+    }
 
     // create rightmost panel (OG table)
     var table = document.getElementById('ortologic_table');
