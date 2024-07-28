@@ -37,7 +37,7 @@ class PbsListener:
         """
         #get running jobs data
         current_job_state = self.get_server_job_stats()
-        logger.info(f'current_job_state = {current_job_state}')
+        #logger.info(f'current_job_state = {current_job_state}')
         # check state diff, act accordingly
         try:
             self.handle_job_state(current_job_state)
@@ -65,13 +65,13 @@ class PbsListener:
 
         # find jobs who have changed status and act accordingly
         changed_jobs = self.get_changed_job_state(new_job_state)
-        logger.info(f'changed_jobs = {changed_jobs}')
+        #logger.info(f'changed_jobs = {changed_jobs}')
         # make sure there is something to report
         if len(changed_jobs.index) == 0:
             return
         for job_prefix in self.job_prefixes:
             relevant_df = changed_jobs[changed_jobs[JOB_NAME_COL].str.startswith(job_prefix)]
-            logger.info(f'relevant_df = {relevant_df}')
+            #logger.info(f'relevant_df = {relevant_df}')
             for index, job_row in relevant_df.iterrows():
                 job_number = job_row[JOB_NUMBER_COL]
                 job_status = job_row[JOB_STATUS_COL]
