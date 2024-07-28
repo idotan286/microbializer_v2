@@ -217,8 +217,8 @@ def results(process_id):
         if the analysis is finished (by sending the POST request)
     """
     if request.method == 'POST':
-        logger.info(f'request = {request}')
-        data = request.action
+        logger.info(f'request = {request.data}')
+        data = request.data
         logger.info(f'data = {data}')
         if "page" in data:
             return redirect(url_for('download_page', process_id=process_id))
