@@ -223,7 +223,10 @@ def results(process_id):
             return redirect(url_for('download_page', process_id=process_id))
         elif "all" in data:
             all_outputs_path = manager.get_all_outputs_path(process_id)
-            return send_file(all_outputs_path, mimetype='application/octet-stream')            
+            if all_outputs_path:
+                return send_file(all_outputs_path, mimetype='application/octet-stream')
+            else:
+                redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
     # results
     #df, summary_json = manager.get_UI_matrix(process_id)
