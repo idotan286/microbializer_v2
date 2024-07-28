@@ -218,7 +218,7 @@ def results(process_id):
     """
     if request.method == 'POST':
         logger.info(f'request = {request.data}')
-        data = jsonify(request.data)
+        data = json.loads(request.data.decode())
         logger.info(f'data = {data}')
         if "action" not in data:
             redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
