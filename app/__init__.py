@@ -171,7 +171,7 @@ def post_process_state(process_id):
     if job_state == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
     if job_state == State.Crashed:
-        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.JOB_CRASHED.name))
+        return redirect(url_for('error_from_job', process_id=process_id))
     if job_state != State.Finished:
         # here we decide what GIF will be displayed to the user
         kwargs = {
