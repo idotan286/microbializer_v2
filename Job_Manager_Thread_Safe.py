@@ -377,7 +377,7 @@ class Job_Manager_Thread_Safe:
             # monitor the processes states
             self.__monitor.update_monitor_data(process_id, state, job_prefix, {})
         except Exception as e:
-            logger.error(e)
+            logger.exception(e)
 
         func2update(process_id, state, email_address, job_name, job_prefix)
 
@@ -455,7 +455,7 @@ class Job_Manager_Thread_Safe:
                     args[0] = hashlib.sha256(str(args[0]).encode('utf-8')).hexdigest()
                 self.__monitor.update_monitor_data(process_id, State.Init, job_prefix, {'input_parameters': args})
             except Exception as e:
-                logger.error(e)
+                logger.exception(e)
 
         else:
             self.__mutex_processes_waiting_queue.acquire()
