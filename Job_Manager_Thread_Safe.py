@@ -331,8 +331,7 @@ class Job_Manager_Thread_Safe:
             # TODO handle
             logger.error(f'process_id is None')
             return
-        if state != State.Running:
-            logger.info(f'process_id = {process_id}, job_prefix = {job_prefix} state = {state}')
+
         email_address = None
         job_name = None
 
@@ -353,7 +352,10 @@ class Job_Manager_Thread_Safe:
                     state = State.Finished
                 else:
                     state = State.Crashed
-
+                    
+        if state != State.Running:
+            logger.info(f'after update process_id = {process_id}, job_prefix = {job_prefix} state = {state}')
+            
         self.__mutex_processes_state_dict.acquire()
         if process_id in self.__processes_state_dict:
             self.__processes_state_dict[process_id].set_job_state(state, job_prefix)
