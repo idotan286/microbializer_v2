@@ -117,7 +117,7 @@ def process_state(process_id):
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
     
     if job_state == State.Crashed:
-        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.JOB_CRASHED.name))
+        return redirect(url_for('error_from_job', process_id=process_id))
     if job_state != State.Finished:
         # here we decide what GIF will be displayed to the user
         kwargs = {
@@ -151,46 +151,10 @@ def download_page(process_id):
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
     return render_template_wrapper('export_file.html', list_of_files_to_export=json.dumps(list_of_files_to_export))
 
-@app.route('/post_process_state/<process_id>')
-def post_process_state(process_id):
-    """Similar to process_state. Check the function above for more details.
-    This process is after the user inserted the thresholds to process his data.
-    It has the same behavior as the "process_state" endpoint
-    Parameters
-    ----------
-    process_id : str
-        The ID of the process
-    Returns
-    -------
-    process_running.html: HTML page
-        if the process is still running
-    redirection to download_file:
-        if the process is finished
-    """
-    job_state = manager.get_postprocess_job_state(process_id)
-    if job_state == None:
-        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
-    if job_state == State.Crashed:
-        return redirect(url_for('error_from_job', process_id=process_id))
-    if job_state != State.Finished:
-        # here we decide what GIF will be displayed to the user
-        kwargs = {
-            "process_id": process_id,
-            "text": UI_CONSTS.states_text_dict[job_state],
-            "message_to_user": UI_CONSTS.PROCESS_INFO_PP,
-            "gif": UI_CONSTS.states_gifs_dict[job_state],
-            "update_text": UI_CONSTS.TEXT_TO_RELOAD_HTML,
-            "update_interval_sec": UI_CONSTS.FETCH_UPDATE_INTERVAL_HTML_SEC
-        }
-        return render_template_wrapper('process_running.html', **kwargs)
-    else:
-        return redirect(url_for('download_file', process_id=process_id))
-
 @app.route('/results/<process_id>', methods=['GET', 'POST'])
 def results(process_id):
     """Endpoint to analysis the Kraken results. 
     The GET request will return the matrix to display the data to the user.
-    The POST request will start the post_process to filter the reads based on the user thresholds.
     Parameters
     ----------
     process_id : str
@@ -199,8 +163,6 @@ def results(process_id):
     -------
     results.html: HTML page
         the page contains the reads matrix to display to the user
-    redirection to post_process_state:
-        if the analysis is finished (by sending the POST request)
     """
     if request.method == 'POST':
         data = json.loads(request.data.decode())
