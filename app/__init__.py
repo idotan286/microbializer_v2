@@ -265,6 +265,23 @@ def error(error_type):
     except:
         return render_template_wrapper('error_page.html', error_text=f'Unknown error, \"{error_type}\" is not a valid error code', contact_info=contact_info)
 
+@app.route('/error_from_job/<process_id>')
+def error_from_job(process_id):
+    """Endpoint to display errors.
+    Parameters
+    ----------
+    process_id : str
+        The ID of the process
+    Returns
+    -------
+    error_page.html': HTML page
+        displays the error nicely
+    """
+    # checking if error_type exists in error enum
+    contact_info = UI_CONSTS.ERROR_CONTACT_INFO
+    error_text = manager.get_process_error(process_id)
+    return render_template_wrapper('error_page.html', error_text=error_text, contact_info=contact_info)
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     """Endpoint to the home page.
