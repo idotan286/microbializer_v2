@@ -145,6 +145,7 @@ const runResultsScript = async (histogram_data, max_num_of_rows, tree_str) => {
 
 const createTable = async (offset) => {
   var table = document.getElementById('ortologic_table');
+  table.innerHTML = '';
   var headers_tr = document.createElement('tr');
   var th = document.createElement('th');
   var text = document.createTextNode('ortologic group');
