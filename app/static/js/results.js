@@ -155,7 +155,7 @@ const runResultsScript = async (histogram_data, max_num_of_rows, tree_str) => {
       });
   };
 
-    const orthologous_data = await get_data(10, 0);
+    const orthologous_data = await get_data(0, 10);
 
     Object.values(orthologous_data.columns).forEach((key, index) => {
         console.log(key, index)
