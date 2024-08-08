@@ -139,7 +139,7 @@ const runResultsScript = async (histogram_data, max_num_of_rows, tree_str) => {
         console.log(resultId)
         let request = await fetch({
             method: "GET",
-            url: `get_table/${resultId}?offset=${offest}&limit=${limit}`
+            url: `get_table/${resultId}?offset=${offset}&limit=${limit}`
         });
         return request.json();
     }
