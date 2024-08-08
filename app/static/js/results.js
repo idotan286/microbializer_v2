@@ -89,12 +89,12 @@ const parseNewick = (a) => {for(var e=[],r={},s=a.split(/\s*(;|\(|\)|,|:)\s*/),t
 
 
 
-const initResultsScript = (histogram_data, orthologous_data, tree_str) => {
+const initResultsScript = (histogram_data, max_num_of_rows_inp, tree_str) => {
     const json_histogram_data = JSON.parse(histogram_data);
-    const json_orthologous_data = JSON.parse(orthologous_data);
-    console.log(tree_str)
+    const max_num_of_rows = max_num_of_rows_inp;
+    console.log(max_num_of_rows)
     const json_tree_str = JSON.parse(tree_str);
-    runResultsScript(json_histogram_data, json_orthologous_data, json_tree_str)
+    runResultsScript(json_histogram_data, max_num_of_rows, json_tree_str)
 };
 
 
@@ -104,7 +104,7 @@ const addAlpha = (color) => {
     return color + _opacity.toString(16).toUpperCase();
 }
 
-const runResultsScript = (histogram_data, orthologous_data, tree_str) => {
+const runResultsScript = async (histogram_data, max_num_of_rows, tree_str) => {
     console.log('inside runResultsScript') 
     // create leftmost panel (histogram)
     const radio_bar_plot_parameters = document.getElementById("parameters_option_bar_chart")
@@ -132,6 +132,21 @@ const runResultsScript = (histogram_data, orthologous_data, tree_str) => {
     th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99;'; // = 'rotate(90.0deg)'
     th.appendChild(text)
     headers_tr.appendChild(th)
+
+    let get_data = async (offset, limit) => {
+        const url = new URL(window.location.href);
+        const resultId = url.pathname.split('/')[url.pathname.split('/').length];
+        console.log(resultId)
+        let request = await fetch({
+            method: "GET",
+            url: `get_table/${resultId}?offset=${offest}&limit=${limit}`
+        });
+        return request.json();
+    }
+
+    const orthologous_data = await get_data(10, 0);
+
+    console.log(orthologous_data)
     Object.values(orthologous_data.columns).forEach((key, index) => {
         console.log(key, index)
         var th = document.createElement('th');

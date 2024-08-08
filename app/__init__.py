@@ -196,10 +196,16 @@ def results(process_id):
     #    logger.error(f'process_id = {process_id}, df = {df}')
     #    return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.RESULTS_DF_IS_NONE.name))
     #import random
+
     histogram_data = manager.get_historgram_data(process_id)
     if histogram_data == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.HISTOGRAM_DATA_IS_NULL.name))
-    
+
+    max_num_of_rows = manager.get_max_rows_orthologous(process_id)
+
+    if max_num_of_rows == None:
+        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
+
     newick_tree_str = manager.get_newick_tree(process_id)
     if newick_tree_str == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
@@ -211,6 +217,7 @@ def results(process_id):
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
         tree_str=json.dumps(newick_tree_str),
+        max_num_of_rows=max_num_of_rows,
         summary_stats=summary_stats
     )
 

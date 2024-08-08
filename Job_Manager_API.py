@@ -436,6 +436,30 @@ class Job_Manager_API:
             return data
         return None
 
+    def get_max_rows_orthologous(self, process_id: str):
+        """Return the data to display histogram
+
+        Parameters
+        ----------
+        process_id: str
+            The ID of the process
+
+        Returns
+        -------
+        max_rows: ind
+            max_number of rows for offset
+        """
+        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        if not os.path.isdir(parent_folder):
+            return None
+
+        data_path = os.path.join(parent_folder, OG_TABLE)
+        if os.path.isfile(data_path):
+            df = pd.read_csv(data_path)
+            return len(df.index)
+
+        return None
+
     def get_newick_tree(self, process_id: str):
         """Return the newick tree
 

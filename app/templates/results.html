@@ -7,6 +7,6 @@
 {%block diff_scripts%}
     <script src="{{url_for('static',filename='js/results.js')}}"></script>
     <script>
-        initResultsScript('{{ histogram_data|safe }}', '{{orthologous_data|safe}}', '{{tree_str|safe}}');
+        initResultsScript('{{ histogram_data|safe }}', '{{max_num_of_rows|safe}}', '{{tree_str|safe}}');
     </script>
 {% endblock %}
