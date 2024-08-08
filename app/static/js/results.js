@@ -394,7 +394,7 @@ document.getElementById("download_all").addEventListener("click", () => {
 })
 
 document.getElementById("table_up").addEventListener("click", () => {
-  new_offset = offset + LIMIT
+  new_offset = table_offset + LIMIT
   if (new_offset > max_num_of_rows) {
     new_offset = max_num_of_rows
     document.getElementById("table_up").disabled = true
@@ -403,11 +403,11 @@ document.getElementById("table_up").addEventListener("click", () => {
   }
 
   createTable(new_offset)
-  offset = new_offset
+  table_offset = new_offset
 })
 
 document.getElementById("table_down").addEventListener("click", () => {
-  new_offset = offset - LIMIT
+  new_offset = table_offset - LIMIT
   if (new_offset < 0) {
     new_offset = 0
     document.getElementById("table_down").disabled = true
@@ -416,5 +416,5 @@ document.getElementById("table_down").addEventListener("click", () => {
   }
 
   createTable(new_offset)
-  offset = new_offset
+  table_offset = new_offset
 })
