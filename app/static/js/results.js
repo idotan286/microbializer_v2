@@ -22,6 +22,9 @@ let all_species_list = [];
 let unchecked_all = false;
 let checked_all = true;
 
+let table_offset = 0;
+let LIMIT = 50
+
 // categories colors:
 blue_color = "#2563eb" // blue-600 in tailwind
 orange_color = "#f59e0b" // amber-500 in tailwind
@@ -87,11 +90,11 @@ function makeRadioButton(group, text, is_default, genomes_data, index) {
 
 const parseNewick = (a) => {for(var e=[],r={},s=a.split(/\s*(;|\(|\)|,|:)\s*/),t=0;t<s.length;t++){var n=s[t];switch(n){case"(":var c={};r.branchset=[c],e.push(r),r=c;break;case",":var c={};e[e.length-1].branchset.push(c),r=c;break;case")":r=e.pop();break;case":":break;default:var h=s[t-1];")"==h||"("==h||","==h?r.name=n:":"==h&&(r.length=parseFloat(n))}}return r}
 
-
+let max_num_of_rows = 0
 
 const initResultsScript = (histogram_data, max_num_of_rows_inp, tree_str) => {
     const json_histogram_data = JSON.parse(histogram_data);
-    const max_num_of_rows = max_num_of_rows_inp;
+    max_num_of_rows = max_num_of_rows_inp;
     console.log(max_num_of_rows)
     const json_tree_str = JSON.parse(tree_str);
     runResultsScript(json_histogram_data, max_num_of_rows, json_tree_str)
@@ -125,70 +128,8 @@ const runResultsScript = async (histogram_data, max_num_of_rows, tree_str) => {
     }
 
     // create rightmost panel (OG table)
-    var table = document.getElementById('ortologic_table');
-    var headers_tr = document.createElement('tr');
-    var th = document.createElement('th');
-    var text = document.createTextNode('ortologic group');
-    th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99;'; // = 'rotate(90.0deg)'
-    th.appendChild(text)
-    headers_tr.appendChild(th)
+    createTable(0);
 
-    let get_data = (offset, limit) => {
-      const url = new URL(window.location.href);
-      const resultId = url.pathname.replace('/results/', '');
-      const xhr = new XMLHttpRequest();
-  
-      return new Promise((resolve, reject) => {
-          xhr.open("GET", `/get_table/${resultId}?offset=${offset}&limit=${limit}`, true);
-  
-          xhr.onreadystatechange = () => {
-              if (xhr.readyState === 4) {
-                  if (xhr.status >= 200 && xhr.status < 300) {
-                      resolve(JSON.parse(xhr.responseText));
-                  } else {
-                      reject(`Error: ${xhr.status}`);
-                  }
-              }
-          };
-  
-          xhr.send();
-      });
-  };
-
-    const orthologous_data = await get_data(0, 10);
-
-    Object.values(orthologous_data.columns).forEach((key, index) => {
-        console.log(key, index)
-        var th = document.createElement('th');
-        var text = document.createTextNode(key);
-        th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99;'
-        th.appendChild(text)
-        headers_tr.appendChild(th)
-    });
-    table.appendChild(headers_tr);
-    
-    Object.values(orthologous_data.index).forEach((key, index) => {
-        var tr = document.createElement('tr');
-        var th = document.createElement('th');
-        th.style.position = 'sticky';
-        th.style.left = '0';
-        var text = document.createTextNode(key);
-        th.appendChild(text)
-        tr.appendChild(th)
-        Object.values(orthologous_data.data[index]).forEach((key, index) => {
-            var td = document.createElement('td');
-            td.style.cssText = 'text-align:center;'
-            if (key === 0){
-                td.style.cssText += 'background-color:red;'
-            } else if (key === 1){
-                td.style.cssText += 'background-color:green;'
-            }
-            var text = document.createTextNode(key);
-            td.appendChild(text);
-            tr.appendChild(td);
-        })
-        table.appendChild(tr);
-    })
     // document.body.appendChild(table);
     //datasets = json_data.map((val, idx) => {
     //    val.backgroundColor = addAlpha(colors[0])
@@ -202,6 +143,73 @@ const runResultsScript = async (histogram_data, max_num_of_rows, tree_str) => {
 }
 
 
+const createTable = (offset) => {
+  var table = document.getElementById('ortologic_table');
+  var headers_tr = document.createElement('tr');
+  var th = document.createElement('th');
+  var text = document.createTextNode('ortologic group');
+  th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99;'; // = 'rotate(90.0deg)'
+  th.appendChild(text)
+  headers_tr.appendChild(th)
+
+
+  const orthologous_data = await get_table_data(offset, LIMIT);
+
+  Object.values(orthologous_data.columns).forEach((key, index) => {
+      console.log(key, index)
+      var th = document.createElement('th');
+      var text = document.createTextNode(key);
+      th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99;'
+      th.appendChild(text)
+      headers_tr.appendChild(th)
+  });
+  table.appendChild(headers_tr);
+  
+  Object.values(orthologous_data.index).forEach((key, index) => {
+      var tr = document.createElement('tr');
+      var th = document.createElement('th');
+      th.style.position = 'sticky';
+      th.style.left = '0';
+      var text = document.createTextNode(key);
+      th.appendChild(text)
+      tr.appendChild(th)
+      Object.values(orthologous_data.data[index]).forEach((key, index) => {
+          var td = document.createElement('td');
+          td.style.cssText = 'text-align:center;'
+          if (key === 0){
+              td.style.cssText += 'background-color:red;'
+          } else if (key === 1){
+              td.style.cssText += 'background-color:green;'
+          }
+          var text = document.createTextNode(key);
+          td.appendChild(text);
+          tr.appendChild(td);
+      })
+      table.appendChild(tr);
+  })
+}
+
+const get_table_data = (offset, limit) => {
+  const url = new URL(window.location.href);
+  const resultId = url.pathname.replace('/results/', '');
+  const xhr = new XMLHttpRequest();
+
+  return new Promise((resolve, reject) => {
+      xhr.open("GET", `/get_table/${resultId}?offset=${offset}&limit=${limit}`, true);
+
+      xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+              if (xhr.status >= 200 && xhr.status < 300) {
+                  resolve(JSON.parse(xhr.responseText));
+              } else {
+                  reject(`Error: ${xhr.status}`);
+              }
+          }
+      };
+
+      xhr.send();
+  });
+};
 // all code below from: https://gist.github.com/mitchac/7aa120d1ef89b737d1f3fcee8698fbdd
 
 // parse Newick format phylogeny source file
@@ -383,4 +391,30 @@ document.getElementById("download_all").addEventListener("click", () => {
     request.open('POST', '');
     var data = JSON.stringify({"action": "download_all"});
     request.send(data);
+})
+
+document.getElementById("table_up").addEventListener("click", () => {
+  new_offset = offset + LIMIT
+  if (new_offset > max_num_of_rows) {
+    new_offset = max_num_of_rows
+    document.getElementById("table_up").disabled = true
+  } else {
+    document.getElementById("table_up").disabled = false
+  }
+
+  createTable(new_offset)
+  offset = new_offset
+})
+
+document.getElementById("table_down").addEventListener("click", () => {
+  new_offset = offset - LIMIT
+  if (new_offset < 0) {
+    new_offset = 0
+    document.getElementById("table_down").disabled = true
+  } else {
+    document.getElementById("table_down").disabled = false
+  }
+
+  createTable(new_offset)
+  offset = new_offset
 })
