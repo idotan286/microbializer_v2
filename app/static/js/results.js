@@ -118,7 +118,7 @@ const runResultsScript = async (histogram_data, max_num_of_rows, tree_str) => {
     const tree_data = parseNewick(tree_str);
     //console.log(tree_data)
     // only if tree data is have items
-    if (tree_data != "") {
+    if (tree_data != "" && Object.keys(tree_data || {}).length > 0) {
         const treeChart = createChart(tree_data)
         let container = document.getElementById("phylo_tree_container")
         container.append(treeChart);
