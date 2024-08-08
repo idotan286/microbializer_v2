@@ -155,6 +155,7 @@ def download_page(process_id):
 def get_table(process_id):
     offset_og = request.args.get('offset')
     limit_og = request.args.get('limit')
+    logger.info(f'limit_og = {limit_og}, offset_og = {offset_og}')
     orthologous_data = manager.get_orthologous_data(process_id, offset_og, limit_og)
     if orthologous_data == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
@@ -206,7 +207,7 @@ def results(process_id):
     summary_stats = {
         'job_name': 'example'
     }
-    logger.info(f'histogram_data = {histogram_data}, orthologous_data = {orthologous_data}')
+    logger.info(f'histogram_data = {histogram_data}')
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
         tree_str=json.dumps(newick_tree_str),
