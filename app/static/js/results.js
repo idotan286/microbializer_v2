@@ -133,20 +133,30 @@ const runResultsScript = async (histogram_data, max_num_of_rows, tree_str) => {
     th.appendChild(text)
     headers_tr.appendChild(th)
 
-    let get_data = async (offset, limit) => {
-        const url = new URL(window.location.href);
-        const resultId = url.pathname.split('/')[url.pathname.split('/').length];
-        console.log(resultId)
-        let request = await fetch({
-            method: "GET",
-            url: `get_table/${resultId}?offset=${offset}&limit=${limit}`
-        });
-        return request.json();
-    }
+    let get_data = (offset, limit) => {
+      const url = new URL(window.location.href);
+      const resultId = url.pathname.replace('/results/', '');
+      const xhr = new XMLHttpRequest();
+  
+      return new Promise((resolve, reject) => {
+          xhr.open("GET", `/get_table/${resultId}?offset=${offset}&limit=${limit}`, true);
+  
+          xhr.onreadystatechange = () => {
+              if (xhr.readyState === 4) {
+                  if (xhr.status >= 200 && xhr.status < 300) {
+                      resolve(JSON.parse(xhr.responseText));
+                  } else {
+                      reject(`Error: ${xhr.status}`);
+                  }
+              }
+          };
+  
+          xhr.send();
+      });
+  };
 
     const orthologous_data = await get_data(10, 0);
 
-    console.log(orthologous_data)
     Object.values(orthologous_data.columns).forEach((key, index) => {
         console.log(key, index)
         var th = document.createElement('th');
