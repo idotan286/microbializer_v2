@@ -151,6 +151,16 @@ def download_page(process_id):
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
     return render_template_wrapper('export_file.html', list_of_files_to_export=json.dumps(list_of_files_to_export))
 
+@app.route('/get_table/<process_id>', methods=['GET'])
+def get_table(process_id):
+    offset_og = request.args.get('offset')
+    limit_og = request.args.get('limit')
+    orthologous_data = manager.get_orthologous_data(process_id, offset_og, limit_og)
+    if orthologous_data == None:
+        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
+        
+    return json.dumps(orthologous_data)
+
 @app.route('/results/<process_id>', methods=['GET', 'POST'])
 def results(process_id):
     """Endpoint to analysis the Kraken results. 
@@ -188,11 +198,7 @@ def results(process_id):
     histogram_data = manager.get_historgram_data(process_id)
     if histogram_data == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.HISTOGRAM_DATA_IS_NULL.name))
-
-    orthologous_data = manager.get_orthologous_data(process_id)
-    if orthologous_data == None:
-        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
-
+    
     newick_tree_str = manager.get_newick_tree(process_id)
     if newick_tree_str == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
@@ -203,7 +209,6 @@ def results(process_id):
     logger.info(f'histogram_data = {histogram_data}, orthologous_data = {orthologous_data}')
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
-        orthologous_data=json.dumps(orthologous_data),
         tree_str=json.dumps(newick_tree_str),
         summary_stats=summary_stats
     )
