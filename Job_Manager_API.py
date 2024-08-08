@@ -402,13 +402,17 @@ class Job_Manager_API:
             return data
         return None
     
-    def get_orthologous_data(self, process_id: str):
+    def get_orthologous_data(self, process_id: str, offset: int, limit: int):
         """Return the data to display histogram
 
         Parameters
         ----------
         process_id: str
             The ID of the process
+        offset: int
+            To read chunks of the OG table
+        limit: int
+            To read chunks of the OG table
         
         Returns
         -------
@@ -423,7 +427,7 @@ class Job_Manager_API:
         data = {}
         data_path = os.path.join(parent_folder, OG_TABLE)
         if os.path.isfile(data_path):
-            df = pd.read_csv(data_path, index_col=0)
+            df = pd.read_csv(data_path, index_col=0, skiprows=offset, nrows=limit)
             # convert not nan values to 1 and nan values to 0
             df = df.notnull().astype("int")
             data = df.to_dict('split')
