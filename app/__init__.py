@@ -153,8 +153,8 @@ def download_page(process_id):
 
 @app.route('/get_table/<process_id>', methods=['GET'])
 def get_table(process_id):
-    offset_og = request.args.get('offset')
-    limit_og = request.args.get('limit')
+    offset_og = int(request.args.get('offset'))
+    limit_og = int(request.args.get('limit'))
     logger.info(f'limit_og = {limit_og}, offset_og = {offset_og}')
     orthologous_data = manager.get_orthologous_data(process_id, offset_og, limit_og)
     if orthologous_data == None:
