@@ -90,7 +90,7 @@ function makeRadioButton(group, text, is_default, genomes_data, index) {
 
 const parseNewick = (a) => {for(var e=[],r={},s=a.split(/\s*(;|\(|\)|,|:)\s*/),t=0;t<s.length;t++){var n=s[t];switch(n){case"(":var c={};r.branchset=[c],e.push(r),r=c;break;case",":var c={};e[e.length-1].branchset.push(c),r=c;break;case")":r=e.pop();break;case":":break;default:var h=s[t-1];")"==h||"("==h||","==h?r.name=n:":"==h&&(r.length=parseFloat(n))}}return r}
 
-let max_num_of_rows = 0
+let max_num_of_rows = 0;
 
 const initResultsScript = (histogram_data, max_num_of_rows_inp, tree_str) => {
     const json_histogram_data = JSON.parse(histogram_data);
@@ -143,7 +143,7 @@ const runResultsScript = async (histogram_data, max_num_of_rows, tree_str) => {
 }
 
 
-const createTable = (offset) => {
+const createTable = async (offset) => {
   var table = document.getElementById('ortologic_table');
   var headers_tr = document.createElement('tr');
   var th = document.createElement('th');
