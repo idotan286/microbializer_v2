@@ -6,7 +6,7 @@ from pathlib import Path
 
 import consts
 
-LOGS_BASE_PATH = Path(r'C:\temp') if consts.LOCAL else Path('/var/www/vhosts/dev.microbializer.tau.ac.il/logs/')
+LOGS_BASE_PATH = Path(consts.LOCAL_BASE_PATH) / 'logs' if consts.LOCAL else Path('/var/www/vhosts/dev.microbializer.tau.ac.il/logs/')
 
 
 LOGGER_LEVEL_JOB_MANAGE_THREAD_SAFE = logging.DEBUG

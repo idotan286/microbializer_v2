@@ -1,7 +1,8 @@
 import os
 import sys
+import consts
 
-sys.path.append(r"C:\repos\microbializer\pipeline\flask")
+sys.path.append(os.path.join(consts.MICROBIALIZER_LOCAL_PATH, 'pipeline', 'flask'))
 
 import SharedConsts as sc
 import flask_interface_consts as mc
