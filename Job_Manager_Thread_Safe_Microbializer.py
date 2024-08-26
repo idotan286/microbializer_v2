@@ -1,4 +1,8 @@
 import os
+import sys
+
+sys.path.append(r"C:\repos\microbializer\pipeline\flask")
+
 import SharedConsts as sc
 import flask_interface_consts as mc
 from Handlers.JobHandler import Handler

@@ -2,6 +2,11 @@ from enum import Enum
 from datetime import datetime
 import logging
 import os
+from pathlib import Path
+
+import consts
+
+LOGS_BASE_PATH = Path(r'C:\temp') if consts.LOCAL else Path('/var/www/vhosts/dev.microbializer.tau.ac.il/logs/')
 
 
 LOGGER_LEVEL_JOB_MANAGE_THREAD_SAFE = logging.DEBUG
@@ -9,12 +14,12 @@ LOGGER_LEVEL_JOB_MANAGE_API = logging.DEBUG
 logger = logging.getLogger('main')
 formatter = logging.Formatter('%(asctime)s[%(levelname)s][%(filename)s][%(funcName)s]: %(message)s')
 
-handler = logging.FileHandler('/var/www/vhosts/dev.microbializer.tau.ac.il/logs/flask-error.log')  # Adjust the path
+handler = logging.FileHandler(LOGS_BASE_PATH / 'flask-error.log')  # Adjust the path
 handler.setFormatter(formatter)
 handler.setLevel(logging.ERROR)
 logger.addHandler(handler)
 
-handler_debug = logging.FileHandler('/var/www/vhosts/dev.microbializer.tau.ac.il/logs/flask-debug.log')  # Adjust the path
+handler_debug = logging.FileHandler(LOGS_BASE_PATH / 'flask-debug.log')  # Adjust the path
 handler_debug.setFormatter(formatter)
 handler_debug.setLevel(logging.DEBUG)
 logger.addHandler(handler_debug)
