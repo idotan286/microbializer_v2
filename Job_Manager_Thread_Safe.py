@@ -1,11 +1,18 @@
 import datetime
 import os
 import pickle
+import sys
 from threading import Lock
 from apscheduler.schedulers.background import BackgroundScheduler
 from JobListener import PbsListener
+import consts
+
+if consts.LOCAL:
+    sys.path.append(os.path.join(consts.MICROBIALIZER_LOCAL_PATH, 'pipeline', 'flask'))
+
 import SharedConsts as sc
 from SharedConsts import State
+
 from utils import logger, LOGGER_LEVEL_JOB_MANAGE_THREAD_SAFE
 from Monitor import Monitor_Jobs
 import hashlib
@@ -108,7 +115,8 @@ class Job_Manager_Thread_Safe:
         self.__monitor = Monitor_Jobs(upload_root_path)
         self.__listener = PbsListener(function_to_call_listener)
         self.__scheduler = BackgroundScheduler()
-        self.__scheduler.add_job(self.__listener.run, 'interval', seconds=sc.INTERVAL_BETWEEN_LISTENER_SAMPLES)
+        self.__scheduler.add_job(self.__listener.run, 'interval', 
+                                 seconds=consts.LOCAL_INTERVAL_BETWEEN_LISTENER_SAMPLES if consts.LOCAL else sc.INTERVAL_BETWEEN_LISTENER_SAMPLES)
         self.__scheduler.add_job(self.__clean_processes_state_dict, 'interval',
                                  minutes=sc.INTERVAL_BETWEEN_CLEANING_THE_PROCESSES_DICT * 60)
         #self.__scheduler.add_job(self.__monitor.create_and_send_weekly_summary, 'cron', day_of_week='sun', hour=6)

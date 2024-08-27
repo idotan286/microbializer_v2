@@ -1,13 +1,20 @@
 import re
 import subprocess
 import os
+import sys
 import pandas as pd
-from get_jobs import get_jobs, ACCOUNT_NAME
 
+import consts
+
+if consts.LOCAL:
+    sys.path.append(os.path.join(consts.MICROBIALIZER_LOCAL_PATH, 'pipeline', 'flask'))
+
+from get_jobs import get_jobs, ACCOUNT_NAME
 from SharedConsts import QstatDataColumns, SRVER_USERNAME, JOB_CHANGE_COLS, JOB_ELAPSED_TIME, \
     JOB_RUNNING_TIME_LIMIT_IN_HOURS, JOB_NUMBER_COL, LONG_RUNNING_JOBS_NAME, QUEUE_JOBS_NAME, NEW_RUNNING_JOBS_NAME, \
     FINISHED_JOBS_NAME, JOB_STATUS_COL, WEIRD_BEHAVIOR_JOB_TO_CHECK, ERROR_JOBS_NAME, PATH2SAVE_PREVIOUS_DF, \
     JOB_NAME_COL
+
 from utils import logger
 
 

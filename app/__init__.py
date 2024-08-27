@@ -1,12 +1,20 @@
-from flask import Flask, flash, request, redirect, url_for, render_template, Response, jsonify, send_file, json
-from werkzeug.utils import secure_filename
-from utils import logger
-from Job_Manager_API import Job_Manager_API
-from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, MAX_NUMBER_PROCESS
 import os
 import warnings
 import time
+import sys
 from random import choice
+
+from flask import Flask, flash, request, redirect, url_for, render_template, Response, jsonify, send_file, json
+from werkzeug.utils import secure_filename
+from utils import logger
+import consts
+from Job_Manager_API import Job_Manager_API
+
+if consts.LOCAL:
+    sys.path.append(os.path.join(consts.MICROBIALIZER_LOCAL_PATH, 'pipeline', 'flask'))
+
+from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, MAX_NUMBER_PROCESS
+
 
 def render_template_wrapper(*args, **kwargs):
     names = os.listdir(os.path.join(app.static_folder, 'images/background'))
@@ -17,7 +25,11 @@ def render_template_wrapper(*args, **kwargs):
 #TODO think about it
 warnings.filterwarnings("ignore")
 
-UPLOAD_FOLDERS_ROOT_PATH = '/lsweb/pupko/microbializer/user_results/' # path to folder to save results
+if consts.LOCAL:
+    UPLOAD_FOLDERS_ROOT_PATH = os.path.join(consts.LOCAL_BASE_PATH, 'user_results')
+    os.makedirs(UPLOAD_FOLDERS_ROOT_PATH, exist_ok=True)
+else:
+    UPLOAD_FOLDERS_ROOT_PATH = '/lsweb/pupko/microbializer/user_results/' # path to folder to save results
 
 # force use of HTTPS protocol, should be removed once the server is developed
 class ReverseProxied(object):
