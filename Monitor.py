@@ -1,4 +1,3 @@
-from SharedConsts import State, PATH2SAVE_MONITOR_DATA, SEPERATOR_FOR_MONITOR_DF, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME
 import os
 from utils import logger, send_email
 from datetime import datetime
@@ -9,6 +8,14 @@ from pathlib import Path
 import pandas as pd
 import ast
 import json
+import sys
+import consts
+
+if consts.LOCAL:
+    sys.path.append(os.path.join(consts.MICROBIALIZER_LOCAL_PATH, 'pipeline', 'flask'))
+
+from SharedConsts import State, PATH2SAVE_MONITOR_DATA, SEPERATOR_FOR_MONITOR_DF, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME
+
 
 class Monitor_Jobs:
     """
