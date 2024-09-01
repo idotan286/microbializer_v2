@@ -18,7 +18,7 @@ from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME_TAR, U
 
 def render_template_wrapper(*args, **kwargs):
     names = os.listdir(os.path.join(app.static_folder, 'images/background'))
-    img_url = url_for('static', filename=os.path.join('images/background', choice(names)))
+    img_url = url_for('static', filename=f'images/background/{choice(names)}')
     return render_template(*args, **kwargs, file_name=img_url)
 
 
