@@ -4,9 +4,8 @@ import logging
 import os
 
 import consts
-
 if consts.LOCAL:
-    LOGS_BASE_PATH = os.path.join(consts.LOCAL_BASE_PATH, 'logs')
+    LOGS_BASE_PATH = os.path.join(consts.WEBSERVER_LOCAL_OUTPUTS, 'logs')
     os.makedirs(LOGS_BASE_PATH, exist_ok=True)
 else:
     LOGS_BASE_PATH = '/var/www/vhosts/dev.microbializer.tau.ac.il/logs/'

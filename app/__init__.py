@@ -6,13 +6,15 @@ from random import choice
 
 from flask import Flask, flash, request, redirect, url_for, render_template, Response, jsonify, send_file, json
 from werkzeug.utils import secure_filename
-from utils import logger
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 import consts
-from Job_Manager_API import Job_Manager_API
-
 if consts.LOCAL:
-    sys.path.append(os.path.join(consts.MICROBIALIZER_LOCAL_PATH, 'pipeline', 'flask'))
+    sys.path.append(consts.MICROBIALIZER_PIPELINE_LOCAL_FLASK_PATH)
 
+from utils import logger
+from Job_Manager_API import Job_Manager_API
 from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, MAX_NUMBER_PROCESS
 
 
@@ -26,7 +28,7 @@ def render_template_wrapper(*args, **kwargs):
 warnings.filterwarnings("ignore")
 
 if consts.LOCAL:
-    UPLOAD_FOLDERS_ROOT_PATH = os.path.join(consts.LOCAL_BASE_PATH, 'user_results')
+    UPLOAD_FOLDERS_ROOT_PATH = os.path.join(consts.WEBSERVER_LOCAL_OUTPUTS, 'user_results')
     os.makedirs(UPLOAD_FOLDERS_ROOT_PATH, exist_ok=True)
 else:
     UPLOAD_FOLDERS_ROOT_PATH = '/lsweb/pupko/microbializer/user_results/' # path to folder to save results

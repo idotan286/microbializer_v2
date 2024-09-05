@@ -2,15 +2,10 @@ import os
 import shutil
 import uuid
 import json
-import sys
 import pandas as pd
 from InputValidator import InputValidator
 from Job_Manager_Thread_Safe_Microbializer import Job_Manager_Thread_Safe_Microbializer
 from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
-import consts
-
-if consts.LOCAL:
-    sys.path.append(os.path.join(consts.MICROBIALIZER_LOCAL_PATH, 'pipeline', 'flask'))
 
 from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, \
     E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \

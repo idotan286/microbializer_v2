@@ -1,14 +1,10 @@
 import datetime
 import os
 import pickle
-import sys
 from threading import Lock
 from apscheduler.schedulers.background import BackgroundScheduler
 from JobListener import PbsListener
 import consts
-
-if consts.LOCAL:
-    sys.path.append(os.path.join(consts.MICROBIALIZER_LOCAL_PATH, 'pipeline', 'flask'))
 
 import SharedConsts as sc
 from SharedConsts import State
