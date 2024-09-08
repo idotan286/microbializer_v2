@@ -11,7 +11,7 @@
     <div class="flex flex-col mx-auto  h-full justify-center items-center">
         <div class="flex-0 h-64 my-8 text-white text-outline" id="page_title" >
             <h1 class="text-9xl text-center select-none my-5 ">Microbializer</h1>
-            <h1 class="text-8xl select-none">Microbializer Made Easy.</h1>
+            <h1 class="text-6xl text-center select-none">A web server for analyzing bacterial genomics data. Easily.</h1>
         </div>
         <div class="h-32 flex flex-col justify-end transition-all duration-500 ease-in-out" id="job_button">
           <label
@@ -27,9 +27,9 @@
               tracking-wide
               uppercase
               border-2
-              border border-blue
+              border border-lime-800 hover:border-white
               cursor-pointer
-              hover:bg-green-600 hover:text-white
+              hover:bg-lime-600 hover:text-white
               text-green-600
               ease-linear
               transition-all
@@ -46,15 +46,15 @@
             <div id="mail_div" class="flex flex-col">
               <div   class="flex flex-row justify-between items-center">
                 <p class="text-2xl mx-8 select-none">Enter a valid email (optional):</p>
-                <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="email" id="theMail" name="email" placeholder="example@example.com" required>
+                <input class="appearance-none border-2 border-lime-800 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="email" id="theMail" name="email" placeholder="example@example.com" required>
   
-                <label for="theMail" id="continue_after_mail" class="w-16  flex flex-col items-center rounded-md py-3 bg-white shadow-lg tracking-wide uppercase border border-blue-700 bg-gray-600 text-white ease-linear transition-all duration-150 mx-8 my-4">
+                <label for="theMail" id="continue_after_mail" class="w-16  flex flex-col items-center rounded-md py-3 bg-white shadow-lg tracking-wide uppercase border border-lime-800 bg-gray-600 text-white ease-linear transition-all duration-150 mx-8 my-4">
                   <span class="text-base font-bold text-2xl leading-normal select-none ">➔</span>
                 </label>
               </div>
               <div   class="flex flex-row justify-between items-center">
                 <p class="text-2xl mx-8 select-none">Job name (optional):&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
-                <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="text" id="theJobName" name="job_name" maxlength="70" required>
+                <input class="appearance-none border-2 border-lime-800 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="text" id="theJobName" name="job_name" maxlength="70" required>
                 <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
 
               </div>
@@ -62,7 +62,7 @@
             <div id="file_div" class="hidden flex flex-col justify-center">
                 <div class="flex flex-row justify-start items-center ">
                   <p class="text-2xl mx-8 select-none">Select a zipped / tar.gz folder:</p>
-                  <label for="theFile" id="upload_button0" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white  text-black hover:bg-green-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
+                  <label for="theFile" id="upload_button0" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white  text-black hover:bg-lime-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
                     <span class="select-none"><i id="file_icon0" class="fa fa-upload" style="font-size:24px"></i></span>
                     <span id="file_name0" class="select-none text-white text-xs"></span>
                     <input  class="hidden" id="theFile" type="file" name=file accept="{{extensions}}" required/>
@@ -72,208 +72,208 @@
             </div>
             <div id="is_advanced_div" class="hidden flex flex-row justify-center">
                 <div>
-                    <label id="defaultSetting" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-green-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
+                    <label id="defaultSetting" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
                         <span class="select-none">Default setting</span>
                 </div>
                 <div>
-                    <label id="advancedSetting" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-green-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
+                    <label id="advancedSetting" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
                         <span class="select-none">Advanced setting</span>
                     </label>
                 </div>
             </div>
-            <div id="paramaters_div" class="hidden flex flex-col justify-center">
-                <div   class="flex flex-row justify-between items-center">  
-                  <label for="maxEValue" id="continue_after_parameters" class="w-16  flex flex-col items-center rounded-md py-3 bg-white shadow-lg tracking-wide uppercase border border-blue-700  bg-white  text-black hover:bg-green-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
-                    <span class="text-base font-bold text-2xl leading-normal select-none ">➔</span>
-                  </label>
-              </div>
-              <div class="flex flex-row justify-between items-center ">
-                  <p class="text-l mx-8 select-none">Inputs fasta files type?&nbsp</p>
-                  <div>
-                        <input class="hidden peer" id="genomeFastaType" type="radio" name="inputFastaType" value="genomes" checked/>
-                        <label for="genomeFastaType" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">Genomes</span>
-                        </label>
+            <div id="paramaters_div" class="hidden flex flex-col justify-center items-center">
+              <div class="grid grid-cols-2 justify-center items-center">
+                
+                <div class="flex flex-row justify-between items-center ">
+                    <p class="text-l mx-2 select-none w-80">Inputs fasta files type?</p>
+                    <div>
+                          <input class="hidden peer" id="genomeFastaType" type="radio" name="inputFastaType" value="genomes" checked/>
+                          <label for="genomeFastaType" class="w-32  text-center flex flex-row justify-center bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-2  my-4 px-2  py-3  cursor-pointer">
+                              <span class="select-none">Genomes</span>
+                          </label>
+                    </div>
+                    <div>
+                          <input class="hidden peer" id="orfsFastaType" type="radio" name="inputFastaType" value="orfs"/>
+                          <label for="orfsFastaType" class="w-32  text-center flex flex-row justify-center bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-2  my-4 px-2  py-3  cursor-pointer">
+                              <span class="select-none">ORFs</span>
+                          </label>
+                    </div>
+                </div>
+                  
+                <div class="flex flex-row justify-between items-center ">
+                      <p class="text-l mx-2 select-none w-80">Filter out contigs / orfs of plasmids?</p>
+                      <div>
+                          <input class="hidden peer" id="isNotApplyFilter" type="radio" name="isFilter" value="False" checked/>
+                          <label for="isNotApplyFilter" class="w-32  text-center flex flex-row justify-center bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-2  my-4 px-2  py-3  cursor-pointer">
+                              <span class="select-none">No</span>
+                          </label>
+                      </div>
+                      <div>
+                          <input class="hidden peer" id="isApplyFilter" type="radio" name="isFilter" value="True"/>
+                          <label for="isApplyFilter" class="w-32  text-center flex flex-row justify-center bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-2  my-4 px-2  py-3  cursor-pointer">
+                              <span class="select-none">Yes</span>
+                          </label>
+                      </div>
                   </div>
-                  <div>
-                        <input class="hidden peer" id="orfsFastaType" type="radio" name="inputFastaType" value="orfs"/>
-                        <label for="orfsFastaType" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">ORFs</span>
-                        </label>
+                  
+                <div   class="flex flex-row justify-between items-center">
+                    <p class="text-l mx-2 select-none w-80">Minimum sequence identity for orthologs detection:</p>
+                    <input class="appearance-none border-2 border-lime-800 bg-white rounded-lg w-64 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="minIdentity" name="minIdentity" maxlength="10" placeholder="80.0" value="80.0" max="100" min="0" step="1" required>
+                </div>
+                  
+                <div   class="flex flex-row justify-between items-center">
+                    <p class="text-l mx-2 select-none w-80">Minimum sequence coverage for orthologs detection:</p>
+                    <input class="appearance-none border-2 border-lime-800 bg-white rounded-lg w-64 text-gray-700 text-xl mr-1 my-6 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="coverageCutoff" name="coverageCutoff" maxlength="10" placeholder="70" value="70.0" max="100" min="0" step="1" required>
+                </div>
+  
+                <div   class="flex flex-row justify-between items-center">
+                    <p class="text-l mx-2 select-none w-80">Maximal e-value for orthologs detection:</p>
+                    <input class="appearance-none border-2 border-lime-800 bg-white rounded-lg w-64 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="maxEValue" name="maxEValue" placeholder="0.01" value="0.01" maxlength="10" max="1" min="0" step="0.01" required>
+                </div>
+                  
+                <div   class="flex flex-row justify-between items-center">
+                    <p class="text-l mx-2 select-none w-80">Minimum percent of strains required to consider a gene as part of the core genome:</p>
+                    <input class="appearance-none border-2 border-lime-800 bg-white rounded-lg w-64 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="orthologsPercent" name="orthologsPercent" maxlength="10" placeholder="100.0" value="100.0" max="100" min="0" step="1" required>
+                </div>
+  
+                <div   class="flex flex-row justify-between items-center">
+                    <p class="text-l mx-2 select-none w-80">Root the species tree according to this outgroup:</p>
+                    <input class="appearance-none border-2 border-lime-800 bg-white rounded-lg w-64 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="text" id="outgroup" name="outgroup" maxlength="70" placeholder="No outgroup" value="No outgroup" required>
+                </div>
+                  
+                <div class="flex flex-row justify-between items-center ">
+                      <p class="text-l mx-2 select-none w-80">Apply bootstrap over the species tree?</p>
+                      <div>
+                          <input class="hidden peer" id="isNotApplyBootstrap" type="radio" name="isBootstrap" value="False" checked/>
+                          <label for="isNotApplyBootstrap" class="w-32  text-center flex flex-row justify-center bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-2  my-4 px-2  py-3  cursor-pointer">
+                              <span class="select-none">No</span>
+                          </label>
+                      </div>
+                      <div>
+                          <input class="hidden peer" id="isApplyBootstrap" type="radio" name="isBootstrap" value="True"/>
+                          <label for="isApplyBootstrap" class="w-32  text-center flex flex-row justify-center bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-2  my-4 px-2  py-3  cursor-pointer">
+                              <span class="select-none">Yes</span>
+                          </label>
+                      </div>
+                  </div>
+                                  
+                <div class="flex flex-row justify-between items-center ">
+                      <p class="text-l mx-2 select-none">Add orphan genes to orthologs table?</p>
+                      <div>
+                          <input class="hidden peer" id="isNotAddOrphan" type="radio" name="isAddOrphanGenes" value="False" checked/>
+                          <label for="isNotAddOrphan" class="w-32  text-center flex flex-row justify-center bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-2  my-4 px-2  py-3  cursor-pointer">
+                              <span class="select-none">No</span>
+                          </label>
+                      </div>
+                      <div>
+                          <input class="hidden peer" id="isAddOrphan" type="radio" name="isAddOrphanGenes" value="True"/>
+                          <label for="isAddOrphan" class="w-32  text-center flex flex-row justify-center bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-2  my-4 px-2  py-3  cursor-pointer">
+                              <span class="select-none">Yes</span>
+                          </label>
+                      </div>
                   </div>
               </div>
-                
-              <div class="flex flex-row justify-between items-center ">
-                    <p class="text-l mx-8 select-none">Filter out contigs / orfs of plasmids?&nbsp</p>
-                    <div>
-                        <input class="hidden peer" id="isNotApplyFilter" type="radio" name="isFilter" value="False" checked/>
-                        <label for="isNotApplyFilter" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">No</span>
-                        </label>
-                    </div>
-                    <div>
-                        <input class="hidden peer" id="isApplyFilter" type="radio" name="isFilter" value="True"/>
-                        <label for="isApplyFilter" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">Yes</span>
-                        </label>
-                    </div>
-                </div>
-                
-              <div   class="flex flex-row justify-between items-center">
-                  <p class="text-l mx-8 select-none">Minimum sequence identity for orthologs detection:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
-                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="minIdentity" name="minIdentity" maxlength="10" placeholder="80.0" value="80.0" max="100" min="0" step="1" required>
-                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
+              <div class="flex flex-row justify-between items-center">  
+                <label id="continue_after_parameters" class="w-32  flex flex-col items-center rounded-md py-3 bg-lime-300 shadow-lg tracking-wide uppercase border border-lime-800  bg-white  text-black hover:bg-lime-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
+                  <span class="text-base font-bold text-3xl leading-normal select-none ">⟶</span>
+                </label>
               </div>
-                
-              <div   class="flex flex-row justify-between items-center">
-                  <p class="text-l mx-8 select-none">Minimum sequence coverage for orthologs detection: &nbsp</p>
-                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="coverageCutoff" name="coverageCutoff" maxlength="10" placeholder="70" value="70.0" max="100" min="0" step="1" required>
-                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
-              </div>
-
-              <div   class="flex flex-row justify-between items-center">
-                  <p class="text-l mx-8 select-none">Maximal e-value for orthologs detection: &nbsp</p>
-                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="maxEValue" name="maxEValue" placeholder="0.01" value="0.01" maxlength="10" max="1" min="0" step="0.01" required>
-                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
-              </div>
-                
-              <div   class="flex flex-row justify-between items-center">
-                  <p class="text-l mx-8 select-none">Minimum percent of strains required to consider a gene as part of the core genome: &nbsp</p>
-                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="number" id="orthologsPercent" name="orthologsPercent" maxlength="10" placeholder="100.0" value="100.0" max="100" min="0" step="1" required>
-                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
-              </div>
-
-              <div   class="flex flex-row justify-between items-center">
-                  <p class="text-l mx-8 select-none">Root the species tree according to this outgroup: &nbsp</p>
-                  <input class="appearance-none border-2 border-blue-700 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="text" id="outgroup" name="outgroup" maxlength="70" placeholder="No outgroup" value="No outgroup" required>
-                    <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
-              </div>
-                
-              <div class="flex flex-row justify-between items-center ">
-                    <p class="text-l mx-8 select-none">Apply bootstrap over the species tree?&nbsp</p>
-                    <div>
-                        <input class="hidden peer" id="isNotApplyBootstrap" type="radio" name="isBootstrap" value="False" checked/>
-                        <label for="isNotApplyBootstrap" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">No</span>
-                        </label>
-                    </div>
-                    <div>
-                        <input class="hidden peer" id="isApplyBootstrap" type="radio" name="isBootstrap" value="True"/>
-                        <label for="isApplyBootstrap" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">Yes</span>
-                        </label>
-                    </div>
-                </div>
-                                
-              <div class="flex flex-row justify-between items-center ">
-                    <p class="text-l mx-8 select-none">Add orphan genes to orthologs table?&nbsp</p>
-                    <div>
-                        <input class="hidden peer" id="isNotAddOrphan" type="radio" name="isAddOrphanGenes" value="False" checked/>
-                        <label for="isNotAddOrphan" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">No</span>
-                        </label>
-                    </div>
-                    <div>
-                        <input class="hidden peer" id="isAddOrphan" type="radio" name="isAddOrphanGenes" value="True"/>
-                        <label for="isAddOrphan" class="w-64  text-center flex flex-row justify-center bg-white peer-checked:bg-green-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  hover:bg-cyan-600 hover:text-white font-bold  ease-linear  transition-all   mx-8  my-4 px-4  py-6  cursor-pointer">
-                            <span class="select-none">Yes</span>
-                        </label>
-                    </div>
-                </div>
             </div>
             <div id="summary_div" class="hidden flex flex-col justify-center items-center">
-            <p class="text-l mx-8 select-none">Please verify the following input values.</p>
-            <p class="text-l mx-8 select-none">If the data inserted is wrong, please press the reset button</p>
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Job name:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_job_name" class="select-none text-white"></span>
-                </label>
-            </div>
+              <p class="text-l mx-8 select-none font-bold">Please verify the following input values.</p>
+              <p class="text-l mx-8 select-none font-bold">If the data inserted is wrong, please press the reset button</p>
+              <div class="grid grid-cols-2 columns-2 justify-center items-center">
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Job name:</p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_job_name" class="select-none text-white"></span>
+                  </label>
+              </div>
+    
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Email adress:</p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_email_adress" class="select-none text-white"></span>
+                  </label>
+              </div>
+              
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">File name:</p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_file0" class="select-none text-white"></span>
+                  </label>
+              </div>
+              
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Inputs fasta files type:</p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_fasta_type" class="select-none text-white"></span>
+                  </label>
+              </div>
+              
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Filter out contigs / orfs of plasmids: </p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_is_filter" class="select-none text-white"></span>
+                  </label>
+              </div>
   
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Email adress:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_email_adress" class="select-none text-white"></span>
-                </label>
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Minimal percent of identity:</p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_identity" class="select-none text-white"></span>
+                  </label>
+              </div>
+              
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Minimum sequence coverage for orthologs detection:</p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_coverage_cutoff" class="select-none text-white"></span>
+                  </label>
+              </div>
+  
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Maximal permitted e-value:</p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_e_value" class="select-none text-white"></span>
+                  </label>
+              </div>
+                  
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Minimal percent of orthologs to be considered as a core gene:</p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_core_gene" class="select-none text-white"></span>
+                  </label>
+              </div>
+                  
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Apply bootstrap over the species tree:</p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_is_bootstrap" class="select-none text-white"></span>
+                  </label>
+              </div>
+                  
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Root the species tree according to this outgroup:</p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_outgroup" class="select-none text-white"></span>
+                  </label>
+              </div>
+              
+              <div class="flex flex-row justify-between items-center ">
+                  <p class="w-64 text-l mx-2 select-none">Add orphan genes to orthologs table: </p>
+                  <label class="w-80 h-12 text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
+                    <span id="user_is_orpan" class="select-none text-white"></span>
+                  </label>
+              </div>
+              <!---<div 
+                  class="g-recaptcha" 
+                  data-sitekey="6Ld7NqghAAAAAPYzTu5Hzd4MSiEYnPTmnftj7hZB"
+                  data-callback="enablePostForm"
+              ></div> ---->
             </div>
-            
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">File name:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_file0" class="select-none text-white"></span>
-                </label>
-            </div>
-            
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Inputs fasta files type:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_fasta_type" class="select-none text-white"></span>
-                </label>
-            </div>
-            
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Filter out contigs / orfs of plasmids: </p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_is_filter" class="select-none text-white"></span>
-                </label>
-            </div>
-
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Minimal percent of identity:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_identity" class="select-none text-white"></span>
-                </label>
-            </div>
-            
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Minimum sequence coverage for orthologs detection:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_coverage_cutoff" class="select-none text-white"></span>
-                </label>
-            </div>
-
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Maximal permitted e-value:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_e_value" class="select-none text-white"></span>
-                </label>
-            </div>
-                
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Minimal percent of orthologs to be considered as a core gene:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_core_gene" class="select-none text-white"></span>
-                </label>
-            </div>
-                
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Apply bootstrap over the species tree:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_is_bootstrap" class="select-none text-white"></span>
-                </label>
-            </div>
-                
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Root the species tree according to this outgroup:</p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_outgroup" class="select-none text-white"></span>
-                </label>
-            </div>
-            
-            <div class="flex flex-row justify-between items-center ">
-                <p class="w-48 text-l mx-2 select-none">Add orphan genes to orthologs table: </p>
-                <label class="w-80  text-center flex flex-row justify-center bg-gray-600 rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700 font-bold  ease-linear  transition-all   mx-8  my-2 px-4  py-3">
-                  <span id="user_is_orpan" class="select-none text-white"></span>
-                </label>
-            </div>
-            <!---<div 
-                class="g-recaptcha" 
-                data-sitekey="6Ld7NqghAAAAAPYzTu5Hzd4MSiEYnPTmnftj7hZB"
-                data-callback="enablePostForm"
-            ></div> ---->
-              <label id="submit_button" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white-600 text-black hover:bg-green-600 hover:text-white ease-linear font-bold transition-all  duration-150  mx-8  my-4 cursor-pointer">
-                <span class="select-none">Submit</span></label>
+            <label id="submit_button" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear font-bold transition-all  duration-150  mx-8  my-4 cursor-pointer">
+              <span class="select-none">Submit</span></label>
             </div>
             
           </form>
@@ -294,13 +294,13 @@
           <h1 id="progress-bar" class="text-center text-outline text-white animate-pulse text-4xl select-none"></h1>
         </div>
         <div class="flex flex-row justify-end items-center">
-          <a  href="/about" target="_blank" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white-600 text-black hover:bg-green-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
+          <a  href="/about" target="_blank" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
             About
           </a>
-          <a  href="/overview" target="_blank" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white-600 text-black hover:bg-green-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
+          <a  href="/overview" target="_blank" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
             Overview
           </a>
-          <a  href="/example" target="_blank" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white-600 text-black hover:bg-green-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
+          <a  href="/example" target="_blank" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
             Example
           </a>
         </div>

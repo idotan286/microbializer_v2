@@ -62,7 +62,7 @@ const buttonClick = () => {
 const reset_continue_after_mail = () => {
     const continue_button_mail = document.getElementById("continue_after_mail");
 
-    continue_button_mail.classList.remove("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
+    continue_button_mail.classList.remove("hover:bg-lime-600","hover:text-white", "text-green-600", "cursor-pointer")
     continue_button_mail.classList.add("bg-gray-600","text-white")
     continue_button_mail.removeEventListener("click", () => formForward(PageStates.File))
 
@@ -93,7 +93,7 @@ const checkMail = (event) => {
         event.target.classList.add("text-green-600");
         event.target.valid = true;
         continue_button_mail.classList.remove("bg-gray-600","text-white")
-        continue_button_mail.classList.add("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
+        continue_button_mail.classList.add("hover:bg-lime-600","hover:text-white", "text-green-600", "cursor-pointer")
         theFile.disabled = false;
         continue_button_mail.addEventListener("click", () => formForward(PageStates.File))
         return true;

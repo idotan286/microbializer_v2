@@ -148,7 +148,7 @@ const createTable = async (offset) => {
   table.innerHTML = '';
   var headers_tr = document.createElement('tr');
   var th = document.createElement('th');
-  var text = document.createTextNode('ortologic group');
+  var text = document.createTextNode('Orthogroup');
   th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99;'; // = 'rotate(90.0deg)'
   th.appendChild(text)
   headers_tr.appendChild(th)
