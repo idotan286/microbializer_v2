@@ -313,34 +313,27 @@ class Job_Manager_API:
                 return "error file does not exists"
         logger.warning(f'process_id = {process_id} don\'t have a folder')
         return "no process ID folder"
-    
-    def add_example_postprocess(self, process_id: str, species_list: list, k_threshold: float):
-        """Example postprocess to support the button on the EXAMPLE PAGE ONLY
-        because this process hasn't run KRAKEN process we need to add the email and job name
-
-        Parameters
-        ----------
-        process_id: str
-            The ID of the process
-        species_list: list
-            what speceis are filtered from the reads
-        k_threshold: float
-            what threshold should reads be filtered from
+       
+    def get_example_data(self):
+        parent_folder = self.EXAMPLE_FOLDER_PATH
         
-        Returns
-        -------
-        is_process_added: bool
-            True if the process has been added, else None
-        """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
-        if os.path.isdir(parent_folder):
-            self.__j_manager.add_example_postprocess(process_id, '', '',k_threshold, species_list)
-            return True
-        logger.warning(f'process_id = {process_id} don\'t have a folder')
-        return None
-    
-    def copy_example_folder(self, process_folder):
-        shutil.copytree(self.EXAMPLE_FOLDER_PATH, process_folder)
+        data = {}
+        for key, value in DATA_2_VIEW_IN_HISTOGRAM.items():
+            data_path = os.path.join(parent_folder, value)
+            if os.path.isfile(data_path):
+                with open(data_path, 'r') as f:
+                    data[key] = json.load(f)
+
+        data_path = os.path.join(parent_folder, OG_TABLE)
+        df = pd.read_csv(data_path)
+        max_rows = len(df.index)
+
+        data_path = os.path.join(parent_folder, SPECIES_TREE_NEWICK)
+        if os.path.isfile(data_path):
+            with open(data_path, 'r') as f:
+                tree = f.read().replace('\n', '')
+        
+        return data, max_rows, tree
         
     def parse_form_inputs(self, form_dict: dict):
         """Parse the form of the user.
@@ -422,6 +415,8 @@ class Job_Manager_API:
                     were the key is the genomes and the value are scalars
         """
         parent_folder = os.path.join(self.__upload_root_path, process_id)
+        if 'example' in process_id:
+            parent_folder = self.EXAMPLE_FOLDER_PATH
         if not os.path.isdir(parent_folder):
             return None
         
