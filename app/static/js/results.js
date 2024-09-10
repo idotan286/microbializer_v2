@@ -10,24 +10,10 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-
-//change to true for init options
-let show_unclassified = true;
-
-//default value for k_mer_threshold
-let k_mer_threshold = 0.5;
-
-//set after init when df is given
-let all_species_list = [];
-let unchecked_all = false;
-let checked_all = true;
-
+let max_num_of_rows = 0;
 let table_offset = 0;
 let LIMIT = 50
-
-// categories colors:
-blue_color = "#2563eb" // blue-600 in tailwind
-orange_color = "#f59e0b" // amber-500 in tailwind
+let orthologous_data_columns = {}
 
 bar_chart = new Chart('bar_chart', {
     type: "bar",
@@ -68,29 +54,34 @@ function updateBarPlot(genomes_data, index){
 
 
 function makeRadioButton(group, text, is_default, genomes_data, index) {
+    var div = document.createElement("div")
     var label = document.createElement("label")
     var radio = document.createElement("input")
     radio.type = "radio"
     radio.name = group
     radio.id = text
+    radio.classList = "hidden peer"
+    label.classList = "text-center h-fit text-xs flex flex-row  bg-white peer-checked:bg-lime-600 peer-checked:text-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  hover:bg-lime-600 hover:text-white font-bold  ease-linear  transition-all   mx-2  my-4 px-2  py-3  cursor-pointer"
+    label.setAttribute("for", text);
     //radio.group = group
     if (is_default) {
         radio.checked = "checked"
         updateBarPlot(genomes_data, index)
     }
-    label.appendChild(radio)
+    div.classList = "my-2"
+    div.appendChild(radio)
 
     label.appendChild(document.createTextNode(text))
     label.addEventListener("click", (change) => {
         updateBarPlot(genomes_data, index)
     });
-    return label;
+    div.appendChild(label)
+    return div;
 }
 
 
 const parseNewick = (a) => {for(var e=[],r={},s=a.split(/\s*(;|\(|\)|,|:)\s*/),t=0;t<s.length;t++){var n=s[t];switch(n){case"(":var c={};r.branchset=[c],e.push(r),r=c;break;case",":var c={};e[e.length-1].branchset.push(c),r=c;break;case")":r=e.pop();break;case":":break;default:var h=s[t-1];")"==h||"("==h||","==h?r.name=n:":"==h&&(r.length=parseFloat(n))}}return r}
 
-let max_num_of_rows = 0;
 
 const initResultsScript = (histogram_data, max_num_of_rows_inp, tree_str) => {
     const json_histogram_data = JSON.parse(histogram_data);
@@ -128,6 +119,10 @@ const runResultsScript = async (histogram_data, max_num_of_rows, tree_str) => {
     }
 
     // create rightmost panel (OG table)
+    const orthologous_data = await get_table_data(0, LIMIT);
+    orthologous_data_columns = orthologous_data.columns
+
+
     createTable(0);
 
     // document.body.appendChild(table);
@@ -147,20 +142,27 @@ const createTable = async (offset) => {
   var table = document.getElementById('ortologic_table');
   table.innerHTML = '';
   var headers_tr = document.createElement('tr');
+  // headers_tr.classList = "flex flex-row"
   var th = document.createElement('th');
-  var text = document.createTextNode('Orthogroup');
+  var text = document.createTextNode('');
   th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99;'; // = 'rotate(90.0deg)'
   th.appendChild(text)
   headers_tr.appendChild(th)
 
 
   const orthologous_data = await get_table_data(offset, LIMIT);
+  if (orthologous_data_columns.length < 8){
+    table.classList += "w-full";
+  } else{
+    let width = orthologous_data_columns.length * 64 + 20;
+    table.style.cssText += "width:" + width + "px";
+  }
 
-  Object.values(orthologous_data.columns).forEach((key, index) => {
+  Object.values(orthologous_data_columns).forEach((key, index) => {
       console.log(key, index)
       var th = document.createElement('th');
       var text = document.createTextNode(key);
-      th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99;'
+      th.style.cssText = 'position:sticky; top:0; writing-mode:vertical-rl; background-color:white; z-index: 99; width: 48px'
       th.appendChild(text)
       headers_tr.appendChild(th)
   });
@@ -169,8 +171,10 @@ const createTable = async (offset) => {
   Object.values(orthologous_data.index).forEach((key, index) => {
       var tr = document.createElement('tr');
       var th = document.createElement('th');
-      th.style.position = 'sticky';
-      th.style.left = '0';
+      th.classList = "border-4 border-gray-200"
+      // tr.classList = "flex flex-row "
+      // th.style.position = 'sticky';
+      // th.style.left = '0';
       var text = document.createTextNode(key);
       th.appendChild(text)
       tr.appendChild(th)
@@ -178,12 +182,12 @@ const createTable = async (offset) => {
           var td = document.createElement('td');
           td.style.cssText = 'text-align:center;'
           if (key === 0){
-              td.style.cssText += 'background-color:red;'
+            td.classList = "bg-rose-600"
+              // td.style.cssText += 'background-color:red;'
           } else if (key === 1){
-              td.style.cssText += 'background-color:green;'
+            td.classList = "bg-emerald-600"
+
           }
-          var text = document.createTextNode(key);
-          td.appendChild(text);
           tr.appendChild(td);
       })
       table.appendChild(tr);
@@ -308,6 +312,7 @@ let createChart = (data) => {
   //setColor(root);
 
   const svg = d3.create("svg")
+      .attr("id", "tree")
       .attr("viewBox", [-outerRadius, -outerRadius, width, width])
       .attr("font-family", "sans-serif")
       .attr("font-size", 16);
@@ -394,28 +399,39 @@ document.getElementById("download_all").addEventListener("click", () => {
     request.send(data);
 })
 
-document.getElementById("table_up").addEventListener("click", () => {
+document.getElementById("table_down").addEventListener("click", () => {
   new_offset = table_offset + LIMIT
   if (new_offset > max_num_of_rows) {
     new_offset = max_num_of_rows
-    document.getElementById("table_up").disabled = true
-  } else {
-    document.getElementById("table_up").disabled = false
   }
 
   createTable(new_offset)
   table_offset = new_offset
 })
 
-document.getElementById("table_down").addEventListener("click", () => {
+document.getElementById("table_up").addEventListener("click", () => {
   new_offset = table_offset - LIMIT
   if (new_offset < 0) {
     new_offset = 0
-    document.getElementById("table_down").disabled = true
-  } else {
-    document.getElementById("table_down").disabled = false
   }
 
   createTable(new_offset)
   table_offset = new_offset
+})
+
+document.getElementById("download_histogram").addEventListener("click", () => {
+  var url_base64jp = document.getElementById("bar_chart").toDataURL("image/jpg");
+  /*get download button (tag: <a></a>) */
+  var a = document.getElementById("download_histogram");
+  /*insert chart image url to download button (tag: <a></a>) */
+  a.href = url_base64jp;
+})
+
+document.getElementById("download_tree").addEventListener("click", () => {
+  var tree = document.getElementById("tree").outerHTML;
+  var url_base64jp = 'data:image/svg+xml,'+ encodeURIComponent(tree);
+  /*get download button (tag: <a></a>) */
+  var a = document.getElementById("download_tree");
+  /*insert chart image url to download button (tag: <a></a>) */
+  a.href = url_base64jp;
 })

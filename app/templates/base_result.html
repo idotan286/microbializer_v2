@@ -56,8 +56,8 @@
     
     </style>
     <div class=" flex flex-col items-center justify-evenly h-full">
-        <div class="bg-white bg-opacity-75 flex flex-col items-center justify-evenly mx-4 my-2  px-4 py-2 border-2 rounded-md shadow-lg w-11/12">
-            <div class="flex w-full flex-row my-3">
+        <div class=" w-11/12 h-largest bg-white bg-opacity-75 flex flex-col items-center justify-evenly mx-4 my-2  px-4 py-2 border-2 rounded-md shadow-lg">
+            <div class="flex w-full  flex-row my-3">
                 {% for key, value in summary_stats.items() %}
                 <div class="relative flex-1 text-center mx-2 px-2 py-2 select-none border-2 shadow-lg rounded bg-white">
                     <h1 class="text-2xl my-4">{{" ".join(key.split("_")).capitalize()}}</h1>
@@ -71,50 +71,62 @@
                 </div>
                 {% endfor %}
             </div>
-            <div  class="flex w-full flex-row items-center my-3 justify-between"  style="height: 560px;">
-                <div class="w-5/12 relative border-2 flex flex-col h-full rounded mx-2 py-2 shadow-lg bg-white min-max-div-size-side" >
+            <div  class="grid grid-cols-3 w-full h-4/6 items-center my-3 justify-between ">
+                <div class="relative border-2 flex flex-col justify-between h-full rounded mx-2 py-2 shadow-lg bg-white" >
                     <h1 class="text-center text-4xl select-none">Histograms</h1>
-                    <div class="flex w-full flex-row my-3" id="parameters_option_bar_chart">
+                    <div class="flex flex-col h-full justify-center">
+                        <div class="flex w-full h-fit flex-row my-3" id="parameters_option_bar_chart"></div>
+                        <canvas id="bar_chart"></canvas>
                     </div>
-                    <canvas style="height: 360px; width: 480px" id="bar_chart" ></canvas>
                     <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
                         <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
                     </label>
                     <div class="opacity-0 absolute bottom-0 left-0 w-auto h-11/12 bg-teal-800 text-white rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-5 pointer-events-none border-black shadow-xl">
-                    <p id="help_text_bar_similarites" class="p-3 text-xl text-justify select-none">
+                    <p id="help_text_histograms" class="p-3 text-xl text-justify select-none">
                     </p>
                     </div>
-                    <a id="download_histogram" download="histogram_chart.jpg"  href="" class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 right-0 mx-2 my-2 tracking-wide font-bold text-1xl text-gray-700 select-none">
+                    <a id="download_histogram" download="histogram_chart.jpg" href="" class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 right-0 mx-2 my-2 tracking-wide font-bold text-1xl text-gray-700 select-none">
                         <img src="{{url_for('static',filename='images/down_arrow.svg')}}" width="70%" alt="*" title="Export image">
                     </a>
                 </div>
-                <div class="w-4/12 relative flex-col h-full border-2 rounded mx-2 px-2 py-2 shadow-lg bg-white min-max-div-size-center">
+                <div class="relative flex-col h-full border-2 rounded mx-2 px-2 py-2 shadow-lg bg-white">
                     <h1 class="text-center text-4xl select-none">Phylogenetic Tree</h1>
-                    <div id="body_val" class="flex flex-1 flex-col  mx-3 my-3 px-1 border-2" style="height: 480px;">
+                    <div id="body_val" class="flex flex-1 flex-col  mx-3 my-3 px-1 border-2">
                         <div id="phylo_tree_container"></div>
                     </div>
                     <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
                         <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
                     </label>
                     <div class="opacity-0 absolute bottom-0 left-0 w-auto h-11/12 bg-teal-800 text-white rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-5 pointer-events-none border-black shadow-xl">
-                    <p id="help_text_species_list" class="p-3 text-xl text-justify select-none">
-                    </p>
+                        <p id="help_text_histograms" class="p-3 text-xl text-justify select-none">
+                        </p>
                     </div>
+                    <a id="download_tree" download="phylogenetic_tree.svg" href="" class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 right-0 mx-2 my-2 tracking-wide font-bold text-1xl text-gray-700 select-none">
+                        <img src="{{url_for('static',filename='images/down_arrow.svg')}}" width="70%" alt="*" title="Export image">
+                    </a>
                 </div>
-                <div class="w-3/12 relative border-2 flex flex-col h-full rounded mx-2 py-2 shadow-lg bg-white min-max-div-size-side" style="overflow-y:scroll; overflow-x:scroll;" >
+                <div class="relative border-2 flex flex-col h-full rounded mx-2 py-2 px-4 shadow-lg bg-white " >
                     <h1 class="text-center text-4xl select-none" style="position:sticky; top:0; background-color:white">Orthogroups</h1>
-                    <table id="ortologic_table"> <!--- class="sortable" --->
-                    </table>
-                    <div class="flex items-center justify-center">
-                        <button id="table_up" class="h-8 px-4 py-2 bg-orange-200">^</button>
-                        <button id="table_down"  class="h-8 px-4 py-2 bg-orange-200 rotate-180">^</button>
+                    <div class="h-table  overflow-auto ">
+                        <table id="ortologic_table" class="table-auto w-screen border-separate "> <!--- class="sortable" --->
+                        </table>
+                    </div>
+                    <div class="flex  items-center justify-center ">
+                        <button id="table_up"></button>
+                        <label for="table_up" class="flex flex-col  items-center justify-center h-8 p-2 m-2 bg-orange-200 hover:bg-orange-600 hover:text-white transition-bg ease-linear duration-150 border-2 select-none cursor-pointer shadow-lg">
+                            <span class="font-bold">Previous</span>
+                        </label>
+                        <button id="table_down"></button>
+                        <label for="table_down" class="flex flex-col  items-center justify-center h-8 p-2 m-2 bg-orange-200 hover:bg-orange-600 hover:text-white transition-bg ease-linear duration-150 border-2 select-none cursor-pointer shadow-lg ">
+                            <span class="font-bold">Next</span>
+                        </label>
                     </div>
 
                     <div class="opacity-0 absolute bottom-0 left-0 w-auto h-11/12 bg-teal-800 text-white rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-5 pointer-events-none border-black shadow-xl">
-                    <p id="help_text_pie_chart" class="p-3 text-xl text-justify select-none">
+                    <p id="help_table" class="p-3 text-xl text-justify select-none">
                     </p>
                     </div>
-                    <a id="download_pie" download="pie_chart.jpg"  href="" class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 right-0 mx-2 my-2 tracking-wide font-bold text-1xl text-gray-700 select-none">
+                    <a id="download_table" download="table.csv"  href="" class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 right-0 mx-2 my-2 tracking-wide font-bold text-1xl text-gray-700 select-none">
                         <img src="{{url_for('static',filename='images/down_arrow.svg')}}" width="70%" alt="*" title="Export image">
                     </a>
                 </div>
