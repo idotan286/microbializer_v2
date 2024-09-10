@@ -386,19 +386,6 @@ let createChart = (data) => {
   return Object.assign(svg.node(), {update});
 };
 
-document.getElementById("download_page").addEventListener("click", () => {
-    let request = new XMLHttpRequest();
-    request.open('POST', '');
-    var data = JSON.stringify({"action": "redirect_page"});
-    request.send(data);
-})
-document.getElementById("download_all").addEventListener("click", () => {
-    let request = new XMLHttpRequest();
-    request.open('POST', '');
-    var data = JSON.stringify({"action": "download_all"});
-    request.send(data);
-})
-
 document.getElementById("table_down").addEventListener("click", () => {
   new_offset = table_offset + LIMIT
   if (new_offset > max_num_of_rows) {
@@ -434,4 +421,16 @@ document.getElementById("download_tree").addEventListener("click", () => {
   var a = document.getElementById("download_tree");
   /*insert chart image url to download button (tag: <a></a>) */
   a.href = url_base64jp;
+})
+
+document.getElementById("download_page").addEventListener("click", () => {
+  const resultId = url.pathname.replace('/results/', '');
+  document.location.href = `/download_page/${resultId}`;
+})
+
+document.getElementById("download_all").addEventListener("click", () => {
+  let request = new XMLHttpRequest();
+  request.open('POST', '');
+  var data = JSON.stringify({"action": "download_all"});
+  request.send(data);
 })

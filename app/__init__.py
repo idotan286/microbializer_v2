@@ -219,7 +219,15 @@ def results(process_id):
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
 
     summary_stats = {
-        'Microbializer results': []
+        'Job Name': '1gad',
+        'Job Name1': '1gad',
+        'Job Name2': '1gad',
+        'Job Name3': '1gad',
+        'Job Name4': '1gad',
+        'Job Name5': '1gad',
+        'Job Name6': '1gad',
+        'Job Name7': '1gad',
+        'E value': 'tesxt',
     }
     logger.info(f'histogram_data = {histogram_data}')
     return render_template_wrapper('results.html', 
