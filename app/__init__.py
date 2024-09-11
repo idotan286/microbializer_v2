@@ -199,22 +199,6 @@ def results(process_id):
     results.html: HTML page
         the page contains the reads matrix to display to the user
     """
-    if request.method == 'POST':
-        data = json.loads(request.data.decode())
-        if "action" not in data:
-            redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
-        if "page" in data["action"]:
-            logger.info(f'redirect to doanload_page')
-            return redirect(url_for('download_page', process_id=process_id))
-        elif "all" in data["action"]:
-            all_outputs_path = manager.get_all_outputs_path(process_id)
-            if all_outputs_path:
-                logger.info(f'send all outputs file to user')
-                return send_file(all_outputs_path, mimetype='application/octet-stream')
-            else:
-                redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
-        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
-
     histogram_data = manager.get_historgram_data(process_id)
     if histogram_data == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.HISTOGRAM_DATA_IS_NULL.name))
@@ -228,23 +212,14 @@ def results(process_id):
     if newick_tree_str == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
 
-    summary_stats = {
-        'Job Name': '1gad',
-        'Job Name1': '1gad',
-        'Job Name2': '1gad',
-        'Job Name3': '1gad',
-        'Job Name4': '1gad',
-        'Job Name5': '1gad',
-        'Job Name6': '1gad',
-        'Job Name7': '1gad',
-        'E value': 'tesxt',
-    }
+    summary_stats = manager.get_summary_stats(process_id)
     logger.info(f'histogram_data = {histogram_data}')
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
         tree_str=json.dumps(newick_tree_str),
         max_num_of_rows=max_num_of_rows,
-        summary_stats=summary_stats
+        summary_stats=summary_stats, 
+        process_id=process_id
     )
 
 @app.route('/error/<error_type>')
