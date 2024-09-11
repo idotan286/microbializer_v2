@@ -126,6 +126,10 @@ class Job_Manager_Thread_Safe_Microbializer:
         """
         logger.info(f'process_folder_path = {process_folder_path}')
         files2fltr = self.__get_files_in_folder(process_folder_path)
+        if job_name:
+            job_arguemnts[mc.JOB_NAME] = job_name
+        if email_address:
+            job_arguemnts[mc.EMAIL] = email_address
         pbs_id = self.__handler.submit_micro_job(files2fltr, job_arguemnts)
         return pbs_id
         

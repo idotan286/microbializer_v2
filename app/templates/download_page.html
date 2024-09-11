@@ -12,7 +12,7 @@
 
         <ul class=" flex flex-wrap justify-between ">
             {% for title, files_dict in paths2download.items() %}
-            <li class="w-56 p-4 relative bg-white bg-opacity-25 text-black hover:bg-opacity-60 ease-in-out  transition-all  duration-150 ">
+            <li class="w-56 p-4 relative bg-white bg-opacity-25 text-black hover:bg-opacity-60 ease-in-out rounded-md  transition-all  duration-150 ">
                 <h1 class="text-1xl font-bold">{{title}}</h1>
                 <ul>
                     {% for file_name, _ in files_dict.items() %}
