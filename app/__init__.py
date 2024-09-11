@@ -160,10 +160,20 @@ def download_page(process_id):
     results: file
         When using the POST request type
     """
-    list_of_files_to_export = manager.export_files(process_id)
-    if list_of_files_to_export == None:
+    dict_of_files_to_export = manager.get_files_dict(process_id)
+    if dict_of_files_to_export == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
-    return render_template_wrapper('export_file.html', list_of_files_to_export=json.dumps(list_of_files_to_export))
+    return render_template_wrapper('download_page.html', paths2download=dict_of_files_to_export, process_id=process_id)
+
+@app.route('/download/<process_id>/<file_name>', methods=['GET'])
+def download(process_id, file_name):
+    file_path = manager.get_file(process_id, file_name)
+    if file_path == None:
+        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.FILE_NOT_FOUND.name))
+        
+    return send_file(file_path, as_attachment=True, mimetype='application/octet-stream')
+
+
 
 @app.route('/get_table/<process_id>', methods=['GET'])
 def get_table(process_id):

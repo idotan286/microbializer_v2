@@ -9,7 +9,7 @@ from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
 
 from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, \
     E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
-    DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, \
+    DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, \
     COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED_FORMAT, ERROR_FILE_PATH
 from SharedConsts import K_MER_COUNTER_MATRIX_FILE_NAME, \
     FINAL_OUTPUT_FILE_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME, EMAIL_CONSTS, UI_CONSTS, CUSTOM_DB_NAME, State, POSTPROCESS_JOB_PREFIX, GENOME_DOWNLOAD_SUMMARY_RESULTS_FILE_NAME, FINAL_OUTPUT_FILE_CONTAMINATED_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES_NEW_CONTAMINATED
@@ -56,6 +56,10 @@ class Job_Manager_API:
         self.input_validator = InputValidator() # creates the input_validator
         self.__func2update_html = func2update_html
         self.EXAMPLE_FOLDER_PATH = r'/data/www/flask/microbializer_v2/example_process_results/'
+        self.__relative_files2download_and_paths = {}
+        for title, paths in PATHS_TO_DOWNLOAD.items():
+            for file_name, path in paths.items():
+                self.__relative_files2download_and_paths[file_name] = path
 
     def __build_and_send_mail(self, process_id, subject, content, email_address):
         """Sends mail to user
@@ -262,7 +266,7 @@ class Job_Manager_API:
         logger.warning(f'process_id = {process_id}, can\'t add process: is_valid_email = {is_valid_email}')
         return False
         
-    def export_files(self, process_id: str):
+    def get_files_dict(self, process_id: str):
         """After the post process has finished (and the user already filtred his reads), this will return the path to the result file
 
         Parameters
@@ -272,13 +276,37 @@ class Job_Manager_API:
         
         Returns
         -------
-        list_of_files_to_export: list
-            list of (title, path) for files to download
+        dict_of_files_to_export: dict
+            Dict of (title, path) for files to download
         """
         parent_folder = os.path.join(self.__upload_root_path, process_id)
-        list_of_files_to_export = []
-        return list_of_files_to_export
+        if not os.path.exists(parent_folder):
+            return None
+
+        return PATHS_TO_DOWNLOAD
     
+    def get_file(self, process_id: str, file_name: str):
+        """Find specific result file and download
+
+        Parameters
+        ----------
+        process_id: str
+            The ID of the process
+        file_name: str
+            The name of the file
+        Returns
+        -------
+        path2file: str
+            path to required file, else None
+        """
+        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        if not file_name in self.__relative_files2download_and_paths:
+            return None
+        path2file = os.path.join(parent_folder, self.__relative_files2download_and_paths[file_name])
+        if not os.path.exists(path2file):
+            return None
+        return path2file
+
     def get_process_state(self, process_id):
         """Given process_id returns the kraken process state
 
