@@ -21,7 +21,7 @@
                             <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
                         </label> -->
                         <a href="/download/{{process_id}}/{{file_name}}">
-                            <span>⇩ {{file_name}}</span>
+                            <span>⇩ {{file_name.replace("_", " ")}}</span>
                         </a>
                     </li>
                     {% endfor %}
