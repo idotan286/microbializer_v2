@@ -213,7 +213,7 @@ def results(process_id):
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
 
     summary_stats = manager.get_summary_stats(process_id)
-    logger.info(f'histogram_data = {histogram_data}')
+    summary_stats.pop('run_dir', None)
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
         tree_str=json.dumps(newick_tree_str),
