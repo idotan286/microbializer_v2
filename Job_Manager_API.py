@@ -410,14 +410,20 @@ class Job_Manager_API:
             dict of dict were key is the tilte of the data and the data is a dict:
                     were the key is the genomes and the value are scalars
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        if process_id != 'example':
+            parent_folder = os.path.join(self.__upload_root_path, process_id)
+        else:
+            parent_folder = self.EXAMPLE_FOLDER_PATH
+        
         if not os.path.isdir(parent_folder):
             return {}
-        
         input_file = os.path.join(parent_folder, JOB_PARAMETERS_FILE_NAME)
+        
         if os.path.exists(input_file):
             with open(input_file) as json_file:
-                return json.load(json_file)
+                dict2return = json.load(json_file)
+                dict2return.pop('run_dir', None)
+                return dict2return
         return {}
     
     def get_historgram_data(self, process_id: str):
