@@ -56,13 +56,13 @@
     
     </style>
     <div class=" flex flex-col items-center justify-evenly h-full">
-        <div class=" w-11/12 h-largest bg-white bg-opacity-75 flex flex-col items-center justify-evenly mx-4 my-2  px-4 py-2 border-2 rounded-md shadow-lg">
+        <div class=" w-11/12 h-largest bg-white bg-opacity-75 flex flex-col items-center mx-4 my-2  px-4 py-2 border-2 rounded-md shadow-lg">
             <div class="flex w-full  flex-row my-3">
                 {% for key, value in summary_stats.items() %}
                 <div class="relative flex-1 text-center mx-2 px-2 py-2 select-none border-2 shadow-lg rounded bg-white">
                     <h1 class="text-2xl my-4">{{" ".join(key.split("_")).capitalize()}}</h1>
                     <h1 class="text-lg">{{value}}</h1>
-                    <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
+                    <label class="peer w-6 h-5 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-1 tracking-wide ">
                         <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
                     </label>
                     <div class="opacity-0 absolute bottom-0 left-0 w-46 h-20 bg-teal-800 text-white rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-5 pointer-events-none border-black shadow-xl">
@@ -73,16 +73,16 @@
             </div>
             <div class="flex flex-row my-3">
                 <a href="/download_page/{{process_id}}">
-                    <label class="w-128  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
+                    <label class="w-128  flex flex-col  items-center  px-4  py-2  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-2 cursor-pointer select-none">
                         <span class=" text-base font-bold leading-normal text-sm select-none">Results for Download</span>
                     </label>
                 </a>
             </div>
             <div  class="grid grid-cols-3 w-full h-4/6 items-center my-3 justify-between ">
                 <div class="relative border-2 flex flex-col justify-between h-full rounded mx-2 py-2 shadow-lg bg-white" >
-                    <h1 class="text-center text-4xl select-none">Histograms</h1>
+                    <h1 class="text-center text-3xl select-none">Histograms</h1>
                     <div class="flex flex-col h-full justify-center">
-                        <div class="flex w-full h-fit flex-row my-3" id="parameters_option_bar_chart"></div>
+                        <div class="flex w-full h-fit flex-row my-2" id="parameters_option_bar_chart"></div>
                         <canvas id="bar_chart"></canvas>
                     </div>
                     <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
@@ -97,8 +97,8 @@
                     </a>
                 </div>
                 <div class="relative flex-col h-full border-2 rounded mx-2 px-2 py-2 shadow-lg bg-white">
-                    <h1 class="text-center text-4xl select-none">Phylogenetic Tree</h1>
-                    <div id="body_val" class="flex flex-1 flex-col  mx-3 my-3 px-1 border-2">
+                    <h1 class="text-center text-3xl select-none">Phylogenetic Tree</h1>
+                    <div id="body_val" class="flex flex-1 flex-col  mx-2 my-3 px-1 border-2">
                         <div id="phylo_tree_container"></div>
                     </div>
                     <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
@@ -113,7 +113,7 @@
                     </a>
                 </div>
                 <div class="relative border-2 flex flex-col h-full rounded mx-2 py-2 px-4 shadow-lg bg-white " >
-                    <h1 class="text-center text-4xl select-none" style="position:sticky; top:0; background-color:white">Orthogroups</h1>
+                    <h1 class="text-center text-3xl select-none" style="position:sticky; top:0; background-color:white">Orthogroups</h1>
                     <div class="h-table  overflow-auto ">
                         <table id="ortologic_table" class="table-auto w-screen border-separate "> <!--- class="sortable" --->
                         </table>
