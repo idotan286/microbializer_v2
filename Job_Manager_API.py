@@ -280,10 +280,10 @@ class Job_Manager_API:
             Dict of (title, path) for files to download
         """
         parent_folder = os.path.join(self.__upload_root_path, process_id)
-        if not os.path.exists(parent_folder):
-            return None
+        if os.path.exists(parent_folder) or process_id == 'example':
+            return PATHS_TO_DOWNLOAD
 
-        return PATHS_TO_DOWNLOAD
+        return None
     
     def get_file(self, process_id: str, file_name: str):
         """Find specific result file and download
@@ -299,9 +299,13 @@ class Job_Manager_API:
         path2file: str
             path to required file, else None
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
         if not file_name in self.__relative_files2download_and_paths:
             return None
+        if process_id != 'example':
+            parent_folder = os.path.join(self.__upload_root_path, process_id)
+        else:
+            parent_folder = self.EXAMPLE_FOLDER_PATH
+            
         path2file = os.path.join(parent_folder, self.__relative_files2download_and_paths[file_name])
         if not os.path.exists(path2file):
             return None
