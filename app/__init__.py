@@ -374,7 +374,8 @@ def example():
         histogram_data=json.dumps(histogram_data), 
         tree_str=json.dumps(newick_tree_str),
         max_num_of_rows=max_num_of_rows,
-        summary_stats=summary_stats
+        summary_stats=summary_stats,
+        process_id='example'
     )
 
 @app.route("/debug/killswitch", methods=['GET', 'POST'])
