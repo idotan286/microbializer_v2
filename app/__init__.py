@@ -215,7 +215,6 @@ def results(process_id):
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
 
     summary_stats = manager.get_summary_stats(process_id)
-    summary_stats.pop('run_dir', None)
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
         tree_str=json.dumps(newick_tree_str),
@@ -366,9 +365,7 @@ def example():
     """
     histogram_data, max_num_of_rows, newick_tree_str = manager.get_example_data()
     
-    summary_stats = {
-        'job_name': 'example'
-    }
+    summary_stats = manager.get_summary_stats('example')
     
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
