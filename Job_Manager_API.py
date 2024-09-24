@@ -55,7 +55,7 @@ class Job_Manager_API:
         self.__j_manager = Job_Manager_Thread_Safe_Microbializer(max_number_of_process, upload_root_path, input_file_names, self.__process_state_changed)
         self.input_validator = InputValidator() # creates the input_validator
         self.__func2update_html = func2update_html
-        self.EXAMPLE_FOLDER_PATH = r'/data/www/flask/microbializer_v2/example_process_results/'
+        self.EXAMPLE_FOLDER_PATH = r'/lsweb/pupko/microbializer/example_process_results/'
         self.__relative_files2download_and_paths = {}
         for title, paths in PATHS_TO_DOWNLOAD.items():
             for file_name, path in paths.items():
