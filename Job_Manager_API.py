@@ -347,7 +347,6 @@ class Job_Manager_API:
         return "no process ID folder"
        
     def get_example_data(self):
-        logger.info(f'get_example_data')
         parent_folder = self.EXAMPLE_FOLDER_PATH
         
         data = {}
@@ -356,18 +355,13 @@ class Job_Manager_API:
             if os.path.isfile(data_path):
                 with open(data_path, 'r') as f:
                     data[key] = json.load(f)
-        logger.info(f'data = {data}')
         data_path = os.path.join(parent_folder, OG_TABLE)
-        logger.info(f'data_path = {data_path}')
         df = pd.read_csv(data_path)
-        logger.info(f'df = {df}')
         max_rows = len(df.index)
-        logger.info(f'max_rows = {max_rows}')
         data_path = os.path.join(parent_folder, SPECIES_TREE_NEWICK)
         if os.path.isfile(data_path):
             with open(data_path, 'r') as f:
                 tree = f.read().replace('\n', '')
-        logger.info(f'tree = {tree}')
         return data, max_rows, tree
         
     def parse_form_inputs(self, form_dict: dict):
