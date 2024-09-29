@@ -141,7 +141,7 @@ def process_state(process_id):
             "gif": UI_CONSTS.states_gifs_dict[job_state],
             "message_to_user": UI_CONSTS.PROCESS_INFO_KR,
             "update_text": UI_CONSTS.TEXT_TO_RELOAD_HTML,
-            "update_interval_sec": UI_CONSTS.FETCH_UPDATE_INTERVAL_HTML_SEC, ,
+            "update_interval_sec": UI_CONSTS.FETCH_UPDATE_INTERVAL_HTML_SEC,
             "progressbar": progressbar
         }
         return render_template_wrapper('process_running.html', **kwargs)
