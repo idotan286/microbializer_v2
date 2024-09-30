@@ -355,6 +355,18 @@ def overview():
     """
     return render_template_wrapper('overview.html')
 
+@app.route("/faq")
+def faq():
+    """Endpoint to about page.
+    Parameters
+    ----------
+    Returns
+    -------
+    about.html: HTML page
+        about page
+    """
+    return render_template_wrapper('faq.html')
+    
 @app.route("/example", methods=['GET', 'POST'])
 def example():
     """Endpoint to example page.
