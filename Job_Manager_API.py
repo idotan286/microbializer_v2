@@ -10,8 +10,7 @@ from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
 from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, \
     E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
-    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED_FORMAT, ERROR_FILE_PATH, \
-    PROGRESS_BAR
+    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED_FORMAT, ERROR_FILE_PATH
 from SharedConsts import K_MER_COUNTER_MATRIX_FILE_NAME, \
     FINAL_OUTPUT_FILE_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME, EMAIL_CONSTS, UI_CONSTS, CUSTOM_DB_NAME, State, POSTPROCESS_JOB_PREFIX, GENOME_DOWNLOAD_SUMMARY_RESULTS_FILE_NAME, FINAL_OUTPUT_FILE_CONTAMINATED_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES_NEW_CONTAMINATED
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
@@ -56,7 +55,7 @@ class Job_Manager_API:
         self.__j_manager = Job_Manager_Thread_Safe_Microbializer(max_number_of_process, upload_root_path, input_file_names, self.__process_state_changed)
         self.input_validator = InputValidator() # creates the input_validator
         self.__func2update_html = func2update_html
-        self.EXAMPLE_FOLDER_PATH = r'/data/www/flask/microbializer_v2/example_process_results/'
+        self.EXAMPLE_FOLDER_PATH = r'/lsweb/pupko/microbializer/example_process_results/'
         self.__relative_files2download_and_paths = {}
         for title, paths in PATHS_TO_DOWNLOAD.items():
             for file_name, path in paths.items():
@@ -281,10 +280,10 @@ class Job_Manager_API:
             Dict of (title, path) for files to download
         """
         parent_folder = os.path.join(self.__upload_root_path, process_id)
-        if not os.path.exists(parent_folder):
-            return None
+        if os.path.exists(parent_folder) or process_id == 'example':
+            return PATHS_TO_DOWNLOAD
 
-        return PATHS_TO_DOWNLOAD
+        return None
     
     def get_file(self, process_id: str, file_name: str):
         """Find specific result file and download
@@ -300,9 +299,13 @@ class Job_Manager_API:
         path2file: str
             path to required file, else None
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
         if not file_name in self.__relative_files2download_and_paths:
             return None
+        if process_id != 'example':
+            parent_folder = os.path.join(self.__upload_root_path, process_id)
+        else:
+            parent_folder = self.EXAMPLE_FOLDER_PATH
+            
         path2file = os.path.join(parent_folder, self.__relative_files2download_and_paths[file_name])
         if not os.path.exists(path2file):
             return None
@@ -352,16 +355,13 @@ class Job_Manager_API:
             if os.path.isfile(data_path):
                 with open(data_path, 'r') as f:
                     data[key] = json.load(f)
-
         data_path = os.path.join(parent_folder, OG_TABLE)
         df = pd.read_csv(data_path)
         max_rows = len(df.index)
-
         data_path = os.path.join(parent_folder, SPECIES_TREE_NEWICK)
         if os.path.isfile(data_path):
             with open(data_path, 'r') as f:
                 tree = f.read().replace('\n', '')
-        
         return data, max_rows, tree
         
     def parse_form_inputs(self, form_dict: dict):
@@ -410,14 +410,20 @@ class Job_Manager_API:
             dict of dict were key is the tilte of the data and the data is a dict:
                     were the key is the genomes and the value are scalars
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        if process_id != 'example':
+            parent_folder = os.path.join(self.__upload_root_path, process_id)
+        else:
+            parent_folder = self.EXAMPLE_FOLDER_PATH
+        
         if not os.path.isdir(parent_folder):
             return {}
-        
         input_file = os.path.join(parent_folder, JOB_PARAMETERS_FILE_NAME)
+        
         if os.path.exists(input_file):
             with open(input_file) as json_file:
-                return json.load(json_file)
+                dict2return = json.load(json_file)
+                dict2return.pop('run_dir', None)
+                return dict2return
         return {}
     
     def get_historgram_data(self, process_id: str):
@@ -534,36 +540,6 @@ class Job_Manager_API:
         
         return None
 
-    def get_progress_bar(self, process_id: str):
-        """Return progress bar list
-
-        Parameters
-        ----------
-        process_id: str
-            The ID of the process
-        
-        Returns
-        -------
-        progress_status: str
-            which stages and done
-        """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
-        if not os.path.isdir(parent_folder):
-            return None
-        
-        data = {}
-        data_path = os.path.join(parent_folder, PROGRESS_BAR)
-        if os.path.isfile(data_path):
-            import csv
-            progressbar = []
-            with open(data_path, newline='') as csvfile:
-                reader = csv.DictReader(csvfile)
-                for row in reader:
-                    progressbar.append (row)
-            return progressbar
-        
-        return []
-        
     def get_all_outputs_path(self, process_id: str):
         """get path to all outputs
 

@@ -133,16 +133,14 @@ def process_state(process_id):
     if job_state == State.Crashed:
         return redirect(url_for('error_from_job', process_id=process_id))
     if job_state != State.Finished:
-            # here we decide what GIF will be displayed to the 
-        progressbar = manager.get_progress_bar(process_id)
+        # here we decide what GIF will be displayed to the user
         kwargs = {
             "process_id": process_id,
             "text": UI_CONSTS.states_text_dict[job_state],
             "gif": UI_CONSTS.states_gifs_dict[job_state],
             "message_to_user": UI_CONSTS.PROCESS_INFO_KR,
             "update_text": UI_CONSTS.TEXT_TO_RELOAD_HTML,
-            "update_interval_sec": UI_CONSTS.FETCH_UPDATE_INTERVAL_HTML_SEC,
-            "progressbar": progressbar
+            "update_interval_sec": UI_CONSTS.FETCH_UPDATE_INTERVAL_HTML_SEC
         }
         return render_template_wrapper('process_running.html', **kwargs)
     else:
@@ -217,7 +215,6 @@ def results(process_id):
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
 
     summary_stats = manager.get_summary_stats(process_id)
-    summary_stats.pop('run_dir', None)
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
         tree_str=json.dumps(newick_tree_str),
@@ -368,15 +365,14 @@ def example():
     """
     histogram_data, max_num_of_rows, newick_tree_str = manager.get_example_data()
     
-    summary_stats = {
-        'job_name': 'example'
-    }
+    summary_stats = manager.get_summary_stats('example')
     
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
         tree_str=json.dumps(newick_tree_str),
         max_num_of_rows=max_num_of_rows,
-        summary_stats=summary_stats
+        summary_stats=summary_stats,
+        process_id='example'
     )
 
 @app.route("/debug/killswitch", methods=['GET', 'POST'])
