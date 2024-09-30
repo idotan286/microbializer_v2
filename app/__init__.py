@@ -134,13 +134,15 @@ def process_state(process_id):
         return redirect(url_for('error_from_job', process_id=process_id))
     if job_state != State.Finished:
         # here we decide what GIF will be displayed to the user
+        progressbar = manager.get_progress_bar(process_id)                                                  
         kwargs = {
             "process_id": process_id,
             "text": UI_CONSTS.states_text_dict[job_state],
             "gif": UI_CONSTS.states_gifs_dict[job_state],
             "message_to_user": UI_CONSTS.PROCESS_INFO_KR,
             "update_text": UI_CONSTS.TEXT_TO_RELOAD_HTML,
-            "update_interval_sec": UI_CONSTS.FETCH_UPDATE_INTERVAL_HTML_SEC
+            "update_interval_sec": UI_CONSTS.FETCH_UPDATE_INTERVAL_HTML_SEC,
+            "progressbar": progressbar                         
         }
         return render_template_wrapper('process_running.html', **kwargs)
     else:

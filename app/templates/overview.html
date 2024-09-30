@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title >Genomefltr</title>
+  <title >M1CR0B1AL1Z3R</title>
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   <link rel="icon" type="image/x-icon" href="{{url_for('static',filename='images/dna.svg')}}">
   <link rel="stylesheet" href="{{url_for('static',filename='css/output.css')}}">
@@ -17,70 +17,98 @@
     <div class="flex flex-col mx-auto  h-full justify-start items-center">
     <div class="flex flex-col my-4 justify-center items-center">
         <h1 class="text-9xl text-center  text-white select-none my-5 text-outline">Overview</h1>
-                <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            Here we present GenomeFLTR <em><a href="https://doi.org/10.1093/nar/gkad410">(Dotan, et al., 2023)</a></em>, a web server that easily filters genomic reads. No technical skill, downloading, or computational power is needed. Raw reads are uploaded to the server and contaminated reads are removed, based on similarity to databases that are periodically and automatically updated. A user can also provide a tailored dataset to compare against. The contaminated reads are analyzed, e.g., the reads taxonomy distribution is provided. Our server provides a simple and interactive graphical user interface (GUI) that allows controlling the filtering process.
+		
+		<img class="w-1/2 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/flow-chart.png')}}">
+		
+		<h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Introduction</h2>
+        <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
+            Significant technological advances in the last decade have enabled the use of large-scale sequencing, mining, and analysis of bacterial and archaeal genomic data in an unprecedented resolution. Such large-scale analyses have contributed to our understanding of microbial diversity and evolution, both within populations and among different phylogenetic groups. Following sequencing and genome assembly, analyzing microbial genomics data involves various computational steps such as the detecting open reading frames (ORFs), finding orthologous groups, aligning orthologous sequences, and reconstructing phylogenetic trees. These steps as well as additional analysis-specific computations require the use of multiple bioinformatics tools and various ad-hoc programming scripts, making the entire process cumbersome, tedious, and prone to errors due to manual handling. This has prompted laboratories to implement their own in-house analysis pipelines, and thus different analysis applications have begun to emerge. These applications require specific working environments, i.e., operating system, multi-cores machines, and more than basic technological skills, such as installations and running.
         </p>
         
-        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Input</h2>
+        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Motivation</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            The minimal input to the GenomeFLTR server consists of:
-            <br/>
-            1. <strong>A single read file or two pair-ended read files</strong>. Standard formats such as <em><a href="https://en.wikipedia.org/wiki/FASTQ_format">Fastq</a></em> and <em><a href="https://en.wikipedia.org/wiki/FASTA_format">Fasta</a></em> are accepted, or compressed gz versions of these two formats. The number of reads is limited to 50 millions for paired reads and 100 millions for single reads.
-            <br/>
-            2. <strong>A database</strong> against which the reads are queried (e.g., to detect bacterial contaminants, a user can choose a bacterial database containing multiple genomes from a diverse set of bacteria). A user may also input a custom database. The entire set of sequence databases available in GenomeFLTR is automatically updated monthly from NCBI. These databases are processed for the Kraken search engine format <em><a href="https://doi.org/10.1186/gb-2014-15-3-r46">(Wood, et al., 2019)</a></em>. Default databases are bacteria, human, fungi, protozoa, <em><a href="https://www.ncbi.nlm.nih.gov/tools/vecscreen/univec/">univec</a></em> (i.e., a dataset of vector sequences), plasmid, archaea, viral, Kraken standard (i.e., all complete bacterial, archeal, and viral genomes in <em><a href="https://www.ncbi.nlm.nih.gov/refseq/">Refseq</a></em>), and custom. For the custom database, a user inserts the NCBI taxonomy identifiers of the species included in <em><a href="https://www.ncbi.nlm.nih.gov/refseq/">Refseq</a></em> (NCBI Reference Sequence Database) to compare against and may choose specific accession numbers of genomes from this species to analyze. If accession numbers are not provided, the first three genomes from <em><a href="https://www.ncbi.nlm.nih.gov/refseq/">Refseq</a></em> are downloaded for each species. 
+            M1CR0B1AL1Z3R (pronounced: microbializer) was developed in order to facilitate large scale microbial genomics analyses. Our goal was to make M1CR0B1AL1Z3R easily accessible to the scientific community and thus to allow handling the abovementioned computational challenges of analyzing dozens of bacterial genomes simultaneously. Such computations are highly demanding, and therefore, M1CR0B1AL1Z3R runs background computational processes in parallel on a high-performance computer cluster. Notably, due to the high computational demand of these analyses, they cannot run on a simple desktop computer. To this end, M1CR0B1AL1Z3R enables the research community to analyze massive genomic data that previously necessitated expensive computational infrastructure and expert knowledge. Visual and textual results, ready for publication or further analysis, are given as an output.
         </p>
         
-        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Methodology</h2>
+        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">The Data</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            Three simple steps to use GenomeFLTR: (1) <strong>Upload</strong> read data and specify optional parameters; (2) <strong>View and analyze</strong> contamination results with the interactive GUI; (3) <strong>Download</strong> the filtered reads (figure 1).
+            The input to the M1CR0B1AL1Z3R web server is a collection of genomic sequences, one file for each genome. In other words, the input data were already binned (binning is the classification of reads and contigs to different taxonomic units) and assembled (the generation of contigs from sequence reads). Of note, we do not assume that the reads were assembled to a single contig. The input to our web server can thus be microbial genomes, where each genome is composed of one or multiple contigs. Currently, the web server is designed for bacterial and archaeal genomes (eukaryotic genomes and transcriptomes are not handled). As we show in the <a href="https://doi.org/10.1186/gb-2014-15-3-r46">Gallery section</a>, M1CR0B1AL1Z3R is useful for analyzing genomes from a range of phylogenetic relatedness: from genomic sequences of bacterial isolates of a specific species, to genomes of different species that belong to a diverse phylogenetic group such as the Gammaproteobacteria.
         </p>
-        <img class="w-1/2 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/graphical_abstract_overview_page.png')}}">
+         <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Input</h2>
+        <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
+            The input for the web server is a zipped folder (either  <a href="https://support.microsoft.com/en-us/help/14200/windows-compress-uncompress-zip-files" target="_blank">.zip</a> or <a href="https://linhost.info/2012/08/gzip-files-in-windows/" target="_blank">.tar.gz</a>) in which each file is in a  <a href="https://www.ncbi.nlm.nih.gov/blast/fasta.shtml" target="_blank">FASTA format</a> containing genomic sequence of a different species. Each file can contain either a fully assembled genome or a collection of contigs (originating from the same genome).
+        </p>
+        
+        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Basic terms</h2>
+        <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
+			&#x25cf; An open reading frame (ORF) is the part the gene that encodes for a protein.
+			<br/><br>
+			&#x25cf; Orthologous genes or orthologs are genes that diverged from a single gene in the common ancestor of the analyzed genomes, following speciation events. Orthologous genes have high sequence similarity that can be detected using remote homology search algorithms such as BLAST. High sequence similarity can also stem from gene duplication events and in this case, the sequences are not orthologs but are considered paralogs. Finally, genes can undergo horizontal transfer events, and in this case they are considered xenologs.
+			<br/><br>
+			&#x25cf; Species tree reflect the evolution of orthologous sequences, i.e., the vertical phylogenetic relationships among the analyzed genome. In Bacteria and Archaea, many genes do not follow the species tree due to horizontal gene transfer events. Gene trees (are being reconstructed based on a MSA of a single-gene orthologous group and thus) represent the evolutionary relationships among the analyzed genes. Gene trees can differ from the species tree due to horizontal gene transfer and gene duplications events. Trees in general are inferred and not observed and as such they are subjected to biases and errors (see <a href="#msa_reliability">Can I trust the obtained core gene phylogenetic tree?</a>).
+			<br><br>
+			&#x25cf; A phyletic pattern matrix is a table in which row i is an orthologous group, column j is a genome and the i,j entry contains 1 if the member of orthologous family i from genome j is present, o.w., 0. Phyletic patterns data are used to infer events of gene loss and gene gain (acquisition), taking into account the phylogenetic relationships among the analyzed genomes.
+			<br><br>
+			&#x25cf; Core genes are genes that are shared by all analyzed genomes. The protein sequences that are encoded by these genes are called the core proteome. Core genes are often essential to the organism and hence are never lost. As these genes are found in all analyzed genomes, they are often used to reconstruct the species tree. In contrast, the pan genome is the entire set of genes, i.e., a gene belongs to the pan genome if it is present in at least one of the analyzed genomes.
+			<br><br>
+			&#x25cf; GC content: the percentage of the nucleotides G and C out of the total number of nucleotides. GC content varies among genomes.
+        </p>
+        
+        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Output and methodology</h2>
         <p class="w-3/4 text-center text-ssm p-3 py-0 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            Figure 1: Illustration of the three steps.
+			<br>
+            M1CR0B1AL1Z3R implements the following algorithmic steps:
+            <br><br>
+			&#x25cf; M1CR0B1AL1Z3R extract all ORFs from all genomes using Prodigal (<a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-119" target="_blank">Hyatt D., et al., BMC Bioinformatics, 2010</a>).
+			<br><br>
+			&#x25cf; M1CR0B1AL1Z3R detects homologous genes (all against all) using MMSEQS2 (<a href="https://www.nature.com/articles/nbt.3988" target="_blank">Steinegger M. & Soding J., Nat Biotechnol, 2017</a>) and then clusters them using MCL (<a href="https://dspace.library.uu.nl/bitstream/handle/1874/848/full.pdf?sequence=1&isAllowed=y" target="_blank">Van Dongen SM., Thesis, 2000</a>).
+			<br><br>
+			&#x25cf; M1CR0B1AL1Z3R translates each orthologous group and uses MAFFT (<a href="https://academic.oup.com/mbe/article/30/4/772/1073398" target="_blank">Katoh K. & Standley DM., Mol Biol Evol, 2013</a>) to reconstruct an amino acid (AA) multiple sequence alignment. Once aligned, M1CR0B1AL1Z3R reverse translates each AA alignment to get the corresponding codon alignment.
+			<br><br>
+			&#x25cf; M1CR0B1AL1Z3R computes the core-proteome (proteins that are shared across all bacterial genomes) and provides the core-proteome alignment, based on which, the species tree is often inferred. In cases where there are duplications (i.e., two genomes for which the sequences of the core genes are identical), a reduced core-proteome alignment (containing only unique sequences) is provided as well.
+			<br><br>
+			&#x25cf; M1CR0B1AL1Z3R reconstructs a maximum-likelihood-based phylogenetic tree using RAxML (<a href="https://academic.oup.com/bioinformatics/article/30/9/1312/238053" target="_blank">Stamatakis A., Bioinformatics, 2014</a>) based on the inferred core-proteome alignment and visualizes it interactively using PhyD3 (<a href="https://academic.oup.com/bioinformatics/article/33/18/2946/3835380" target="_blank">Kreft L., et al., Bioinformatics, 2017</a>).
+			<br><br>
+			&#x25cf; Several statistics regarding the pan genome (the entire set of genomes analyzed) are also provided, e.g., the GC content, the distribution of the number of ORFs across the analyzed genomes, and the distribution of the sizes of the orthologous groups.
+			<br><br>
         </p>
-        <br/>
+
+        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Result Folders</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            Each read is first split into k-mers (k-mers are substrings of the read with length k; for example, 3-mer for the read: “ATGG” will be: “ATG” and “TGG”). To maximize both speed and accuracy, we use the Kraken 2 search engine <em><a href="https://doi.org/10.1186/gb-2014-15-3-r46">(Wood, et al., 2019)</a></em> to query each k-mer (with k = 35) against the selected database. A phylogenetic tree representing the evolutionary relationships within the taxon included in each Kraken database is used to classify hits to either species or ancestral nodes. If a k-mer only matches a single species, it will be assigned to it. If a k-mer matches multiple species, it will be assigned to the most recent common ancestral node of all these species. Note that different k-mers within the same read might be assigned to different nodes of the phylogenetic tree. The output of this step is a file containing, for each of the reads, a list of species or ancestral nodes and the number of k-mers matched to each node. 
-            <br/>
-            The output of the previous step is further processed in order to classify each read to a specific node in the tree. To this end, for each read and for each node we define a read-node score, which is the percentage of k-mers mapped to this node divided by the total number of k-mers possible for that read (l – k + 1, where l is the read length). For each read, we identify the node that maximizes the read-node score and assign the read to this node. A tabular description of the number of contaminated reads from each node is provided as interactive visual output by GenomeFLTR as well as a pie chart indicating the percentage of contaminated reads. We also define a read-contamination score, which is the sum, over all nodes of the tree, of the read-node score. This score quantifies the percent of k-mers that were mapped to the contaminated database out of the l – k + 1 total k-mers. The higher the read-contamination score, the more likely it is that the read is a contamination and hence should be filtered. 
-            <br/>
-            Another feature implemented in the web server is the filtering of paired-end reads. Each end is first processed independently as described above. Next, the node-score of the pair-end read is the maximum over the two ends. For example, if one end has a read-node score of 0.2 for species X, and the other end the read-node score is 0.75 to species Y, the result of the paired read is a read-node score of 0.75 to species Y. Based on the read scores, the paired reads are either filtered or not, thus, if one end within a pair is considered to be a contamination, the entire paired-end read is discarded.
+            M1CR0B1AL1Z3R provides the following results:
+			<br><br>
+			&#x25cf; Folder #11: A curated table of orthologous sets and a corresponding phyletic pattern matrix;
+			<br><br>
+			&#x25cf; Folder #12: A Fasta file for each orthologous set containing the UNALIGNED DNA sequences of the set members;
+			<br><br>
+			&#x25cf; Folder #13: A Fasta file for each orthologous set containing the UNALIGNED AA sequences of the set members;
+			<br><br>
+			&#x25cf; Folder #14: A Fasta file for each orthologous set containing the ALIGNED AA sequences of the set members;
+			<br><br>
+			&#x25cf; Folder #15: A Fasta file containing the inferred core-proteome of the species in the dataset and different statistics of it;
+			<br><br>
+			&#x25cf; Folder #16: A reliable maximum likelihood species phylogeny tree*. We recommend using the interactive PhyD3 tool embedded in the Results page to personalize the phylogeny figure visualization parameters;
+			<br><br>
+			&#x25cf; Folder #17: ORF statistics per genome;
+			<br><br>
+			&#x25cf; Folder #18: A Fasta file for each orthologous set containing the ALIGNED DNA sequences (codon alignment) of the set members;
+			<br><br>
+			&#x25cf; Folder #19: A bar plot of the group sizes frequency*;
+			<br><br>
+			&#x25cf; Folder #20: A violin plot of the ORF count dispersion* and a violin plot of the GC-content dispersion, among protein coding genes*;
+			<br>
+			*Raw data is provided as well
+			<br><br>
         </p>
-        
-        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Output</h2>
-        <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            A histogram illustrating the distribution of the read-contamination score is given as an interactive graphical output by GenomeFLTR. The user specifies a threshold cutoff that determines which reads will be labeled as contamination and which will be retained in the “clean” data. By default, this threshold is set to 0.5. This threshold can be set interactively by clicking on the bars of the histogram. Reads with a score lower than the threshold (this threshold is marked by a red line in the graphical plot) are colored blue and will be retained, while reads colored orange will be filtered once the user presses the “Get filtered results” button. 
-            <br/>
-            It is possible that a user chooses to retain reads of specific species. For example, if a user sequenced a metagenomic sample containing multiple bacteria species, and would like to retain only a subset of those bacteria, e.g., bacteria that are known to exist in a specific niche. He can do so, by choosing specific species to retain / filter from the interactive tabular section of the GUI. The pie chart and the histogram are updated accordingly in real-time. We note that in this case, some blue reads (retained reads) could appear to the right of the red bar, which indicates the read-contamination score threshold.
-            <br class="br-h"/>
-            Pressing the <strong>“Get filtered results”</strong> button initiates the post process, which iterates over the reads and identifies the “cleaned” from the contaminated ones. When the post process is finished, a link to download a compressed file (i.e., a “.gz” file) containing all the non-contaminated reads is provided on the screen and via email to the user.
-        </p>
-        
-        <!--<h3 class="text-5xl text-center  text-white select-none my-3 text-outline">Running time</h3>
-        <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            We transform the list of the reads (which contain millions of reads) into a matrix, in which rows are bins of the read-node score (101 bins: 0, 0.01, …, 1) and columns are nodes in the tree. Each cell denotes the number of reads for that bin and node. This data structure allows us to present interactive graphs in real-time. 
-        </p>-->
-        
-        <!--<h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Case study</h2>
-        <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            We present the GenomeFLTR output by analyzing the transcriptome reads available under accession number SRR1300899. This paired-read dataset originated from a myxozoan parasite (Kudoa iwatai). Myxozoans are microscopic eukaryotic parasites of fish, with a large negative economic impact <a href="https://doi.org/10.1007/978-3-319-14753-6_17">(Fontes, et al., 2015)</a>. Because of their small size and their presence within fish tissues, we expected to find fish reads as well as some bacterial reads and possibly a small number of human reads in these NGS data. This parasitic dataset was published before the fish host genome was available and thus these data were not filtered before their submission to public repositories <a href="https://doi.org/10.1073/pnas.1511468112">(Chang, et al., 2015)</a>. We analyzed a total of 50 million paired-end reads (100 million reads in total) from these data in two steps. First, we excluded the fish reads by performing a custom filtering analysis in which we provided the taxonomic id (taxid 8175) of the host fish as input. The program automatically downloaded the corresponding Refseq genome GCF_900880675.1 for this analysis. GenomeFLTR inferred that ~17.3% of the reads (8,641,393 paired reads) were of fish origin using a read similarity threshold above 0.75. We then downloaded the remaining uncontaminated reads and conducted a second filtering analyses against the Kraken standard database (again with a threshold of 0.75). The remaining read data contained bacterial contaminations from various sources, for example Proteobacteria (39,129 paired reads) and Staphylococcus (49,243 paired reads). It also contained a number of reads from human origin (107,658 paired reads). Using the web server option to mark nodes that should not be filtered, we decided not to filter cellular organisms and root (taxid 1), which reflect reads that are potentially of eukaryotic origin and thus may be genuine myxozoan reads. In total, 1.22% of the reads were filtered, generating contamination-free data that are ready for further analyses.
-        </p>-->
-        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Example</h2>
-        <video width="640" height="480" controls>
-            <source src="{{url_for('static',filename='videos/GenomeFLTR_video.mp4')}}" type="video/mp4" class="display-block margin-auto">
-            Your browser does not support the video tag.
-        </video>
-        <p class="w-3/4 text-center text-ssm p-3 py-0 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            A video demonstrating the web server usage.
-        </p>
-        <a  href="/example" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white-600 text-black hover:bg-purple-600 hover:text-white ease-linear transition-all  duration-150  mx-8  my-4 cursor-pointer">
-            example page
-        </a>
-        
+		
         <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Contact</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            In case of problems or questions, email us at: <strong>edodotan@mail.tau.ac.il</strong>.
+            Please feel free to try it yourself!
+			<br><br><br>
+			Click <a href="/example">here</a> to submit the provided example dataset or go to the <a href="/gallery">Gallery</a> section.
+			<br>
         </p>
+		
     </div>
     <a  href="/" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white-600 text-black hover:bg-purple-600 hover:text-white ease-linear transition-all  duration-150  mx-8  my-4 cursor-pointer">
         back to home page

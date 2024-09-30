@@ -8,18 +8,23 @@
 	 style="background-color: {{gif['background']|safe}};">
 
 	<h1 id="state_title" class="text-6xl text-center my-5 select-none" >{{text}}</h1>
-	
-	<div id="gif_div" class="w-1/3">
-		<iframe id="gif_iframe" src="https://giphy.com/embed/{{gif['gif_id']|safe}}" width="640" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/{{gif['gif_id']|safe}}">via GIPHY</a></p>
-	</div>
-	<!-- <img id="loading_gif" class="w-1/3" alt="loading page"/> -->
 
+	<table>
+	{% for row in progressbar %}
+		<tr>
+		{% if row.Finished == 'True' %}
+			<th class="th_progress">{{row.Step}}</th><th class="th_progress"><input type="checkbox" checked></th>
+		{% else %}
+			<th class="th_progress">{{row.Step}}</th><th class="th_progress"><input type="checkbox"><br></th>
+		{% endif %}
+		</tr>
+	{% endfor %}
+	</table>
+	
 	<h3 class="text-2xl text-center my-5 select-none w-2/3">{{message_to_user}}</h3>
 </div>
 
 <script>
-
-	document.getElementById("gif_iframe").src += ''; //makes sure to reload the gif.
 
 	const main_screen = document.getElementById("main_screen");
 	let corner_color = main_screen.style.backgroundColor.match(/\d+/g);
