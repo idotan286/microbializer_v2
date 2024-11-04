@@ -201,7 +201,7 @@ class Job_Manager_Thread_Safe:
             #elif time_diff.days >= sc.TIME_TO_SAVE_PROCESSES_IN_THE_PROCESSES_DICT:
             #    del self.__processes_state_dict[process_id]
             #    shutil.rmtree(folder_path) # delete folder
-            elif self.__calc_days_since_modification_of_folder(folder_path) > sc.TIME_TO_KEEP_PROCSES_IDS_FOLDERS:
+            elif self.__calc_days_since_modification_of_folder(folder_path) > sc.TIME_TO_KEEP_PROCSES_IDS_FOLDERS and not consts.LOCAL:
                 del self.__processes_state_dict[process_id]
                 shutil.rmtree(folder_path) # delete folder
 

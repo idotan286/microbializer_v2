@@ -4,6 +4,7 @@ import os
 import sys
 import pandas as pd
 
+import consts
 from get_jobs import get_jobs, ACCOUNT_NAME
 from SharedConsts import QstatDataColumns, SRVER_USERNAME, JOB_CHANGE_COLS, JOB_ELAPSED_TIME, \
     JOB_RUNNING_TIME_LIMIT_IN_HOURS, JOB_NUMBER_COL, LONG_RUNNING_JOBS_NAME, QUEUE_JOBS_NAME, NEW_RUNNING_JOBS_NAME, \
@@ -99,8 +100,12 @@ class PbsListener:
         gets the users current job statistics (running and queued) and parses them
         :return: a data frame of all current jobs
         """
-        results_df = pd.DataFrame(get_jobs(account=ACCOUNT_NAME, logger=logger))
-        results_df = results_df[[JOB_NUMBER_COL, JOB_NAME_COL, 'state']]
+        if consts.LOCAL:  # for local testing
+            results_df = pd.DataFrame(columns=[JOB_NUMBER_COL, JOB_NAME_COL, 'state'])
+        else:
+            results_df = pd.DataFrame(get_jobs(account=ACCOUNT_NAME, logger=logger))
+            results_df = results_df[[JOB_NUMBER_COL, JOB_NAME_COL, 'state']]
+        
         results_df = results_df[results_df[JOB_NAME_COL].str.startswith(self.job_prefixes)]
         results_df[['state', 'reason']] = results_df['state'].apply(pd.Series)
         results_df['current_state'] = results_df['state'].apply(lambda x: ','.join(map(str, x)))

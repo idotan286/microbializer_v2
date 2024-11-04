@@ -60,7 +60,7 @@
             <div class="flex w-full  flex-row my-3">
                 {% for key, value in summary_stats.items() %}
                 <div class="relative flex-1 text-center mx-2 px-2 py-2 select-none border-2 shadow-lg rounded bg-white">
-                    <h1 class="text-lg my-4">{{" ".join(key.split("_")).capitalize()}}</h1>
+                    <h1 class="text-lg my-4">{{key}}</h1>
                     <h1 class="text-sm">{{value}}</h1>
                     <label class="peer w-6 h-5 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-1 tracking-wide ">
                         <span class="font-bold text-1xl text-gray-700 select-none" >?</span>

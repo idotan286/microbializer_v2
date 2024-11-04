@@ -5,7 +5,34 @@ LOCAL = False
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 WEBSERVER_LOCAL_OUTPUTS = os.path.join(BASE_DIR, 'local_run')
 
-MICROBIALIZER_PIPELINE_LOCAL_PATH = '/home/elyalab/Dev/failed_syncs/microbializer'
+MICROBIALIZER_PIPELINE_LOCAL_PATH = r'C:\repos\microbializer'
 MICROBIALIZER_PIPELINE_LOCAL_FLASK_PATH = os.path.join(MICROBIALIZER_PIPELINE_LOCAL_PATH, 'pipeline', 'flask')
 
 LOCAL_INTERVAL_BETWEEN_LISTENER_SAMPLES = 60
+
+ARG_DISPLAY_JOB_NAME = 'Job Name'
+ARG_DISPLAY_EMAIL = 'Email address'
+ARG_DISPLAY_INPUTS_FASTA_TYPE = 'Inputs fasta files type'
+ARG_DISPLAY_FILTER_OUT_PLASMIDS = 'Filter out contigs / orfs of plasmids'
+ARG_DISPLAY_IDENTITY_CUTOFF = 'Minimum sequence identity for orthologs detection'
+ARG_DISPLAY_COVERAGE_CUTOFF = 'Minimum sequence coverage for orthologs detection'
+ARG_DISPLAY_E_VALUE_CUTOFF = 'Maximum e-value for orthologs detection'
+ARG_DISPLAY_CORE_MINIMAL_PERCENTAGE = 'Minimum percent of strains required to consider an orthogroup as part of the core genome'
+ARG_DISPLAY_OUTGROUP = 'Root the species tree according to this outgroup'
+ARG_DISPLAY_BOOTSTRAP = 'Apply bootstrap over the species tree'
+ARG_DISPLAY_ADD_ORPHAN_GENES_TO_OGS = 'Add orphan genes to orthologs table'
+
+
+ARG_NAME_IN_PIPELINE_TO_DISPLAY = {
+    'job_name': ARG_DISPLAY_JOB_NAME,
+    'email': ARG_DISPLAY_EMAIL,
+    'inputs_fasta_type': ARG_DISPLAY_INPUTS_FASTA_TYPE,
+    'filter_out_plasmids': ARG_DISPLAY_FILTER_OUT_PLASMIDS,
+    'identity_cutoff': ARG_DISPLAY_IDENTITY_CUTOFF,
+    'coverage_cutoff': ARG_DISPLAY_COVERAGE_CUTOFF,
+    'e_value_cutoff': ARG_DISPLAY_E_VALUE_CUTOFF,
+    'core_minimal_percentage': ARG_DISPLAY_CORE_MINIMAL_PERCENTAGE,
+    'outgroup': ARG_DISPLAY_OUTGROUP,
+    'bootstrap': ARG_DISPLAY_BOOTSTRAP,
+    'add_orphan_genes_to_ogs': ARG_DISPLAY_ADD_ORPHAN_GENES_TO_OGS,
+}

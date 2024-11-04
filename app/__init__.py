@@ -314,7 +314,18 @@ def home():
         return redirect(url_for('process_state', process_id=new_process_id))
     extensions=",".join(UI_CONSTS.ALLOWED_EXTENSIONS)
     return render_template_wrapper('home.html', 
-            extensions=extensions
+            extensions=extensions,
+            args_display_job_name=consts.ARG_DISPLAY_JOB_NAME,
+            args_display_email=consts.ARG_DISPLAY_EMAIL,
+            args_display_inputs_fasta_type=consts.ARG_DISPLAY_INPUTS_FASTA_TYPE,
+            args_display_filter_out_plasmids=consts.ARG_DISPLAY_FILTER_OUT_PLASMIDS,
+            args_display_identity_cutoff=consts.ARG_DISPLAY_IDENTITY_CUTOFF,
+            args_display_coverage_cutoff=consts.ARG_DISPLAY_COVERAGE_CUTOFF,
+            args_display_e_value_cutoff=consts.ARG_DISPLAY_E_VALUE_CUTOFF,
+            args_display_core_minimal_percentage=consts.ARG_DISPLAY_CORE_MINIMAL_PERCENTAGE,
+            args_display_outgroup=consts.ARG_DISPLAY_OUTGROUP,
+            args_display_bootstrap=consts.ARG_DISPLAY_BOOTSTRAP,
+            args_display_add_orphan_genes_to_ogs=consts.ARG_DISPLAY_ADD_ORPHAN_GENES_TO_OGS
     )
 
 @app.errorhandler(404)

@@ -6,11 +6,12 @@ import pandas as pd
 from InputValidator import InputValidator
 from Job_Manager_Thread_Safe_Microbializer import Job_Manager_Thread_Safe_Microbializer
 from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
+import consts
 
 from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, \
     E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
-    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED_FORMAT, ERROR_FILE_PATH, PROGRESS_BAR
+    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESS_BAR
 from SharedConsts import K_MER_COUNTER_MATRIX_FILE_NAME, \
     FINAL_OUTPUT_FILE_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME, EMAIL_CONSTS, UI_CONSTS, CUSTOM_DB_NAME, State, POSTPROCESS_JOB_PREFIX, GENOME_DOWNLOAD_SUMMARY_RESULTS_FILE_NAME, FINAL_OUTPUT_FILE_CONTAMINATED_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES_NEW_CONTAMINATED
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
@@ -55,7 +56,10 @@ class Job_Manager_API:
         self.__j_manager = Job_Manager_Thread_Safe_Microbializer(max_number_of_process, upload_root_path, input_file_names, self.__process_state_changed)
         self.input_validator = InputValidator() # creates the input_validator
         self.__func2update_html = func2update_html
-        self.EXAMPLE_FOLDER_PATH = r'/lsweb/pupko/microbializer/example_process_results/'
+        if consts.LOCAL:
+            self.EXAMPLE_FOLDER_PATH = os.path.join(consts.WEBSERVER_LOCAL_OUTPUTS, 'example_process_results')
+        else:
+            self.EXAMPLE_FOLDER_PATH = r'/lsweb/pupko/microbializer/example_process_results/'
         self.__relative_files2download_and_paths = {}
         for title, paths in PATHS_TO_DOWNLOAD.items():
             for file_name, path in paths.items():
@@ -423,6 +427,7 @@ class Job_Manager_API:
             with open(input_file) as json_file:
                 dict2return = json.load(json_file)
                 dict2return.pop('run_dir', None)
+                dict2return = {consts.ARG_NAME_IN_PIPELINE_TO_DISPLAY[key]: value for key, value in dict2return.items()}
                 return dict2return
         return {}
     
@@ -587,7 +592,7 @@ class Job_Manager_API:
         if not os.path.isdir(parent_folder):
             return None
         
-        data_path = os.path.join(parent_folder, ALL_OUTPUTS_ZIPPED_FORMAT)
+        data_path = os.path.join(parent_folder, ALL_OUTPUTS_ZIPPED)
         if os.path.isfile(data_path):
             return data_path
         
