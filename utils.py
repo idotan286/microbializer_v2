@@ -3,12 +3,14 @@ from datetime import datetime
 import logging
 import os
 
+from SharedConsts import WEBSERVER_DOMAIN
+
 import consts
 if consts.LOCAL:
     LOGS_BASE_PATH = os.path.join(consts.WEBSERVER_LOCAL_OUTPUTS, 'logs')
     os.makedirs(LOGS_BASE_PATH, exist_ok=True)
 else:
-    LOGS_BASE_PATH = '/var/www/vhosts/dev.microbializer.tau.ac.il/logs/'
+    LOGS_BASE_PATH = f'/var/www/vhosts/{WEBSERVER_DOMAIN}/logs/'
 
 
 LOGGER_LEVEL_JOB_MANAGE_THREAD_SAFE = logging.DEBUG

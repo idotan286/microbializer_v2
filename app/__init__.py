@@ -15,7 +15,7 @@ if consts.LOCAL:
 
 from utils import logger
 from Job_Manager_API import Job_Manager_API
-from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, MAX_NUMBER_PROCESS
+from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, MAX_NUMBER_PROCESS, WEBSERVER_ADDRESS
 
 
 def render_template_wrapper(*args, **kwargs):
@@ -352,7 +352,7 @@ def about():
     about.html: HTML page
         about page
     """
-    return render_template_wrapper('about.html', help_text_about_list=UI_CONSTS.HELP_TEXT_ABOUT_LIST, contact_info=UI_CONSTS.ERROR_CONTACT_INFO)
+    return render_template_wrapper('about.html', webserver_address=WEBSERVER_ADDRESS, help_text_about_list=UI_CONSTS.HELP_TEXT_ABOUT_LIST, contact_info=UI_CONSTS.ERROR_CONTACT_INFO)
 
 @app.route("/overview")
 def overview():
