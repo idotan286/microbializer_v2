@@ -11,7 +11,7 @@ import consts
 from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, \
     E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
-    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESS_BAR
+    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESS_BAR, OWNER_EMAIL
 from SharedConsts import K_MER_COUNTER_MATRIX_FILE_NAME, \
     FINAL_OUTPUT_FILE_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME, EMAIL_CONSTS, UI_CONSTS, CUSTOM_DB_NAME, State, POSTPROCESS_JOB_PREFIX, GENOME_DOWNLOAD_SUMMARY_RESULTS_FILE_NAME, FINAL_OUTPUT_FILE_CONTAMINATED_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES_NEW_CONTAMINATED
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
@@ -65,7 +65,7 @@ class Job_Manager_API:
             for file_name, path in paths.items():
                 self.__relative_files2download_and_paths[file_name] = path
 
-    def __build_and_send_mail(self, process_id, subject, content, email_address):
+    def __build_and_send_mail(self, process_id, subject, content, email_addresses):
         """Sends mail to user
 
         Parameters
@@ -82,15 +82,19 @@ class Job_Manager_API:
         Returns
         -------
         """
-        if email_address == '':
+        if not email_addresses:
             logger.info('mail is empty, not sending')
             return
         try:
-            # the emails are sent from 'TAU BioSequence <bioSequence@tauex.tau.ac.il>'
-            send_email('mxout.tau.ac.il', 'TAU BioSequence <bioSequence@tauex.tau.ac.il>',
-                       email_address, subject=subject,
-                       content= content)
-            logger.info(f'sent email to {email_address}')
+            if type(email_addresses) == str:
+                email_addresses = [email_addresses]
+            
+            for email_address in email_addresses:
+                # the emails are sent from 'TAU BioSequence <bioSequence@tauex.tau.ac.il>'
+                send_email('mxout.tau.ac.il', 'TAU BioSequence <bioSequence@tauex.tau.ac.il>',
+                        email_address, subject=subject,
+                        content= content)
+                logger.info(f'sent email to {email_address}')
         except:
             logger.exception(f'failed to sent email to {email_address}')
             
@@ -113,22 +117,18 @@ class Job_Manager_API:
         Returns
         -------
         """
-        if state == State.Crashed:
-            self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), f'Process id {process_id} have **crashed**\n\nemail adress of the user: {email_address}', 'edodotan@mail.tau.ac.il')
-        elif state == State.Finished:
-            self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), f'Process id {process_id} have **finished**\n\nemail adress of the user: {email_address}', 'edodotan@mail.tau.ac.il')
-            
+        email_addresses = [OWNER_EMAIL]
         if email_address != None:
-            # sends mail once the job finshed or crashes
-            if state == State.Finished:
-                self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), EMAIL_CONSTS.CONTENT_PROCESS_FINISHED.format(process_id=process_id), email_address)
-
-            elif state == State.Crashed:
-                self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), EMAIL_CONSTS.CONTENT_PROCESS_CRASHED.format(process_id=process_id), email_address)
-
-            # sends mail if the genome download process crashed is on a differnt function (this function isn't called for genome download)
+            email_addresses.append(email_address)
         else:
-            logger.warning(f'process_id = {process_id} email_address is None, state = {state}, job_name = {job_name}')
+            logger.warning(f'process_id = {process_id} email_address is None, state = {state}, job_name = {job_name}')          
+        
+        # sends mail once the job finshed or crashes
+        if state == State.Finished:
+            self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), EMAIL_CONSTS.CONTENT_PROCESS_FINISHED.format(process_id=process_id), email_addresses)
+        elif state == State.Crashed:
+            self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), EMAIL_CONSTS.CONTENT_PROCESS_CRASHED.format(process_id=process_id), email_addresses)
+
         self.__func2update_html(process_id, state)
 
     def __delete_folder(self, process_id):
@@ -265,7 +265,6 @@ class Job_Manager_API:
             # adding the process
             self.__j_manager.add_process(process_id, email_address, job_name, job_arguemnts)
             self.__build_and_send_mail(process_id, EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name), EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id), email_address)
-            self.__build_and_send_mail(process_id, 'Microbializer: JOB SUBMITTED', EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id) + f'\nemail adress is: {email_address}', 'edodotan@mail.tau.ac.il')
             return True
         logger.warning(f'process_id = {process_id}, can\'t add process: is_valid_email = {is_valid_email}')
         return False
