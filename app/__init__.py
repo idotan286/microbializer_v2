@@ -385,7 +385,7 @@ def example():
     ----------
     Returns
     -------
-    example.html: HTML page
+    results.html: HTML page
         example page
     """
     histogram_data, max_num_of_rows, newick_tree_str = manager.get_example_data()

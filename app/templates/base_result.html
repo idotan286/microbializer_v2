@@ -62,12 +62,6 @@
                 <div class="relative flex-1 text-center mx-2 px-2 py-2 select-none border-2 shadow-lg rounded bg-white">
                     <h1 class="text-lg my-4">{{key}}</h1>
                     <h1 class="text-sm">{{value}}</h1>
-                    <label class="peer w-6 h-5 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-1 tracking-wide ">
-                        <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
-                    </label>
-                    <div class="opacity-0 absolute bottom-0 left-0 w-46 h-20 bg-teal-800 text-white rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-5 pointer-events-none border-black shadow-xl">
-                    <p id="help_text_{{key}}" class="p-3 text-lg text-justify select-none">{{value[1]}}</p>
-                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -85,32 +79,12 @@
                         <div class="flex w-full h-fit flex-row my-2" id="parameters_option_bar_chart"></div>
                         <canvas id="bar_chart"></canvas>
                     </div>
-                    <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
-                        <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
-                    </label>
-                    <div class="opacity-0 absolute bottom-0 left-0 w-auto h-11/12 bg-teal-800 text-white rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-5 pointer-events-none border-black shadow-xl">
-                    <p id="help_text_histograms" class="p-3 text-xl text-justify select-none">
-                    </p>
-                    </div>
-                    <a id="download_histogram" download="histogram_chart.jpg" href="" class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 right-0 mx-2 my-2 tracking-wide font-bold text-1xl text-gray-700 select-none">
-                        <img src="{{url_for('static',filename='images/down_arrow.svg')}}" width="70%" alt="*" title="Export image">
-                    </a>
                 </div>
                 <div class="relative flex-col h-full border-2 rounded mx-2 px-2 py-2 shadow-lg bg-white">
                     <h1 class="text-center text-3xl select-none">Phylogenetic Tree</h1>
                     <div id="body_val" class="flex flex-1 flex-col  mx-2 my-3 px-1 border-2">
                         <div id="phylo_tree_container"></div>
                     </div>
-                    <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
-                        <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
-                    </label>
-                    <div class="opacity-0 absolute bottom-0 left-0 w-auto h-11/12 bg-teal-800 text-white rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-5 pointer-events-none border-black shadow-xl">
-                        <p id="help_text_histograms" class="p-3 text-xl text-justify select-none">
-                        </p>
-                    </div>
-                    <a id="download_tree" download="phylogenetic_tree.svg" href="" class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 right-0 mx-2 my-2 tracking-wide font-bold text-1xl text-gray-700 select-none">
-                        <img src="{{url_for('static',filename='images/down_arrow.svg')}}" width="70%" alt="*" title="Export image">
-                    </a>
                 </div>
                 <div class="relative border-2 flex flex-col h-full rounded mx-2 py-2 px-4 shadow-lg bg-white " >
                     <h1 class="text-center text-3xl select-none" style="position:sticky; top:0; background-color:white">Orthogroups</h1>
@@ -128,14 +102,6 @@
                             <span class="font-bold">Next</span>
                         </label>
                     </div>
-
-                    <div class="opacity-0 absolute bottom-0 left-0 w-auto h-11/12 bg-teal-800 text-white rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-5 pointer-events-none border-black shadow-xl">
-                    <p id="help_table" class="p-3 text-xl text-justify select-none">
-                    </p>
-                    </div>
-                    <a id="download_table" download="table.csv"  href="" class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 right-0 mx-2 my-2 tracking-wide font-bold text-1xl text-gray-700 select-none">
-                        <img src="{{url_for('static',filename='images/down_arrow.svg')}}" width="70%" alt="*" title="Export image">
-                    </a>
                 </div>
             </div>
         </div>

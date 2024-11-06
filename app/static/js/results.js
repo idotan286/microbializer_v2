@@ -406,23 +406,6 @@ document.getElementById("table_up").addEventListener("click", () => {
   table_offset = new_offset
 })
 
-document.getElementById("download_histogram").addEventListener("click", () => {
-  var url_base64jp = document.getElementById("bar_chart").toDataURL("image/jpg");
-  /*get download button (tag: <a></a>) */
-  var a = document.getElementById("download_histogram");
-  /*insert chart image url to download button (tag: <a></a>) */
-  a.href = url_base64jp;
-})
-
-document.getElementById("download_tree").addEventListener("click", () => {
-  var tree = document.getElementById("tree").outerHTML;
-  var url_base64jp = 'data:image/svg+xml,'+ encodeURIComponent(tree);
-  /*get download button (tag: <a></a>) */
-  var a = document.getElementById("download_tree");
-  /*insert chart image url to download button (tag: <a></a>) */
-  a.href = url_base64jp;
-})
-
 document.getElementById("download_page").addEventListener("click", () => {
   const resultId = url.pathname.replace('/results/', '');
   document.location.href = `/download_page/${resultId}`;
