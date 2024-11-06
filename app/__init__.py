@@ -364,7 +364,7 @@ def overview():
     about.html: HTML page
         about page
     """
-    return render_template_wrapper('overview.html')
+    return render_template_wrapper('overview.html', webserver_address=WEBSERVER_ADDRESS)
 
 @app.route("/faq")
 def faq():

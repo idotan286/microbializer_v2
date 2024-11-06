@@ -17,97 +17,146 @@
     <div class="flex flex-col mx-auto  h-full justify-start items-center">
     <div class="flex flex-col my-4 justify-center items-center">
         <h1 class="text-9xl text-center  text-white select-none my-5 text-outline">Overview</h1>
-		
-		<img class="w-1/2 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/flow-chart.png')}}">
-		
-		<h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Introduction</h2>
+				
+		<h2 class="text-5xl text-white select-none my-5 text-outline">Introduction</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            Significant technological advances in the last decade have enabled the use of large-scale sequencing, mining, and analysis of bacterial and archaeal genomic data in an unprecedented resolution. Such large-scale analyses have contributed to our understanding of microbial diversity and evolution, both within populations and among different phylogenetic groups. Following sequencing and genome assembly, analyzing microbial genomics data involves various computational steps such as the detecting open reading frames (ORFs), finding orthologous groups, aligning orthologous sequences, and reconstructing phylogenetic trees. These steps as well as additional analysis-specific computations require the use of multiple bioinformatics tools and various ad-hoc programming scripts, making the entire process cumbersome, tedious, and prone to errors due to manual handling. This has prompted laboratories to implement their own in-house analysis pipelines, and thus different analysis applications have begun to emerge. These applications require specific working environments, i.e., operating system, multi-cores machines, and more than basic technological skills, such as installations and running.
+            Significant technological advances in the last decade have enabled the use of large-scale sequencing, 
+			mining, and analysis of bacterial and archaeal genomic data in an unprecedented resolution. Such 
+			large-scale analyses have contributed to our understanding of microbial diversity and evolution, 
+			both within populations and among different phylogenetic groups. Following sequencing and genome assembly, 
+			analyzing microbial genomics data involves various computational steps such as the detecting open reading 
+			frames (ORFs), finding orthologous groups, aligning orthologous sequences, and reconstructing phylogenetic 
+			trees. These steps as well as additional analysis-specific computations require the use of multiple 
+			bioinformatics tools and various ad-hoc programming scripts, making the entire process cumbersome, tedious, 
+			and prone to errors due to manual handling. This has prompted laboratories to implement their own in-house 
+			analysis pipelines, and thus different analysis applications have begun to emerge. These applications 
+			require specific working environments, i.e., operating system, multi-cores machines, and more than basic 
+			technological skills, such as installations and running.
         </p>
         
-        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Motivation</h2>
+        <h2 class="text-5xl text-center  text-white select-none my-5 text-outline">The motivation for developing M1CR0B1AL1Z3R</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            M1CR0B1AL1Z3R (pronounced: microbializer) was developed in order to facilitate large scale microbial genomics analyses. Our goal was to make M1CR0B1AL1Z3R easily accessible to the scientific community and thus to allow handling the abovementioned computational challenges of analyzing dozens of bacterial genomes simultaneously. Such computations are highly demanding, and therefore, M1CR0B1AL1Z3R runs background computational processes in parallel on a high-performance computer cluster. Notably, due to the high computational demand of these analyses, they cannot run on a simple desktop computer. To this end, M1CR0B1AL1Z3R enables the research community to analyze massive genomic data that previously necessitated expensive computational infrastructure and expert knowledge. Visual and textual results, ready for publication or further analysis, are given as an output.
+            M1CR0B1AL1Z3R (pronounced: microbializer) was developed in order to facilitate large scale microbial 
+			genomics analyses. Our goal was to make M1CR0B1AL1Z3R easily accessible to the scientific community and 
+			thus to allow handling the abovementioned computational challenges of analyzing dozens of bacterial genomes 
+			simultaneously. Such computations are highly demanding, and therefore, M1CR0B1AL1Z3R runs background 
+			computational processes in parallel on a high-performance computer cluster. Notably, due to the high 
+			computational demand of these analyses, they cannot run on a simple desktop computer. To this end, 
+			M1CR0B1AL1Z3R enables the research community to analyze massive genomic data that previously necessitated 
+			expensive computational infrastructure and expert knowledge. Visual and textual results, ready for 
+			publication or further analysis, are given as an output.
         </p>
         
-        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">The Data</h2>
+        <h2 class="text-5xl text-center  text-white select-none my-5 text-outline">The type of data analyzed by M1CR0B1AL1Z3R</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            The input to the M1CR0B1AL1Z3R web server is a collection of genomic sequences, one file for each genome. In other words, the input data were already binned (binning is the classification of reads and contigs to different taxonomic units) and assembled (the generation of contigs from sequence reads). Of note, we do not assume that the reads were assembled to a single contig. The input to our web server can thus be microbial genomes, where each genome is composed of one or multiple contigs. Currently, the web server is designed for bacterial and archaeal genomes (eukaryotic genomes and transcriptomes are not handled). As we show in the <a href="https://doi.org/10.1186/gb-2014-15-3-r46">Gallery section</a>, M1CR0B1AL1Z3R is useful for analyzing genomes from a range of phylogenetic relatedness: from genomic sequences of bacterial isolates of a specific species, to genomes of different species that belong to a diverse phylogenetic group such as the Gammaproteobacteria.
+            The input to the M1CR0B1AL1Z3R web server is a collection of genomic sequences, one file for each genome. 
+			The input data should be binned (in the case of metagenome sequencing, binning is the classification of 
+			reads and contigs to different taxonomic units) and assembled (the generation of contigs from sequence reads)
+			beforehand. Of note, we do not assume that the reads were assembled to a single contig. The input to our 
+			web server can thus be microbial genomes, where each genome is composed of one or multiple contigs.
+			In the case the user already has the open reading frames (ORFs) of each genome and wants to start the
+			analysis from those, we also accept ORFs as valid inputs.<br>
+			Currently, the web server is designed for bacterial and archaeal genomes (eukaryotic genomes and 
+			transcriptomes are not handled). M1CR0B1AL1Z3R is useful for analyzing genomes from a range of phylogenetic 
+			relatedness: from genomic sequences of bacterial isolates of a specific species, to genomes of different 
+			species that belong to a diverse phylogenetic group such as the Gammaproteobacteria.
         </p>
-         <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Input</h2>
+         <h2 class="text-5xl text-center  text-white select-none my-5 text-outline">Input specification</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            The input for the web server is a zipped folder (either  <a href="https://support.microsoft.com/en-us/help/14200/windows-compress-uncompress-zip-files" target="_blank">.zip</a> or <a href="https://linhost.info/2012/08/gzip-files-in-windows/" target="_blank">.tar.gz</a>) in which each file is in a  <a href="https://www.ncbi.nlm.nih.gov/blast/fasta.shtml" target="_blank">FASTA format</a> containing genomic sequence of a different species. Each file can contain either a fully assembled genome or a collection of contigs (originating from the same genome).
+            The input for the web server is a zipped folder (either .zip or .tar.gz) in which each file is in a 
+			<a href="https://en.wikipedia.org/wiki/FASTA_format" target="_blank">FASTA format</a> containing genomic 
+			sequence of a different species/strain/isolate. Each file can contain either a fully assembled genome, a collection 
+			of contigs (originating from the same genome) or the open reading frames (ORFs) of that genome.
         </p>
         
-        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Basic terms</h2>
+        <h2 class="text-5xl text-center  text-white select-none my-5 text-outline">Basic terms used in M1CR0B1AL1Z3R</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-			&#x25cf; An open reading frame (ORF) is the part the gene that encodes for a protein.
+			&#x25cf; An open reading frame (ORF) is a part of the gneome that encodes for a protein.
 			<br/><br>
-			&#x25cf; Orthologous genes or orthologs are genes that diverged from a single gene in the common ancestor of the analyzed genomes, following speciation events. Orthologous genes have high sequence similarity that can be detected using remote homology search algorithms such as BLAST. High sequence similarity can also stem from gene duplication events and in this case, the sequences are not orthologs but are considered paralogs. Finally, genes can undergo horizontal transfer events, and in this case they are considered xenologs.
+			&#x25cf; An Orthogroup or orthologous group is a set of genes that diverged from a single gene in the LCA (last common ancestor) of the analyzed genomes. The genes in an orthogroup have high sequence similarity that can be detected using remote homology search algorithms such as BLAST. Of note, two genes from different genomes in an orthogroup are considered orthologs (=genes that diverged from a specification event) and two genes from the same genome in an orthogroup are considered paralogs (=genes that diverged from a duplication event).
 			<br/><br>
 			&#x25cf; Species tree reflect the evolution of orthologous sequences, i.e., the vertical phylogenetic relationships among the analyzed genome. In Bacteria and Archaea, many genes do not follow the species tree due to horizontal gene transfer events. Gene trees (are being reconstructed based on a MSA of a single-gene orthologous group and thus) represent the evolutionary relationships among the analyzed genes. Gene trees can differ from the species tree due to horizontal gene transfer and gene duplications events. Trees in general are inferred and not observed and as such they are subjected to biases and errors (see <a href="#msa_reliability">Can I trust the obtained core gene phylogenetic tree?</a>).
 			<br><br>
-			&#x25cf; A phyletic pattern matrix is a table in which row i is an orthologous group, column j is a genome and the i,j entry contains 1 if the member of orthologous family i from genome j is present, o.w., 0. Phyletic patterns data are used to infer events of gene loss and gene gain (acquisition), taking into account the phylogenetic relationships among the analyzed genomes.
+			&#x25cf; A phyletic pattern matrix is a table in which row i is a genome, column j is an orthogroup and the i,j entry contains 1 if the orthogroup j contains a member of genome i, o.w., 0. Phyletic patterns data are used to infer events of gene loss and gene gain (acquisition), taking into account the phylogenetic relationships among the analyzed genomes.
 			<br><br>
-			&#x25cf; Core genes are genes that are shared by all analyzed genomes. The protein sequences that are encoded by these genes are called the core proteome. Core genes are often essential to the organism and hence are never lost. As these genes are found in all analyzed genomes, they are often used to reconstruct the species tree. In contrast, the pan genome is the entire set of genes, i.e., a gene belongs to the pan genome if it is present in at least one of the analyzed genomes.
+			&#x25cf; Core genes are genes that are shared by all analyzed genomes. The collection of protein sequences that are encoded by these genes is called the core proteome. Core genes are often essential to the organism and hence are never lost. As these genes are found in all analyzed genomes, they are often used to reconstruct the species tree. In contrast, the pan genome is the entire set of genes, i.e., a gene belongs to the pan genome if it is present in at least one of the analyzed genomes.
 			<br><br>
 			&#x25cf; GC content: the percentage of the nucleotides G and C out of the total number of nucleotides. GC content varies among genomes.
         </p>
         
-        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Output and methodology</h2>
+        <h2 class="text-5xl text-center  text-white select-none my-5 text-outline">Output and methodology</h2>
         <p class="w-3/4 text-center text-ssm p-3 py-0 rounded-md  text-black bg-white bg-opacity-75 text-justify">
+            <br>
+			The pipeline of M1CR0B1AL1Z3R is composed of the following algorithmic steps:
+			<br><br>
+		</p>
+		<img class="w-1/2 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/flow_chart.png')}}">
+		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
 			<br>
-            M1CR0B1AL1Z3R implements the following algorithmic steps:
+			&#x25cf; M1CR0B1AL1Z3R calculates ANI (average nucleotide identity) values between all pairs of genomes using FastANI (<a href="https://www.nature.com/articles/s41467-018-07641-9" target="_blank">Jain C., et al., Nature communications, 2018</a>).
             <br><br>
-			&#x25cf; M1CR0B1AL1Z3R extract all ORFs from all genomes using Prodigal (<a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-119" target="_blank">Hyatt D., et al., BMC Bioinformatics, 2010</a>).
+			&#x25cf; M1CR0B1AL1Z3R extract all ORFs from all genomes using Prodigal (<a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-119" target="_blank">Hyatt D., et al., BMC Bioinformatics, 2010</a>). If the inputs are already ORFs, this step is skipped. The ORFs are then translated to amino acids sequences.
 			<br><br>
-			&#x25cf; M1CR0B1AL1Z3R detects homologous genes (all against all) using MMSEQS2 (<a href="https://www.nature.com/articles/nbt.3988" target="_blank">Steinegger M. & Soding J., Nat Biotechnol, 2017</a>) and then clusters them using MCL (<a href="https://dspace.library.uu.nl/bitstream/handle/1874/848/full.pdf?sequence=1&isAllowed=y" target="_blank">Van Dongen SM., Thesis, 2000</a>).
+			&#x25cf; M1CR0B1AL1Z3R uses the protein sequences of each genome to calculate its BUSCO score (a measure of the completeness of the genome assembly, <a href="https://academic.oup.com/bioinformatics/article/31/19/3210/211866" target="_blank">Simão, Felipe A., et al, Bioinformatics, 2015</a>).
 			<br><br>
-			&#x25cf; M1CR0B1AL1Z3R translates each orthologous group and uses MAFFT (<a href="https://academic.oup.com/mbe/article/30/4/772/1073398" target="_blank">Katoh K. & Standley DM., Mol Biol Evol, 2013</a>) to reconstruct an amino acid (AA) multiple sequence alignment. Once aligned, M1CR0B1AL1Z3R reverse translates each AA alignment to get the corresponding codon alignment.
+			&#x25cf; M1CR0B1AL1Z3R infers orthogroups among the protein sequences of all genmoes using a self-implemented version of the OrthoMCL algorithm (<a href="https://genome.cshlp.org/content/13/9/2178.full" target="_blank">Li, Li, Christian J. Stoeckert, and David S. Roos, Genome research, 2003</a>). The algorithm uses MMSEQS2 (<a href="https://www.nature.com/articles/nbt.3988" target="_blank">Steinegger M. & Soding J., Nat Biotechnol, 2017</a>) to infer homologous sequences and then clusters them using MCL (<a href="https://dspace.library.uu.nl/bitstream/handle/1874/848/full.pdf?sequence=1&isAllowed=y" target="_blank">Van Dongen SM., Thesis, 2000</a>).
 			<br><br>
-			&#x25cf; M1CR0B1AL1Z3R computes the core-proteome (proteins that are shared across all bacterial genomes) and provides the core-proteome alignment, based on which, the species tree is often inferred. In cases where there are duplications (i.e., two genomes for which the sequences of the core genes are identical), a reduced core-proteome alignment (containing only unique sequences) is provided as well.
+			&#x25cf; M1CR0B1AL1Z3R reconstructs an amino acid multiple sequence alignment for each orthogroup using MAFFT (<a href="https://academic.oup.com/mbe/article/30/4/772/1073398" target="_blank">Katoh K. & Standley DM., Mol Biol Evol, 2013</a>).
 			<br><br>
-			&#x25cf; M1CR0B1AL1Z3R reconstructs a maximum-likelihood-based phylogenetic tree using RAxML (<a href="https://academic.oup.com/bioinformatics/article/30/9/1312/238053" target="_blank">Stamatakis A., Bioinformatics, 2014</a>) based on the inferred core-proteome alignment and visualizes it interactively using PhyD3 (<a href="https://academic.oup.com/bioinformatics/article/33/18/2946/3835380" target="_blank">Kreft L., et al., Bioinformatics, 2017</a>).
+			&#x25cf; M1CR0B1AL1Z3R computes the core-proteome (proteins that are shared across all bacterial genomes) and provides the core-proteome alignment, based on which, the species tree is inferred. In cases where there are duplications (i.e., two genomes for which the sequences of the core genes are identical), a reduced core-proteome alignment (containing only unique sequences) is provided as well.
 			<br><br>
-			&#x25cf; Several statistics regarding the pan genome (the entire set of genomes analyzed) are also provided, e.g., the GC content, the distribution of the number of ORFs across the analyzed genomes, and the distribution of the sizes of the orthologous groups.
+			&#x25cf; M1CR0B1AL1Z3R reconstructs a maximum-likelihood-based phylogenetic tree using IQ-TREE (<a href="https://academic.oup.com/mbe/article/37/5/1530/5721363" target="_blank">Minh, Bui Quang, et al, Molecular biology and evolution, 2020</a>) based on the inferred core-proteome alignment and visualizes it interactively.
 			<br><br>
-        </p>
-
-        <h2 class="text-7xl text-center  text-white select-none my-5 text-outline">Result Folders</h2>
-        <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            M1CR0B1AL1Z3R provides the following results:
+			&#x25cf; M1CR0B1AL1Z3R detects orphan genes (genes that are not part of any orthogroup).
 			<br><br>
-			&#x25cf; Folder #11: A curated table of orthologous sets and a corresponding phyletic pattern matrix;
+			&#x25cf; M1CR0B1AL1Z3R adds functional annotation to each orthogroup using the KOfam database (<a href="https://academic.oup.com/bioinformatics/article/36/7/2251/5631907" target="_blank">Aramaki, Takuya, et al, Bioinformatics, 2020</a>) which is based on the KEGG Orthology database.
 			<br><br>
-			&#x25cf; Folder #12: A Fasta file for each orthologous set containing the UNALIGNED DNA sequences of the set members;
+			&#x25cf; M1CR0B1AL1Z3R analyzes the codon bias among the different genomes and the different orthogroups (<a href="https://academic.oup.com/nar/article/15/3/1281/1166844" target="_blank">Sharp, Paul M., and Wen-Hsiung Li, Nucleic acids research, 1987</a>)
 			<br><br>
-			&#x25cf; Folder #13: A Fasta file for each orthologous set containing the UNALIGNED AA sequences of the set members;
-			<br><br>
-			&#x25cf; Folder #14: A Fasta file for each orthologous set containing the ALIGNED AA sequences of the set members;
-			<br><br>
-			&#x25cf; Folder #15: A Fasta file containing the inferred core-proteome of the species in the dataset and different statistics of it;
-			<br><br>
-			&#x25cf; Folder #16: A reliable maximum likelihood species phylogeny tree*. We recommend using the interactive PhyD3 tool embedded in the Results page to personalize the phylogeny figure visualization parameters;
-			<br><br>
-			&#x25cf; Folder #17: ORF statistics per genome;
-			<br><br>
-			&#x25cf; Folder #18: A Fasta file for each orthologous set containing the ALIGNED DNA sequences (codon alignment) of the set members;
-			<br><br>
-			&#x25cf; Folder #19: A bar plot of the group sizes frequency*;
-			<br><br>
-			&#x25cf; Folder #20: A violin plot of the ORF count dispersion* and a violin plot of the GC-content dispersion, among protein coding genes*;
+		</p>
+		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
 			<br>
-			*Raw data is provided as well
+            M1CR0B1AL1Z3R provides the following results in the "All outputs" zip available in the download page (see example <a href="{{webserver_address}}/download_page/example">here</a>):
 			<br><br>
-        </p>
-		
-        <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            Please feel free to try it yourself!
-			<br><br>
-			Click <a href="/example">here</a> to submit the provided example dataset or go to the <a href="/gallery">Gallery</a> section.
+		</p>
+		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
 			<br>
-        </p>
-		
+			&#x25cf; Folder 01_ani: a table and heatmap of the ANI (average nucleotide identity) values between all pairs of genomes.
+			<br><br>
+			&#x25cf; Folder 02a_orfs: a file for each genome containing the ORFs of the genome.
+			<br><br>
+			&#x25cf; Folder 02b_orfs_plots: ORFs statistics (ORFs count and GC content) per genome.
+			<br><br>
+			&#x25cf; Folder 02c_translated_orfs: a file for each genome containing the translated ORFs (amino acid sequences) of the genome.
+			<br><br>
+			&#x25cf; Folder 03_genome_completeness: The genome completeness BUSCO score of each genome.
+			<br><br>
+			&#x25cf; Folder 04_orphan_genes: A file for each genome containing a list of the orphan genes of that genome (genes that don't have any orthologs in other genomes). Orphan genes may be single-copy, meaning that they have only one copy in the gneome, or multi-copy, meaning that they have multiple copies in the genome (and in that case they are part of an "orphan orthogroup" - orthgroup that contains genes from a single genome).
+			<br><br>
+			&#x25cf; Folder 05a_orthogroups: The orthogroups: (1) in a table (csv) format, where each row is an orthogroup and each column is a genome. (2) an annotated table similar to (1) with the addition of KEGG Orthology annotations for each orthogroup as well as the average Codon Adaptation Index (CAI) of all the genes in the orthogroup. (3) A phyletic pattern matrix (a table where row i is a genome, column j is an orthogroup and the i,j entry contains 1 if the orthogroup j contains a member of genome i, o.w., 0).
+			<br><br>
+			&#x25cf; Folder 05b_orthogroups_sizes: A bar plot of the orthogroups sizes frequency.
+			<br><br>
+			&#x25cf; Folder 06a_orthogroups_dna: A fasta file for each orthogroup containing the UNALIGNED DNA sequences of the members.
+			<br><br>
+			&#x25cf; Folder 06b_orthogroups_aa: A fasta file for each orthogroup containing the UNALIGNED AA sequences of the members.
+			<br><br>
+			&#x25cf; Folder 06c_orthogroups_aa_msa: A Fasta file for each orthogroup containing the ALIGNED AA sequences of the members.
+			<br><br>
+			&#x25cf; Folder 06d_orthogroups_induced_dna_msa_by_aa_msa: A fasta file for each orthogroup containing the ALIGNED DNA sequences (codon alignment) of the members.
+			<br><br>
+			&#x25cf; Folder 07a_aligned_core_proteome: A fasta file containing the aligned core-proteome of the species in the dataset and different statistics of it.
+			<br><br>
+			&#x25cf; Folder 07b_aligned_core_genome: A fasta file containing the aligned core-genome of the species in the dataset and different statistics of it.
+			<br><br>
+			&#x25cf; Folder 08_genome_numeric_representation: A genome numeric representation of the core genome/proteome.
+			<br><br>
+			&#x25cf; Folder 09_species_phylogeny: A reliable maximum likelihood species phylogeny tree.
+			<br><br>
+			&#x25cf; Folder 10_codon_bias: (1) W_vectors.csv - A table of the relative adaptiveness (w vector) of each codon in each genome, as defined by <a href="https://academic.oup.com/nar/article/15/3/1281/1166844" target="_blank">Sharp and Li, 1987</a>. (2) Relative_Adaptiveness_scatter_plot.png - A clustering of the genomes based on their W vectors. (3) CAI_table.csv - A table of the Codon Adaptation Index (CAI) average of each orthogroup. (4) CAI_histogram.png - A histogram of the CAI values of the orthogroups.
+			<br><br>
+			In addition to the "All outputs" zip, the user can download several outputs separately from the download page (see example <a href="{{webserver_address}}/download_page/example">here</a>).
+        </p>	
     </div>
     <a  href="/" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white-600 text-black hover:bg-purple-600 hover:text-white ease-linear transition-all  duration-150  mx-8  my-4 cursor-pointer">
         back to home page

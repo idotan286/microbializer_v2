@@ -14,13 +14,13 @@ ARG_DISPLAY_JOB_NAME = 'Job Name'
 ARG_DISPLAY_EMAIL = 'Email address'
 ARG_DISPLAY_INPUTS_FASTA_TYPE = 'Inputs fasta files type'
 ARG_DISPLAY_FILTER_OUT_PLASMIDS = 'Filter out contigs / orfs of plasmids'
-ARG_DISPLAY_IDENTITY_CUTOFF = 'Minimum sequence identity for orthologs detection'
-ARG_DISPLAY_COVERAGE_CUTOFF = 'Minimum sequence coverage for orthologs detection'
-ARG_DISPLAY_E_VALUE_CUTOFF = 'Maximum e-value for orthologs detection'
+ARG_DISPLAY_IDENTITY_CUTOFF = 'Minimum sequence identity (protein-level) for homologs detection'
+ARG_DISPLAY_COVERAGE_CUTOFF = 'Minimum sequence coverage (protein-level) for homologs detection'
+ARG_DISPLAY_E_VALUE_CUTOFF = 'Maximum e-value (protein-level) for homologs detection'
 ARG_DISPLAY_CORE_MINIMAL_PERCENTAGE = 'Minimum percent of strains required to consider an orthogroup as part of the core genome'
 ARG_DISPLAY_OUTGROUP = 'Root the species tree according to this outgroup'
 ARG_DISPLAY_BOOTSTRAP = 'Apply bootstrap over the species tree'
-ARG_DISPLAY_ADD_ORPHAN_GENES_TO_OGS = 'Add orphan genes to orthologs table'
+ARG_DISPLAY_ADD_ORPHAN_GENES_TO_OGS = 'Add orphan genes to orthogroups table'
 
 
 ARG_NAME_IN_PIPELINE_TO_DISPLAY = {
