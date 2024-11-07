@@ -85,13 +85,13 @@ class PbsListener:
                     elif job_status == 'COMPLETED':
                         logger.debug(f'job_row = {job_row} finished')
                         self.job_prefix_to_function_mapping[job_prefix][FINISHED_JOBS_NAME](job_number)
-                    elif job_status == 'FAILED':
+                    elif job_status == 'FAILED' or job_status == 'OUT_OF_MEMORY':
                         logger.warning(f'job_row = {job_row} error')
                         self.job_prefix_to_function_mapping[job_prefix][ERROR_JOBS_NAME](job_number)
                     else:
                         logger.warning(f'job_row = {job_row} weird behavior')
                         logger.warning(f'job_status = {job_status}')
-                        self.job_prefix_to_function_mapping[job_prefix][WEIRD_BEHAVIOR_JOB_TO_CHECK](job_number)
+                        self.job_prefix_to_function_mapping[job_prefix][ERROR_JOBS_NAME](job_number)
                 except Exception as e:
                     logger.exception(f'There was an error with job {job_number}, with error {e}')
 
