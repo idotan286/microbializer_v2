@@ -79,7 +79,7 @@ class PbsListener:
                 job_number = job_row[JOB_NUMBER_COL]
                 job_status = job_row[JOB_STATUS_COL]
                 try:
-                    if job_status == 'RUNNING':
+                    if job_status == 'RUNNING' or job_status == 'PENDING':
                         logger.debug(f'job_row = {job_row} running')
                         self.job_prefix_to_function_mapping[job_prefix][NEW_RUNNING_JOBS_NAME](job_number)
                     elif job_status == 'COMPLETED':
