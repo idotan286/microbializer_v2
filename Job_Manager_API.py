@@ -62,7 +62,7 @@ class Job_Manager_API:
             self.EXAMPLE_FOLDER_PATH = r'/lsweb/pupko/microbializer/example_process_results/'
         self.__relative_files2download_and_paths = {}
         for title, paths in PATHS_TO_DOWNLOAD.items():
-            for file_name, path in paths.items():
+            for file_name, (path, description) in paths.items():
                 self.__relative_files2download_and_paths[file_name] = path
 
     def __build_and_send_mail(self, process_id, subject, content, email_addresses):
