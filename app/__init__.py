@@ -352,8 +352,8 @@ def about():
     about.html: HTML page
         about page
     """
-    url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else consts.WEBSERVER_ADDRESS
-    return render_template_wrapper('about.html', webserver_address=url, help_text_about_list=UI_CONSTS.HELP_TEXT_ABOUT_LIST, contact_info=UI_CONSTS.ERROR_CONTACT_INFO)
+    url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS
+    return render_template_wrapper('about.html', webserver_address=url, contact_info=UI_CONSTS.ERROR_CONTACT_INFO)
 
 @app.route("/overview")
 def overview():
@@ -365,7 +365,7 @@ def overview():
     about.html: HTML page
         about page
     """
-    url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else consts.WEBSERVER_ADDRESS
+    url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS
     return render_template_wrapper('overview.html', webserver_address=url)
 
 @app.route("/faq")
