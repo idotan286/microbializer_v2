@@ -8,12 +8,11 @@ from Job_Manager_Thread_Safe_Microbializer import Job_Manager_Thread_Safe_Microb
 from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
 import consts
 
-from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, IDENTITY_CUTOFF, \
+from flask_interface_consts import IDENTITY_CUTOFF, \
     E_VALUE_CUTOFF, CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
     COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESS_BAR, OWNER_EMAIL
-from SharedConsts import K_MER_COUNTER_MATRIX_FILE_NAME, \
-    FINAL_OUTPUT_FILE_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES, KRAKEN_SUMMARY_RESULTS_FOR_UI_FILE_NAME, EMAIL_CONSTS, UI_CONSTS, CUSTOM_DB_NAME, State, POSTPROCESS_JOB_PREFIX, GENOME_DOWNLOAD_SUMMARY_RESULTS_FILE_NAME, FINAL_OUTPUT_FILE_CONTAMINATED_NAME, FINAL_OUTPUT_ZIPPED_BOTH_FILES_NEW_CONTAMINATED
+from SharedConsts import WEBSERVER_ADDRESS, EMAIL_CONSTS, State
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
 
 
@@ -264,7 +263,8 @@ class Job_Manager_API:
             logger.info(f'email address')
             # adding the process
             self.__j_manager.add_process(process_id, email_address, job_name, job_arguemnts)
-            self.__build_and_send_mail(process_id, EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name), EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id), email_address)
+            url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS
+            self.__build_and_send_mail(process_id, EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name), EMAIL_CONSTS.SUBMITTED_CONTENT.format(webserver_address=url,process_id=process_id), email_address)
             return True
         logger.warning(f'process_id = {process_id}, can\'t add process: is_valid_email = {is_valid_email}')
         return False
