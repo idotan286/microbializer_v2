@@ -16,7 +16,6 @@ ARG_DISPLAY_INPUTS_FASTA_TYPE = 'Inputs fasta files type'
 ARG_DISPLAY_FILTER_OUT_PLASMIDS = 'Filter out contigs / orfs of plasmids'
 ARG_DISPLAY_IDENTITY_CUTOFF = 'Minimum sequence identity (protein-level) for homologs detection'
 ARG_DISPLAY_COVERAGE_CUTOFF = 'Minimum sequence coverage (protein-level) for homologs detection'
-ARG_DISPLAY_E_VALUE_CUTOFF = 'Maximum e-value (protein-level) for homologs detection'
 ARG_DISPLAY_CORE_MINIMAL_PERCENTAGE = 'Minimum percent of strains required to consider an orthogroup as part of the core genome'
 ARG_DISPLAY_OUTGROUP = 'Root the species tree according to this outgroup'
 ARG_DISPLAY_BOOTSTRAP = 'Apply bootstrap over the species tree'
@@ -30,7 +29,6 @@ ARG_NAME_IN_PIPELINE_TO_DISPLAY = {
     'filter_out_plasmids': ARG_DISPLAY_FILTER_OUT_PLASMIDS,
     'identity_cutoff': ARG_DISPLAY_IDENTITY_CUTOFF,
     'coverage_cutoff': ARG_DISPLAY_COVERAGE_CUTOFF,
-    'e_value_cutoff': ARG_DISPLAY_E_VALUE_CUTOFF,
     'core_minimal_percentage': ARG_DISPLAY_CORE_MINIMAL_PERCENTAGE,
     'outgroup': ARG_DISPLAY_OUTGROUP,
     'bootstrap': ARG_DISPLAY_BOOTSTRAP,

@@ -188,7 +188,6 @@ function showSummaryPage() {
   document.getElementById("user_file0").classList.add("text-xs");
 
   document.getElementById("user_file0").innerText = document.getElementById("file_name" + "0").innerText;
-  document.getElementById("user_e_value").innerText = document.getElementById("maxEValue").value;
   document.getElementById("user_coverage_cutoff").innerText = document.getElementById("coverageCutoff").value;
   document.getElementById("user_identity").innerText = document.getElementById("minIdentity").value;
   document.getElementById("user_core_gene").innerText = document.getElementById("orthologsPercent").value;

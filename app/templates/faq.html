@@ -29,17 +29,16 @@
 			&#x25cf; Filter out contigs / orfs of plasmids: The pipeline can as a first step filter out contigs or ORFs that 
 			belong to plasmids. This is done by a simple search for the word "plasmid" in the contig or ORF record name.
 			<br><br>
-			&#x25cf; Minimum sequence identity & sequence coverage (protein-level) and maximum E-value for homologs detection: 
+			&#x25cf; Minimum sequence identity & sequence coverage (protein-level) for homologs detection: 
 			These parameters are used in the homology search step, which is the first step in the orthogroup inference step. 
 			The homology search is performed using the MMSEQS2 program, which is a fast and sensitive homology search tool. 
-			The default values for these parameters are 40% sequence identity, 70% sequence coverage, and 0.01 E-value. 
+			The default values for these parameters are 40% sequence identity and 70% sequence coverage. 
 			These values can be adjusted to increase or decrease the stringency of the homology search. 
 			For example, if the user is interested in detecting more remote homologs, the sequence identity and 
-			coverage thresholds can be decreased, and the E-value threshold can be increased. In that case, the inferred 
-			orthogroups will be larger and contain more genes in each orthogroup. In contrast, if the user is interested in 
-			detecting only very close homologs, the sequence identity and coverage thresholds can be increased, and the E-value 
-			threshold can be decreased. In that case, the inferred orthgroups will be smaller as they will contain only very 
-			similar genes.
+			coverage thresholds should be decreased. In that case, the inferred orthogroups will be larger and contain more 
+			genes in each orthogroup. In contrast, if the user is interested in detecting only very close homologs, the 
+			sequence identity and coverage thresholds should be increased. In that case, the inferred orthgroups will be 
+			smaller as they will contain only very similar genes.
 			<br><br>
 			&#x25cf; Minimum percent of strains required to consider an orthogroup as part of the core genome:
 			The parameter dictates the inclusion or exclusion of orthogroups in the core proteome (and core genome). 

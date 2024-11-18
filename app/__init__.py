@@ -321,7 +321,6 @@ def home():
             args_display_filter_out_plasmids=consts.ARG_DISPLAY_FILTER_OUT_PLASMIDS,
             args_display_identity_cutoff=consts.ARG_DISPLAY_IDENTITY_CUTOFF,
             args_display_coverage_cutoff=consts.ARG_DISPLAY_COVERAGE_CUTOFF,
-            args_display_e_value_cutoff=consts.ARG_DISPLAY_E_VALUE_CUTOFF,
             args_display_core_minimal_percentage=consts.ARG_DISPLAY_CORE_MINIMAL_PERCENTAGE,
             args_display_outgroup=consts.ARG_DISPLAY_OUTGROUP,
             args_display_bootstrap=consts.ARG_DISPLAY_BOOTSTRAP,
