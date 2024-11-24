@@ -203,7 +203,7 @@ function showSummaryPage() {
 
   
   const submit_button = document.getElementById("submit_button");
-  submit_button.classList.remove("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
+  submit_button.classList.remove("hover:bg-lime-600", "hover:text-white", "text-green-600", "cursor-pointer")
   submit_button.classList.add("bg-gray-600","text-white")
   
   help_text.innerText = HELP_TEXT_SUMMARY_PAGE.trim()
@@ -212,7 +212,7 @@ function showSummaryPage() {
 
 function enablePostForm(event) {
   submit_button.classList.remove("bg-gray-600","text-white")
-  submit_button.classList.add("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
+  submit_button.classList.add("hover:bg-lime-600", "hover:text-white", "text-green-600", "cursor-pointer")
   submit_button.addEventListener("click", postForm)
 }
 
