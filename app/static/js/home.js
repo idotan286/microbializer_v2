@@ -19,8 +19,6 @@ function initScript(){
 }
 
 const job_form = document.getElementById("theForm")
-
-
 const theFile = document.getElementById("theFile");
 
 const resetHome = () => {
@@ -42,12 +40,16 @@ const buttonClick = () => {
   resetHome();
   const form_div = document.getElementById("formdiv")
   const job_button = document.getElementById("job_button")
-
+  const nav_btns = document.getElementById("nav_btns");
+  
   job_button.classList.remove('opacity-100');
   job_button.classList.add('opacity-0');
+  nav_btns.classList.add("hidden");
+  
   setTimeout(() => {
     job_button.classList.add('hidden');
     form_div.classList.remove('hidden');
+    nav_btns.classList.add("hidden");
     setTimeout(() => {
       form_div.classList.remove('opacity-0');
       

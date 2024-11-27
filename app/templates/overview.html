@@ -64,7 +64,7 @@
          <h2 class="text-5xl text-center  text-white select-none my-5 text-outline">Input specification</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
             The input for the web server is a zipped folder (either .zip or .tar.gz) in which each file is in a 
-			<a href="https://en.wikipedia.org/wiki/FASTA_format" target="_blank">FASTA format</a> containing genomic 
+			<a class="text-blue-600 underline decoration-solid" href="https://en.wikipedia.org/wiki/FASTA_format" target="_blank">FASTA format</a> containing genomic 
 			sequence of a different species/strain/isolate. Each file can contain either a fully assembled genome, a collection 
 			of contigs (originating from the same genome) or the open reading frames (ORFs) of that genome.
         </p>
@@ -75,7 +75,7 @@
 			<br/><br>
 			&#x25cf; An Orthogroup or orthologous group is a set of genes that diverged from a single gene in the LCA (last common ancestor) of the analyzed genomes. The genes in an orthogroup have high sequence similarity that can be detected using remote homology search algorithms such as BLAST. Of note, two genes from different genomes in an orthogroup are considered orthologs (=genes that diverged from a specification event) and two genes from the same genome in an orthogroup are considered paralogs (=genes that diverged from a duplication event).
 			<br/><br>
-			&#x25cf; Species tree reflect the evolution of orthologous sequences, i.e., the vertical phylogenetic relationships among the analyzed genome. In Bacteria and Archaea, many genes do not follow the species tree due to horizontal gene transfer events. Gene trees (are being reconstructed based on a MSA of a single-gene orthologous group and thus) represent the evolutionary relationships among the analyzed genes. Gene trees can differ from the species tree due to horizontal gene transfer and gene duplications events. Trees in general are inferred and not observed and as such they are subjected to biases and errors (see <a href="#msa_reliability">Can I trust the obtained core gene phylogenetic tree?</a>).
+			&#x25cf; Species tree reflect the evolution of orthologous sequences, i.e., the vertical phylogenetic relationships among the analyzed genome. In Bacteria and Archaea, many genes do not follow the species tree due to horizontal gene transfer events. Gene trees (are being reconstructed based on a MSA of a single-gene orthologous group and thus) represent the evolutionary relationships among the analyzed genes. Gene trees can differ from the species tree due to horizontal gene transfer and gene duplications events. Trees in general are inferred and not observed and as such they are subjected to biases and errors (see <a class="text-blue-600 underline decoration-solid" href="faq#msa_reliability">Can I trust the obtained core gene phylogenetic tree?</a>).
 			<br><br>
 			&#x25cf; A phyletic pattern matrix is a table in which row i is a genome, column j is an orthogroup and the i,j entry contains 1 if the orthogroup j contains a member of genome i, o.w., 0. Phyletic patterns data are used to infer events of gene loss and gene gain (acquisition), taking into account the phylogenetic relationships among the analyzed genomes.
 			<br><br>
@@ -90,33 +90,33 @@
 			The pipeline of M1CR0B1AL1Z3R is composed of the following algorithmic steps:
 			<br><br>
 		</p>
-		<img class="w-1/2 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/flow_chart.png')}}">
+		<img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/flow_chart.png')}}">
 		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
 			<br>
-			&#x25cf; M1CR0B1AL1Z3R calculates ANI (average nucleotide identity) values between all pairs of genomes using FastANI (<a href="https://www.nature.com/articles/s41467-018-07641-9" target="_blank">Jain C., et al., Nature communications, 2018</a>).
+			&#x25cf; M1CR0B1AL1Z3R calculates ANI (average nucleotide identity) values between all pairs of genomes using FastANI (<a class="text-blue-600 underline decoration-solid" href="https://www.nature.com/articles/s41467-018-07641-9" target="_blank">Jain C., et al., Nature communications, 2018</a>).
             <br><br>
-			&#x25cf; M1CR0B1AL1Z3R extract all ORFs from all genomes using Prodigal (<a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-119" target="_blank">Hyatt D., et al., BMC Bioinformatics, 2010</a>). If the inputs are already ORFs, this step is skipped. The ORFs are then translated to amino acids sequences.
+			&#x25cf; M1CR0B1AL1Z3R extract all ORFs from all genomes using Prodigal (<a class="text-blue-600 underline decoration-solid" href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-119" target="_blank">Hyatt D., et al., BMC Bioinformatics, 2010</a>). If the inputs are already ORFs, this step is skipped. The ORFs are then translated to amino acids sequences.
 			<br><br>
-			&#x25cf; M1CR0B1AL1Z3R uses the protein sequences of each genome to calculate its BUSCO score (a measure of the completeness of the genome assembly, <a href="https://academic.oup.com/bioinformatics/article/31/19/3210/211866" target="_blank">Simão, Felipe A., et al, Bioinformatics, 2015</a>).
+			&#x25cf; M1CR0B1AL1Z3R uses the protein sequences of each genome to calculate its BUSCO score (a measure of the completeness of the genome assembly, <a class="text-blue-600 underline decoration-solid" href="https://academic.oup.com/bioinformatics/article/31/19/3210/211866" target="_blank">Simão, Felipe A., et al, Bioinformatics, 2015</a>).
 			<br><br>
-			&#x25cf; M1CR0B1AL1Z3R infers orthogroups among the protein sequences of all genmoes using a self-implemented version of the OrthoMCL algorithm (<a href="https://genome.cshlp.org/content/13/9/2178.full" target="_blank">Li, Li, Christian J. Stoeckert, and David S. Roos, Genome research, 2003</a>). The algorithm uses MMSEQS2 (<a href="https://www.nature.com/articles/nbt.3988" target="_blank">Steinegger M. & Soding J., Nat Biotechnol, 2017</a>) to infer homologous sequences and then clusters them using MCL (<a href="https://dspace.library.uu.nl/bitstream/handle/1874/848/full.pdf?sequence=1&isAllowed=y" target="_blank">Van Dongen SM., Thesis, 2000</a>).
+			&#x25cf; M1CR0B1AL1Z3R infers orthogroups among the protein sequences of all genmoes using a self-implemented version of the OrthoMCL algorithm (<a class="text-blue-600 underline decoration-solid" href="https://genome.cshlp.org/content/13/9/2178.full" target="_blank">Li, Li, Christian J. Stoeckert, and David S. Roos, Genome research, 2003</a>). The algorithm uses MMSEQS2 (<a class="text-blue-600 underline decoration-solid" href="https://www.nature.com/articles/nbt.3988" target="_blank">Steinegger M. & Soding J., Nat Biotechnol, 2017</a>) to infer homologous sequences and then clusters them using MCL (<a class="text-blue-600 underline decoration-solid" href="https://dspace.library.uu.nl/bitstream/handle/1874/848/full.pdf?sequence=1&isAllowed=y" target="_blank">Van Dongen SM., Thesis, 2000</a>).
 			<br><br>
-			&#x25cf; M1CR0B1AL1Z3R reconstructs an amino acid multiple sequence alignment for each orthogroup using MAFFT (<a href="https://academic.oup.com/mbe/article/30/4/772/1073398" target="_blank">Katoh K. & Standley DM., Mol Biol Evol, 2013</a>).
+			&#x25cf; M1CR0B1AL1Z3R reconstructs an amino acid multiple sequence alignment for each orthogroup using MAFFT (<a class="text-blue-600 underline decoration-solid" href="https://academic.oup.com/mbe/article/30/4/772/1073398" target="_blank">Katoh K. & Standley DM., Mol Biol Evol, 2013</a>).
 			<br><br>
 			&#x25cf; M1CR0B1AL1Z3R computes the core-proteome (proteins that are shared across all bacterial genomes) and provides the core-proteome alignment, based on which, the species tree is inferred. In cases where there are duplications (i.e., two genomes for which the sequences of the core genes are identical), a reduced core-proteome alignment (containing only unique sequences) is provided as well.
 			<br><br>
-			&#x25cf; M1CR0B1AL1Z3R reconstructs a maximum-likelihood-based phylogenetic tree using IQ-TREE (<a href="https://academic.oup.com/mbe/article/37/5/1530/5721363" target="_blank">Minh, Bui Quang, et al, Molecular biology and evolution, 2020</a>) based on the inferred core-proteome alignment and visualizes it interactively.
+			&#x25cf; M1CR0B1AL1Z3R reconstructs a maximum-likelihood-based phylogenetic tree using IQ-TREE (<a class="text-blue-600 underline decoration-solid" href="https://academic.oup.com/mbe/article/37/5/1530/5721363" target="_blank">Minh, Bui Quang, et al, Molecular biology and evolution, 2020</a>) based on the inferred core-proteome alignment and visualizes it interactively.
 			<br><br>
 			&#x25cf; M1CR0B1AL1Z3R detects orphan genes (genes that are not part of any orthogroup).
 			<br><br>
-			&#x25cf; M1CR0B1AL1Z3R adds functional annotation to each orthogroup using the KOfam database (<a href="https://academic.oup.com/bioinformatics/article/36/7/2251/5631907" target="_blank">Aramaki, Takuya, et al, Bioinformatics, 2020</a>) which is based on the KEGG Orthology database.
+			&#x25cf; M1CR0B1AL1Z3R adds functional annotation to each orthogroup using the KOfam database (<a class="text-blue-600 underline decoration-solid" href="https://academic.oup.com/bioinformatics/article/36/7/2251/5631907" target="_blank">Aramaki, Takuya, et al, Bioinformatics, 2020</a>) which is based on the KEGG Orthology database.
 			<br><br>
-			&#x25cf; M1CR0B1AL1Z3R analyzes the codon bias among the different genomes and the different orthogroups (<a href="https://academic.oup.com/nar/article/15/3/1281/1166844" target="_blank">Sharp, Paul M., and Wen-Hsiung Li, Nucleic acids research, 1987</a>)
+			&#x25cf; M1CR0B1AL1Z3R analyzes the codon bias among the different genomes and the different orthogroups (<a class="text-blue-600 underline decoration-solid" href="https://academic.oup.com/nar/article/15/3/1281/1166844" target="_blank">Sharp, Paul M., and Wen-Hsiung Li, Nucleic acids research, 1987</a>)
 			<br><br>
 		</p>
 		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
 			<br>
-            M1CR0B1AL1Z3R provides the following results in the "All outputs" zip available in the download page (see example <a href="{{webserver_address}}/download_page/example">here</a>):
+            M1CR0B1AL1Z3R provides the following results in the "All outputs" zip available in the download page (see example <a class="text-blue-600 underline decoration-solid" href="{{webserver_address}}/download_page/example">here</a>):
 			<br><br>
 		</p>
 		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
@@ -153,9 +153,9 @@
 			<br><br>
 			&#x25cf; Folder 09_species_phylogeny: A reliable maximum likelihood species phylogeny tree.
 			<br><br>
-			&#x25cf; Folder 10_codon_bias: (1) W_vectors.csv - A table of the relative adaptiveness (w vector) of each codon in each genome, as defined by <a href="https://academic.oup.com/nar/article/15/3/1281/1166844" target="_blank">Sharp and Li, 1987</a>. (2) Relative_Adaptiveness_scatter_plot.png - A clustering of the genomes based on their W vectors. (3) CAI_table.csv - A table of the Codon Adaptation Index (CAI) average of each orthogroup. (4) CAI_histogram.png - A histogram of the CAI values of the orthogroups.
+			&#x25cf; Folder 10_codon_bias: (1) W_vectors.csv - A table of the relative adaptiveness (w vector) of each codon in each genome, as defined by <a class="text-blue-600 underline decoration-solid" href="https://academic.oup.com/nar/article/15/3/1281/1166844" target="_blank">Sharp and Li, 1987</a>. (2) Relative_Adaptiveness_scatter_plot.png - A clustering of the genomes based on their W vectors. (3) CAI_table.csv - A table of the Codon Adaptation Index (CAI) average of each orthogroup. (4) CAI_histogram.png - A histogram of the CAI values of the orthogroups.
 			<br><br>
-			In addition to the "All outputs" zip, the user can download several outputs separately from the download page (see example <a href="{{webserver_address}}/download_page/example">here</a>).
+			In addition to the "All outputs" zip, the user can download several outputs separately from the download page (see example <a class="text-blue-600 underline decoration-solid" href="{{webserver_address}}/download_page/example">here</a>).
         </p>	
     </div>
     <a  href="/" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-blue-700  bg-white-600 text-black hover:bg-purple-600 hover:text-white ease-linear transition-all  duration-150  mx-8  my-4 cursor-pointer">

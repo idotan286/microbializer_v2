@@ -2,10 +2,13 @@ from enum import Enum
 from datetime import datetime
 import logging
 import os
-
-from SharedConsts import WEBSERVER_DOMAIN
+import sys 
 
 import consts
+if consts.LOCAL:
+    sys.path.append(consts.MICROBIALIZER_PIPELINE_LOCAL_FLASK_PATH)
+from SharedConsts import WEBSERVER_DOMAIN
+
 if consts.LOCAL:
     LOGS_BASE_PATH = os.path.join(consts.WEBSERVER_LOCAL_OUTPUTS, 'logs')
     os.makedirs(LOGS_BASE_PATH, exist_ok=True)

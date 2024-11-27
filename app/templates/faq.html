@@ -22,7 +22,7 @@
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
             &#x25cf; Input fasta files type: The input files can be either GENOMES (fully assembled or contigs) or ORFs 
 			(open reading frames). In the case of GENOMES, the first step in the pipeline is ORFs prediction using 
-			<a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-119" target="_blank">Prodigal</a>. 
+			<a class="text-blue-600 underline decoration-solid" href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-119" target="_blank">Prodigal</a>. 
 			If the user already has ORFs and would like to use them as the starting point, they should choose ORFs in this 
 			parameter, and in that case ORFs prediction is skipped.
 			<br><br>
@@ -75,10 +75,10 @@
 			share only some of the genes shared by all ingroup genomes, thus resulting in sparse data, i.e., a core proteome 
 			composed of fewer genes. This, in turn, may produce a less accurate phylogenetic tree. Note that it can also lead 
 			to no tree at all, if including the outgroup results in no genes being shared by all genomes
-			(see <a href="#tree_inference">Why a species tree was not included in my analysis results?</a>).
+			(see <a class="text-blue-600 underline decoration-solid" href="#tree_inference">Why a species tree was not included in my analysis results?</a>).
 			Including a remote outgroup may also introduce a long-branch attraction artifact, as well as biases due to different 
 			nucleotide composition in the ingroup vs. outgroup sequences
-			(see <a href="#msa_reliability">Can I trust the obtained core gene phylogenetic tree?</a>).
+			(see <a class="text-blue-600 underline decoration-solid" href="#msa_reliability">Can I trust the obtained core gene phylogenetic tree?</a>).
 			Thus, in cases where an outgroup is available, we recommend running the analysis twice - with and without the outgroup. 
 			The user is advised to compare these two runs and study the impact of including the outgroup on the specific data 
 			being analyzed.
@@ -102,12 +102,13 @@
             The first step in orthogroup inference is homologs detection. When searching for homologs, all of the genes in each 
 			genome are queried against all other genes in all other genomes, making it the most computationally intensive step. 
 			Even though M1CR0B1AL1Z3R uses MMSEQS2, the fastest algorithm currently available for this task
-			(<a href="https://doi.org/10.1038/nbt.3988" target="_blank">Steinegger M. & Soding J., <i>Nat Biotechnol</i>, 2017</a>)
+			(<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1038/nbt.3988" target="_blank">Steinegger M. & Soding J., <i>Nat Biotechnol</i>, 2017</a>)
 			and despite the fact that it uses parallelization for this computational step, it might take over 12 hours for a 
 			dataset containing ~150 genomes.
 			<br>
         </p>
         
+        <a name="homolog_inference"></a>
         <h2 class="text-4xl text-center  text-white select-none my-5 text-outline">How reliable is the orthogroup inference step and is there a way to improve it?</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
 			The detection of orthologous genes relies on the correct identification of ORFs. Thus, errors in detecting ORFs 
@@ -120,7 +121,7 @@
 			stems from HGT events rather than from vertical divergence following speciation events). It is critically important 
 			to be aware of these potential biases when interpreting the results. An excellent reference that discusses these 
 			problems and suggests algorithms to test (and sometimes correct) for such biases is Philippe H., et al. 
-			(<a href="https://doi.org/10.1371/journal.pbio.1000602" target="_blank"><i>PLoS Biology</i>, 2011</a>).
+			(<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1371/journal.pbio.1000602" target="_blank"><i>PLoS Biology</i>, 2011</a>).
 			<br>
         </p>
         
@@ -129,20 +130,20 @@
         <p class="w-3/4 text-center text-ssm p-3 py-0 rounded-md  text-black bg-white bg-opacity-75 text-justify">
 			Despite substantial advances in multiple alignment theory and the development of even faster and more accurate 
 			alignment programs, generated alignments are still fraught with errors
-			(<a href="https://doi.org/10.1371/journal.pone.0018093" target="_blank">Thompson JD., et al., <i>PLoS One</i>, 2011</a>; 
-			<a href="https://doi.org/10.1093/nar/gkv318" target="_blank">Sela I., et al.,<i>Nucleic Acids Res</i>, 2015</a>). 
+			(<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1371/journal.pone.0018093" target="_blank">Thompson JD., et al., <i>PLoS One</i>, 2011</a>; 
+			<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1093/nar/gkv318" target="_blank">Sela I., et al.,<i>Nucleic Acids Res</i>, 2015</a>). 
 			In this web server, we use the MAFFT program
-			(<a href="https://doi.org/10.1093/molbev/mst010" target="_blank">Katoh K. and Standley DM., <i>Mol Biol Evol</i>, 2013</a>), 
+			(<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1093/molbev/mst010" target="_blank">Katoh K. and Standley DM., <i>Mol Biol Evol</i>, 2013</a>), 
 			which combines accuracy and computational speed, and is one of the most widely used alignment methods. 
 			However, other excellent alignment programs exist. For example, the PRANK program
-			(<a href="https://doi.org/10.1126/science.1158395" target="_blank">Loytynoja A. and Goldman N., <i>Science</i>, 2008</a>) 
+			(<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1126/science.1158395" target="_blank">Loytynoja A. and Goldman N., <i>Science</i>, 2008</a>) 
 			is considerably slower than MAFFT, but has been shown to yield more accurate alignments compared to MAFFT in simulation 
-			studies (e.g., <a href="https://doi.org/10.1093/nar/gkv318" target="_blank">Sela I., et al.,<i>Nucleic Acids Res</i>, 2015</a>). 
+			studies (e.g., <a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1093/nar/gkv318" target="_blank">Sela I., et al.,<i>Nucleic Acids Res</i>, 2015</a>). 
 			In our web server, we provide the inferred multiple sequence alignments for all the orthogroups, and the user can 
 			download these files and realign them using any other alignment method. In addition, we suggest testing the 
 			reliability of any specific alignment using existing tools, such as the 
-			<a href="http://guidance.tau.ac.il/ver2/" target="_blank">GUIDANCE2 web server</a> 
-			(<a href="https://doi.org/10.1093/nar/gkv318" target="_blank">Sela I., et al.,<i>Nucleic Acids Res</i>, 2015</a>).
+			<a class="text-blue-600 underline decoration-solid" href="https://guidance.tau.ac.il" target="_blank">GUIDANCE2 web server</a> 
+			(<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1093/nar/gkv318" target="_blank">Sela I., et al.,<i>Nucleic Acids Res</i>, 2015</a>).
 			<br>
         </p>
 
@@ -155,15 +156,15 @@
 			(vii) the level of sequence divergence and saturation; (viii) random stochastic factors.
 			Often, reconstructed trees are highly supported, yet they reflect non-phylogenetic signal rather than genuine 
 			phylogenetic signal
-			(<a href="https://doi.org/10.1371/journal.pbio.1000602" target="_blank">Philippe H, et al., <i>PLoS Biology</i>, 2011</a>). 
+			(<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1371/journal.pbio.1000602" target="_blank">Philippe H, et al., <i>PLoS Biology</i>, 2011</a>). 
 			For example, long tree branches tend to cluster together regardless of their true evolutionary relationships, a phenomenon 
 			called "long-branch attraction"
-			(<a href="https://doi.org/10.2307/2412923" target="_blank">Felsenstein J, <i>Syst Zool</i>, 1978</a>). 
+			(<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.2307/2412923" target="_blank">Felsenstein J, <i>Syst Zool</i>, 1978</a>). 
 			Similarly, and especially when bacterial sequences are analyzed, genomes with similar GC content can cluster together, 
 			generating trees that reflect similarity in nucleotide composition rather than true vertical inheritance
-			(<a href="https://doi.org/10.1073/pnas.92.24.11317" target="_blank">Galtier N and Gouy M, <i>PNAS</i>, 1995</a>). 
+			(<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1073/pnas.92.24.11317" target="_blank">Galtier N and Gouy M, <i>PNAS</i>, 1995</a>). 
 			Furthermore, horizontal gene transfer events can bias the inference of orthologous sequences
-			(see <a href="#homolog_inference">How reliable is the orthogroup inference step and is there a way to improve it?</a>),
+			(see <a class="text-blue-600 underline decoration-solid" href="#homolog_inference">How reliable is the orthogroup inference step and is there a way to improve it?</a>),
 			and thus trees inferred from a concatenation of many multiple sequence alignments may reflect "an average" of 
 			conflicting gene trees. This average may or may not reflect the desired "vertical" (or species) tree. 
 			Eliminating these biases is an active research area. We highly recommend manually inspecting every step of the 
@@ -173,8 +174,8 @@
 			cases of horizontal transfer. One can then reconstruct the tree, without genes suspected of horizontal transfer, 
 			and compare it to the tree obtained using all of the data. Note that removing genes reduces the noise, but also the 
 			phylogenetic signal, and there is no consensus regarding the optimal strategy.
-			We recommend Anisimova, et al. (<a href="https://doi.org/10.1186/1471-2148-13-161" target="_blank"><i>BMC Evolutionary Biology</i>, 2013</a>) 
-			and Philippe et al. (<a href="https://doi.org/10.1371/journal.pbio.1000602" target="_blank"><i>PLoS Biology</i>, 2011</a>) 
+			We recommend Anisimova, et al. (<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1186/1471-2148-13-161" target="_blank"><i>BMC Evolutionary Biology</i>, 2013</a>) 
+			and Philippe et al. (<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1371/journal.pbio.1000602" target="_blank"><i>PLoS Biology</i>, 2011</a>) 
 			for further reading about biases and potential solutions when reconstructing phylogenetic trees.
 			<br>
         </p>
@@ -185,7 +186,7 @@
 			maximum-likelihood paradigm, which relies on an explicit evolutionary model of sequence evolution. Specifically, 
 			we assume the GTR+I+gamma model, with among-site rate variation modeled using the discrete gamma distribution. 
 			The tree is reconstructed using one of the fastest programs, IQ-TREE
-			(<a href="https://academic.oup.com/mbe/article/37/5/1530/5721363" target="_blank">Minh, Bui Quang, et al, Molecular biology and evolution, 2020</a>). 
+			(<a class="text-blue-600 underline decoration-solid" href="https://academic.oup.com/mbe/article/37/5/1530/5721363" target="_blank">Minh, Bui Quang, et al, Molecular biology and evolution, 2020</a>). 
 			Despite the speed of IQ-TREE, the number of sequences and the number of sites in the alignment can significantly affect the running time.
 			<br>
         </p>
@@ -200,7 +201,7 @@
 			An empty core proteome could result from extensive missing data, so that each gene is missing in at least one genome. 
 			A way around this is to change the definition of core genes in the Advanced Setting "Minimum percent of strains 
 			required to consider an orthogroup as part of the core genome" 
-			(see <a href="#">What are the tunable settings and how can they influence my results?</a>).
+			(see <a class="text-blue-600 underline decoration-solid" href="#">What are the tunable settings and how can they influence my results?</a>).
 			Third, even when more than three sequences are available and core genes do exist, the tree can still be missing. 
 			This can reflect genomic sequences that are identical. IQ-TREE reduces the input alignment to unique sequences, i.e., 
 			it removes duplicates. If removing duplicates leaves less than four sequences, a tree will not be generated.

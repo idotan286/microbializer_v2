@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 
-
-
 {% block body %}
 
-<div class="flex flex-col mx-auto  h-full justify-center items-center">
+<div class="flex flex-col mx-auto h-full justify-center items-center">
     <div class="flex-0 h-32 my-4">
         <h1 class="text-8xl text-white select-none text-outline">Your analysis files are ready for download</h1>
     </div>
-    <div class=" w-11/12 h-fit bg-white bg-opacity-50 mx-4 my-2  px-4 py-2 border-2 rounded-md shadow-lg">
+    <div class="w-11/12 h-fit bg-white bg-opacity-50 mx-4 my-2  px-4 py-2 border-2 rounded-md shadow-lg">
 
         <ul class=" flex flex-wrap justify-between ">
             {% for title, files_dict in paths2download.items() %}
@@ -17,9 +15,6 @@
                 <ul>
                     {% for file_name, _ in files_dict.items() %}
                     <li class="m-2 bg-white bg-opacity-0 cursor-pointer hover:bg-opacity-80 rounded-md">
-                        <!-- <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
-                            <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
-                        </label> -->
                         <a href="/download/{{process_id}}/{{file_name}}">
                             <span>⇩ {{file_name.replace("_", " ")}}</span>
                         </a>
