@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_gradient_background.html' %}
 
 {% block head %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js"></script>
@@ -60,8 +60,8 @@
             <div class="flex w-full  flex-row my-3">
                 {% for key, value in summary_stats.items() %}
                 <div class="relative flex-1 text-center mx-2 px-2 py-2 select-none border-2 shadow-lg rounded bg-white">
-                    <h1 class="text-lg my-4">{{key}}</h1>
-                    <h1 class="text-sm">{{value}}</h1>
+                    <h1 class="text-sm my-4">{{key}}</h1>
+                    <h1 class="text-xs">{{value}}</h1>
                 </div>
                 {% endfor %}
             </div>

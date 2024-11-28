@@ -12,7 +12,7 @@
 
 let max_num_of_rows = 0;
 let table_offset = 0;
-let LIMIT = 50
+let LIMIT = 10
 let orthologous_data_columns = {}
 
 bar_chart = new Chart('bar_chart', {
