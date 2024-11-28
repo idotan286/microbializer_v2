@@ -3,24 +3,51 @@
 {% block body %}
 
 <div class="flex flex-col mx-auto justify-center items-center">
-    <div class="flex-0 my-4">
+    <div class="flex-0 my-0">
         <h1 class="text-4xl text-white select-none text-center text-outline">Your analysis files are ready for download</h1>
     </div>
+    <div class="flex flex-row my-3">
+                <a href="/example">
+                    <label class="w-128  flex flex-col  items-center  px-4  py-2  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-2 cursor-pointer select-none">
+                        <span class=" text-base font-bold leading-normal text-sm select-none">back to example page</span>
+                    </label>
+                </a>
+                <a href="/">
+                    <label class="w-128  flex flex-col  items-center  px-4  py-2  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-2 cursor-pointer select-none">
+                        <span class=" text-base font-bold leading-normal text-sm select-none">back to home page</span>
+                    </label>
+                </a>
+            </div>
     <div class="w-11/12 h-fit bg-white bg-opacity-50 mx-4 my-2  px-4 py-2 border-2 rounded-md shadow-lg">
 
-        <ul class=" flex flex-wrap justify-between ">
+        <ul class=" flex flex-wrap justify-between space-y-1">
             {% for title, files_dict in paths2download.items() %}
-            <li class="w-56 p-4 relative bg-white bg-opacity-25 text-black hover:bg-opacity-60 ease-in-out rounded-md  transition-all  duration-150 ">
+            <li class="w-56 p-4 relative bg-white bg-opacity-25 text-black hover:bg-opacity-60 ease-in-out rounded-md  transition-all  duration-150">
                 <h1 class="text-1xl font-bold">{{title}}</h1>
                 <ul>
-                    {% for file_name, _ in files_dict.items() %}
+                    {% for file_name, file_info in files_dict.items() %}
                     <li class="m-2 bg-white bg-opacity-0 cursor-pointer hover:bg-opacity-80 rounded-md">
                         <a href="/download/{{process_id}}/{{file_name}}">
                             <span>⇩ {{file_name.replace("_", " ")}}</span>
                         </a>
+                    <!--<label class="peer w-4 h-4 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center bottom-0 left-0 mx-2 my-2 tracking-wide">
+                        <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
+                    </label>
+                    -->
+                    <label class="peer">
+                        <span class="font-bold text-1xl text-blue-900 select-none" >?</span>
+                    </label>
+                    <div class="hidden bottom-5 left-6 w-11/12 h-auto bg-slate-200 border border-1 rounded-md peer-hover:block transition-opacity ease-linear duration-150 p-2 pointer-events-none border-white shadow-lg">
+                        <p id="help_text" class="p-0 text-1xl text-justify select-none w-auto h-auto">
+                            {{file_info[1]}}
+                        </p>
+                    </div>
                     </li>
+                    
                     {% endfor %}
+                    
                 </ul>
+                
             </li>
             {% endfor %}
         </ul>
