@@ -1,0 +1,1 @@
+{"identity_cutoff": "40.0", "core_minimal_percentage": "100.0", "outgroup": "No outgroup", "bootstrap": "False", "coverage_cutoff": "70.0", "filter_out_plasmids": "False", "add_orphan_genes_to_ogs": "False", "inputs_fasta_type": "genomes", "job_name": "abc", "email": "yairshsh@gmail.com", "run_dir": "/lsweb/pupko/microbializer/user_results/84e11847-0a08-440d-8b79-3def38551610"}

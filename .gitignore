@@ -3,5 +3,4 @@ app\__pycache__
 wsgi.py
 .idea
 local_run/logs
-local_run/user_results
 SavedObjects
