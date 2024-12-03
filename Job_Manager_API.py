@@ -11,7 +11,7 @@ import consts
 from flask_interface_consts import IDENTITY_CUTOFF, \
     CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
-    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESS_BAR, OWNER_EMAIL
+    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESSBAR_FILE_PATH, OWNER_EMAIL
 from SharedConsts import WEBSERVER_ADDRESS, EMAIL_CONSTS, State
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
 
@@ -560,8 +560,7 @@ class Job_Manager_API:
         if not os.path.isdir(parent_folder):
             return None
         
-        data = {}
-        data_path = os.path.join(parent_folder, PROGRESS_BAR)
+        data_path = os.path.join(parent_folder, PROGRESSBAR_FILE_PATH)
         if os.path.isfile(data_path):
             import csv
             progressbar = []
