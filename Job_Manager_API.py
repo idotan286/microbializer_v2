@@ -11,7 +11,7 @@ import consts
 from flask_interface_consts import IDENTITY_CUTOFF, \
     CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
-    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESSBAR_FILE_PATH, OWNER_EMAIL
+    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESSBAR_FILE_PATH, OWNER_EMAIL, ADDITIONAL_OWNER_EMAILS
 from SharedConsts import WEBSERVER_ADDRESS, EMAIL_CONSTS, State
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
 
@@ -117,6 +117,7 @@ class Job_Manager_API:
         -------
         """
         email_addresses = [OWNER_EMAIL]
+        email_addresses.extend(ADDITIONAL_OWNER_EMAILS)
         if email_address != None:
             email_addresses.append(email_address)
         else:
@@ -260,11 +261,16 @@ class Job_Manager_API:
         is_valid_email = self.__validate_email_address(email_address)
         # validating file and email
         if is_valid_email:
-            logger.info(f'email address')
             # adding the process
             self.__j_manager.add_process(process_id, email_address, job_name, job_arguemnts)
+            
+            email_addresses = [OWNER_EMAIL]
+            email_addresses.extend(ADDITIONAL_OWNER_EMAILS)
+            if email_address != None:
+                email_addresses.append(email_address)
+
             url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS
-            self.__build_and_send_mail(process_id, EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name), EMAIL_CONSTS.SUBMITTED_CONTENT.format(webserver_address=url,process_id=process_id), email_address)
+            self.__build_and_send_mail(process_id, EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name), EMAIL_CONSTS.SUBMITTED_CONTENT.format(webserver_address=url,process_id=process_id), email_addresses)
             return True
         logger.warning(f'process_id = {process_id}, can\'t add process: is_valid_email = {is_valid_email}')
         return False
@@ -567,7 +573,7 @@ class Job_Manager_API:
             with open(data_path, newline='') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
-                    progressbar.append (row)
+                    progressbar.append(row)
             return progressbar
         
         return []
