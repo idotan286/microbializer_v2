@@ -379,7 +379,7 @@ def faq():
     """
     return render_template_wrapper('faq.html')
     
-@app.route("/example", methods=['GET', 'POST'])
+@app.route("/results/example", methods=['GET', 'POST'])
 def example():
     """Endpoint to example page.
     Parameters
