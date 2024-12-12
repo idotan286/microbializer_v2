@@ -8,7 +8,7 @@ from SharedConsts import PATH_TO_OUTPUT_PROCESSOR_SCRIPT, RESULTS_SUMMARY_FILE_N
     INPUT_CLASSIFIED_FILE_NAME_PAIRED, INPUT_UNCLASSIFIED_FILE_NAME_PAIRED, USER_FILE_NAME_ZIP, USER_FILE_NAME_TAR
 from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_QUEUE_NAME, NUBMER_OF_CPUS_MICROBIALIZER_PROCESSOR_JOB, \
     MICROBIALIZER_PROCESSOR_JOB_PREFIX, MICROBIALIZER_PROCESSOR_RESULTS_FILE_NAME, MICROBIALIZER_JOB_TEMPLATE, \
-    ARGS_JSON_PATH_KEY, JOB_PARAMETERS_FILE_NAME, RUN_DIR, MICROBIALIZER_MAIN_JOB_MEMORY
+    ARGS_JSON_PATH_KEY, JOB_PARAMETERS_FILE_NAME, RUN_DIR, MICROBIALIZER_MAIN_JOB_MEMORY, MICROBIALIZER_MAIN_JOB_TIME_LIMIT_IN_HOURS
 import glob
 from slurm_example import submit_job
 import datetime
@@ -57,7 +57,8 @@ class Handler:
             "job_name": job_name,
             "logs_path": input_path_parent,
             "script_commands": command_to_run,
-            "memory": MICROBIALIZER_MAIN_JOB_MEMORY
+            "memory": MICROBIALIZER_MAIN_JOB_MEMORY,
+            "time_limit_in_hours": MICROBIALIZER_MAIN_JOB_TIME_LIMIT_IN_HOURS
         }
         run_parameters['logger'] = logger
         logger.debug(f'{run_parameters}')
