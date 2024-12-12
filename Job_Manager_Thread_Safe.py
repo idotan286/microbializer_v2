@@ -342,6 +342,9 @@ class Job_Manager_Thread_Safe:
         # verify if the process is Finished or Crashed as they have similar behevior
         # uses the funciton from the __paths2verify_process_ends to distinguish between the beheviors
         if (state == State.Finished or state == State.Crashed) and process_id in self.__processes_state_dict:
+            if state == self.__processes_state_dict[process_id].get_job_state(job_prefix):
+                logger.info(f'process_id = {process_id}, job_prefix = {job_prefix} state = {state}, return from function because the state is already updated.')
+                return
             is_one_finished = None
             for func2create_file2check in self.__paths2verify_process_ends[job_prefix]:
                 file2check = func2create_file2check(process_id)
