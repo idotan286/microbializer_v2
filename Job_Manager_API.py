@@ -11,7 +11,8 @@ import consts
 from flask_interface_consts import IDENTITY_CUTOFF, \
     CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
-    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESSBAR_FILE_PATH, OWNER_EMAIL, ADDITIONAL_OWNER_EMAILS
+    COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESSBAR_FILE_PATH, \
+    OWNER_EMAIL, ADDITIONAL_OWNER_EMAILS, SEND_EMAIL_WHEN_JOB_FINISHED_FROM_PIPELINE
 from SharedConsts import WEBSERVER_ADDRESS, EMAIL_CONSTS, State
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
 
@@ -84,18 +85,19 @@ class Job_Manager_API:
         if not email_addresses:
             logger.info('mail is empty, not sending')
             return
-        try:
-            if type(email_addresses) == str:
-                email_addresses = [email_addresses]
-            
-            for email_address in email_addresses:
+        
+        if type(email_addresses) == str:
+            email_addresses = [email_addresses]
+        
+        for email_address in email_addresses:
+            try:
                 # the emails are sent from 'TAU BioSequence <bioSequence@tauex.tau.ac.il>'
                 send_email('mxout.tau.ac.il', 'TAU BioSequence <bioSequence@tauex.tau.ac.il>',
                         email_address, subject=subject,
                         content= content)
                 logger.info(f'sent email to {email_address} with subject {subject}')
-        except:
-            logger.exception(f'failed to sent email to {email_address}')
+            except:
+                logger.exception(f'failed to send email to {email_address}')
             
     def __process_state_changed(self, process_id, state, email_address, job_name, job_prefix):
         """When the process state is changed, this function is called (this funciton is called for the Kraken and post process types).
@@ -116,18 +118,19 @@ class Job_Manager_API:
         Returns
         -------
         """
-        email_addresses = [OWNER_EMAIL]
-        email_addresses.extend(ADDITIONAL_OWNER_EMAILS)
-        if email_address != None:
-            email_addresses.append(email_address)
-        else:
-            logger.warning(f'process_id = {process_id} email_address is None, state = {state}, job_name = {job_name}')          
-        
-        # sends mail once the job finshed or crashes
-        if state == State.Finished:
-            self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), EMAIL_CONSTS.CONTENT_PROCESS_FINISHED.format(process_id=process_id), email_addresses)
-        elif state == State.Crashed:
-            self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), EMAIL_CONSTS.CONTENT_PROCESS_CRASHED.format(process_id=process_id), email_addresses)
+        if not SEND_EMAIL_WHEN_JOB_FINISHED_FROM_PIPELINE:
+            email_addresses = [OWNER_EMAIL]
+            email_addresses.extend(ADDITIONAL_OWNER_EMAILS)
+            if email_address is not None:
+                email_addresses.append(email_address)
+            else:
+                logger.warning(f'process_id = {process_id} email_address is None, state = {state}, job_name = {job_name}')          
+            
+            # sends mail once the job finished or crashes
+            if state == State.Finished:
+                self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), EMAIL_CONSTS.CONTENT_PROCESS_FINISHED.format(process_id=process_id), email_addresses)
+            elif state == State.Crashed:
+                self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), EMAIL_CONSTS.CONTENT_PROCESS_CRASHED.format(process_id=process_id), email_addresses)
 
         self.__func2update_html(process_id, state)
 
