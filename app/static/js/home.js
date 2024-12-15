@@ -238,7 +238,7 @@ function postForm() {
         }
         if(event.loaded == event.total){
         //   document.getElementById('progress-bar').style.width = '100%';
-            document.getElementById('progress-bar').innerHTML = 'Your file has been uploaded. We are processing and validating your file. Don\'t close or refresh the window. This may take a few minutes for a small file and up to two hours for a large one.';
+            document.getElementById('progress-bar').innerHTML = 'Your file has been uploaded. We are processing and validating your file. Don\'t close or refresh the window. This may take an hour for a small file and up to several days for a large one.';
         }
     });
 
