@@ -14,7 +14,7 @@
 
 <body class="font-sans h-full">
   <div class='w-full h-screen bg-no-repeat bg-cover' 
-       style="background-image: url({{file_name}});">
+       style="background-image: url({{file_name}}); min-width: 100%; max-width: 100%; overflow: auto;">
 
     {% block body %}{% endblock %}
   </div>
