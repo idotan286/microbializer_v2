@@ -315,6 +315,7 @@ def home():
     extensions=",".join(UI_CONSTS.ALLOWED_EXTENSIONS)
     return render_template_wrapper('home.html', 
             extensions=extensions,
+            webserver_address=consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS,
             args_display_job_name=consts.ARG_DISPLAY_JOB_NAME,
             args_display_email=consts.ARG_DISPLAY_EMAIL,
             args_display_inputs_fasta_type=consts.ARG_DISPLAY_INPUTS_FASTA_TYPE,
