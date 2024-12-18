@@ -152,12 +152,6 @@ const createTable = async (offset) => {
 
 
   const orthologous_data = await get_table_data(offset, LIMIT);
-  if (orthologous_data_columns.length < 8){
-    table.classList += "w-full";
-  } else{
-    let width = orthologous_data_columns.length * 64 + 20;
-    table.style.cssText += "width:" + width + "px";
-  }
 
   Object.values(orthologous_data_columns).forEach((key, index) => {
       console.log(key, index)
