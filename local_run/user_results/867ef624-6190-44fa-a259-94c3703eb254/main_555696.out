@@ -1,0 +1,6 @@
+Job ID: 555696
+Running on nodes: compute-0-292
+Allocated CPUs: 1
+PATH: /lsweb/pupko/microbializer/miniconda3/envs/microbializer/bin:/lsweb/pupko/microbializer/miniconda3/envs/microbializer/bin:/lsweb/pupko/microbializer/miniconda3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:.
+sys.path is
+['/lsweb/pupko/microbializer/pipeline', '/lsweb/pupko/microbializer/miniconda3/envs/microbializer/lib/python38.zip', '/lsweb/pupko/microbializer/miniconda3/envs/microbializer/lib/python3.8', '/lsweb/pupko/microbializer/miniconda3/envs/microbializer/lib/python3.8/lib-dynload', '/lsweb/pupko/microbializer/miniconda3/envs/microbializer/lib/python3.8/site-packages', '/lsweb/pupko/microbializer/pipeline', '/lsweb/pupko/microbializer/pipeline', '/lsweb/pupko/microbializer/pipeline/flask', '/lsweb/pupko/microbializer/pipeline']
