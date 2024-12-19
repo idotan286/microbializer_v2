@@ -1,17 +1,9 @@
 import pathlib
-import subprocess
-from subprocess import PIPE
 import os
 from utils import logger
-from SharedConsts import PATH_TO_OUTPUT_PROCESSOR_SCRIPT, RESULTS_SUMMARY_FILE_NAME, INPUT_CLASSIFIED_FILE_NAME, \
-    INPUT_UNCLASSIFIED_FILE_NAME, TEMP_CLASSIFIED_IDS, TEMP_UNCLASSIFIED_IDS, INTERVAL_BETWEEN_LISTENER_SAMPLES, \
-    INPUT_CLASSIFIED_FILE_NAME_PAIRED, INPUT_UNCLASSIFIED_FILE_NAME_PAIRED, USER_FILE_NAME_ZIP, USER_FILE_NAME_TAR
-from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_QUEUE_NAME, NUBMER_OF_CPUS_MICROBIALIZER_PROCESSOR_JOB, \
-    MICROBIALIZER_PROCESSOR_JOB_PREFIX, MICROBIALIZER_PROCESSOR_RESULTS_FILE_NAME, MICROBIALIZER_JOB_TEMPLATE, \
-    ARGS_JSON_PATH_KEY, JOB_PARAMETERS_FILE_NAME, RUN_DIR, MICROBIALIZER_MAIN_JOB_MEMORY, MICROBIALIZER_MAIN_JOB_TIME_LIMIT_IN_HOURS
-import glob
+from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, MICROBIALIZER_JOB_TEMPLATE, \
+    JOB_PARAMETERS_FILE_NAME, RUN_DIR
 from slurm_example import submit_job
-import datetime
 import json
 
 
@@ -36,29 +28,20 @@ class Handler:
         else:
             raise ValueError('Input file path parameter was not a list of a string')
         job_unique_id = str(input_path_parent.stem)
-        temp_script_path = input_path_parent / f'temp_micro_search_running_file_{job_unique_id}.sh'
-        results_file_path = input_path_parent / MICROBIALIZER_PROCESSOR_RESULTS_FILE_NAME
         job_name = f'{MICROBIALIZER_PROCESSOR_JOB_PREFIX}_{job_unique_id}'
         job_arguemnts[RUN_DIR] = str(input_path_parent)
         json_parameters_file_path = os.path.join(input_path_parent, JOB_PARAMETERS_FILE_NAME)
         with open(json_parameters_file_path, 'w') as fp:
             json.dump(job_arguemnts, fp)
         command_to_run = MICROBIALIZER_JOB_TEMPLATE.format(
-            sleep_interval=INTERVAL_BETWEEN_LISTENER_SAMPLES,
-            args_json_path_key=ARGS_JSON_PATH_KEY,
             args_json_path=json_parameters_file_path,
-            results_file_path=results_file_path
         )
 
         # run the job
         run_parameters = {
-            "queue": MICROBIALIZER_PROCESSOR_JOB_QUEUE_NAME, 
-            "num_cpus": NUBMER_OF_CPUS_MICROBIALIZER_PROCESSOR_JOB, 
             "job_name": job_name,
             "logs_path": input_path_parent,
-            "script_commands": command_to_run,
-            "memory": MICROBIALIZER_MAIN_JOB_MEMORY,
-            "time_limit_in_hours": MICROBIALIZER_MAIN_JOB_TIME_LIMIT_IN_HOURS
+            "script_commands": command_to_run
         }
         run_parameters['logger'] = logger
         logger.debug(f'{run_parameters}')
