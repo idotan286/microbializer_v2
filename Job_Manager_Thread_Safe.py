@@ -6,9 +6,9 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from JobListener import PbsListener
 import consts
 
-from flask_interface_consts import INTERVAL_BETWEEN_LISTENER_SAMPLES
 import SharedConsts as sc
 from SharedConsts import State
+import flask_interface_consts
 
 from utils import logger, LOGGER_LEVEL_JOB_MANAGE_THREAD_SAFE
 from Monitor import Monitor_Jobs
@@ -112,7 +112,7 @@ class Job_Manager_Thread_Safe:
         self.__monitor = Monitor_Jobs(upload_root_path)
         self.__listener = PbsListener(function_to_call_listener)
         self.__scheduler = BackgroundScheduler()
-        self.__scheduler.add_job(self.__listener.run, 'interval', seconds=INTERVAL_BETWEEN_LISTENER_SAMPLES)
+        self.__scheduler.add_job(self.__listener.run, 'interval', seconds=flask_interface_consts.INTERVAL_BETWEEN_LISTENER_SAMPLES)
         self.__scheduler.add_job(self.__clean_processes_state_dict, 'interval',
                                  minutes=sc.INTERVAL_BETWEEN_CLEANING_THE_PROCESSES_DICT * 60)
         #self.__scheduler.add_job(self.__monitor.create_and_send_weekly_summary, 'cron', day_of_week='sun', hour=6)
