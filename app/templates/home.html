@@ -13,7 +13,7 @@
             <h1 class="text-9xl text-center select-none my-5 ">Microbializer</h1>
             <h1 class="text-5xl text-center select-none">A web server for analyzing bacterial genomics data. Easily.</h1>
         </div>
-        <p class="w-1/2 text-center text-1 p-5 m-8 rounded-md text-black bg-white bg-opacity-75 select-none">
+        <p class="w-1/2 text-center text-1 p-5 m-8 rounded-md text-black bg-white bg-opacity-75 select-none" id="page_liscene">
           Our website provides free access to all users, including commercial users. See terms of use <a class="text-blue-600 underline decoration-solid" href="{{webserver_address}}/about#terms_of_use">here</a>
         </p>
         <div class="h-32 flex flex-col justify-end transition-all duration-500 ease-in-out" id="job_button">
@@ -48,7 +48,7 @@
           <form class="flex flex-col justify-center items-center mx-2" id="theForm" method="POST" enctype="multipart/form-data">
             <div id="mail_div" class="flex flex-col">
               <div   class="flex flex-row justify-between items-center">
-                <p class="text-2xl mx-8 select-none">Enter a valid email (optional):</p>
+                <p class="text-2xl mx-8 select-none">Email address (optional):</p>
                 <input class="appearance-none border-2 border-lime-800 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="email" id="theMail" name="email" placeholder="example@example.com" required>
   
                 <label for="theMail" id="continue_after_mail" class="w-16  flex flex-col items-center rounded-md py-3 bg-white shadow-lg tracking-wide uppercase border border-lime-800 bg-gray-600 text-white ease-linear transition-all duration-150 mx-8 my-4">
@@ -56,7 +56,7 @@
                 </label>
               </div>
               <div   class="flex flex-row justify-between items-center">
-                <p class="text-2xl mx-8 select-none">Job name (optional):&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+                <p class="text-2xl mx-8 select-none">Job name (optional):&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
                 <input class="appearance-none border-2 border-lime-800 bg-white rounded-lg w-128 text-gray-700 text-xl mr-1 py-3 px-2 leading-tight focus:outline-none text-center" type="text" id="theJobName" name="job_name" maxlength="70" required>
                 <span class="w-16 py-3 my-4  mx-8 select-none">&nbsp</span>
 

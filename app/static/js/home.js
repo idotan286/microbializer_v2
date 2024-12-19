@@ -37,6 +37,7 @@ const resetHome = () => {
 
 const buttonClick = () => {
   document.getElementById("page_title").classList.add("hidden");
+  document.getElementById("page_liscene").classList.add("hidden");
   resetHome();
   const form_div = document.getElementById("formdiv")
   const job_button = document.getElementById("job_button")
