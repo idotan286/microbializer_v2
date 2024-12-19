@@ -165,7 +165,11 @@ def download_page(process_id):
     dict_of_files_to_export = manager.get_files_dict(process_id)
     if dict_of_files_to_export == None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
-    return render_template_wrapper('download_page.html', paths2download=dict_of_files_to_export, process_id=process_id)
+    summary_stats = manager.get_summary_stats(process_id)
+    job_description = '' 
+    if consts.ARG_DISPLAY_JOB_NAME in summary_stats and summary_stats[consts.ARG_DISPLAY_JOB_NAME]:
+        job_description = f'(Job name: {summary_stats[consts.ARG_DISPLAY_JOB_NAME]})'
+    return render_template_wrapper('download_page.html', paths2download=dict_of_files_to_export, process_id=process_id, job_description=job_description)
 
 @app.route('/download/<process_id>/<file_name>', methods=['GET'])
 def download(process_id, file_name):
