@@ -12,7 +12,7 @@ from flask_interface_consts import IDENTITY_CUTOFF, \
     CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
     COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESSBAR_FILE_NAME, \
-    OWNER_EMAIL, ADDITIONAL_OWNER_EMAILS, SEND_EMAIL_WHEN_JOB_FINISHED_FROM_PIPELINE
+    OWNER_EMAIL, ADDITIONAL_OWNER_EMAILS, SEND_EMAIL_WHEN_JOB_FINISHED_FROM_PIPELINE, WEBSERVER_PROJECT_ROOT_DIR
 from SharedConsts import WEBSERVER_ADDRESS, EMAIL_CONSTS, State
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
 
@@ -57,9 +57,9 @@ class Job_Manager_API:
         self.input_validator = InputValidator() # creates the input_validator
         self.__func2update_html = func2update_html
         if consts.LOCAL:
-            self.EXAMPLE_FOLDER_PATH = os.path.join(consts.WEBSERVER_LOCAL_OUTPUTS, 'example_process_results')
+            self.EXAMPLE_FOLDER_PATH = consts.MICROBIALIZER_LOCAL_GALLERY_EXAMPLE_PATH
         else:
-            self.EXAMPLE_FOLDER_PATH = r'/lsweb/pupko/microbializer/example_process_results/'
+            self.EXAMPLE_FOLDER_PATH = f'{WEBSERVER_PROJECT_ROOT_DIR}/gallery/chlamydia_run_a/'
         self.__relative_files2download_and_paths = {}
         for title, paths in PATHS_TO_DOWNLOAD.items():
             for file_name, (path, description) in paths.items():
