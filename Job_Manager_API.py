@@ -57,9 +57,9 @@ class Job_Manager_API:
         self.input_validator = InputValidator() # creates the input_validator
         self.__func2update_html = func2update_html
         if consts.LOCAL:
-            self.EXAMPLE_FOLDER_PATH = consts.MICROBIALIZER_LOCAL_GALLERY_EXAMPLE_PATH
+            self.EXAMPLE_FOLDER_PATH = os.path.join(consts.MICROBIALIZER_LOCAL_GALLERY_PATH, 'chlamydia_run_a')
         else:
-            self.EXAMPLE_FOLDER_PATH = f'{WEBSERVER_PROJECT_ROOT_DIR}/gallery/chlamydia_run_a/'
+            self.EXAMPLE_FOLDER_PATH = os.path.join(WEBSERVER_PROJECT_ROOT_DIR, 'gallery', 'chlamydia_run_a')
         self.__relative_files2download_and_paths = {}
         for title, paths in PATHS_TO_DOWNLOAD.items():
             for file_name, (path, description) in paths.items():
