@@ -211,6 +211,9 @@ function showSummaryPage() {
   
   help_text.innerText = HELP_TEXT_SUMMARY_PAGE.trim()
   // should be removed from here once the recaptcha is ready (and then will be callaed from enablePostForm
+  submit_button.classList.remove("bg-gray-600","text-white")
+  submit_button.classList.add("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
+  submit_button.addEventListener("click", postForm)
 }
 
 function enablePostForm(event) {
