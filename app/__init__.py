@@ -4,7 +4,7 @@ import time
 import sys
 from random import choice
 
-from flask import Flask, flash, request, redirect, url_for, render_template, Response, jsonify, send_file, json
+from flask import Flask, flash, request, redirect, url_for, render_template, Response, jsonify, send_file, json, send_from_directory
 from werkzeug.utils import secure_filename
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -370,6 +370,23 @@ def overview():
     """
     url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS
     return render_template_wrapper('overview.html', webserver_address=url)
+
+@app.route("/tools")
+def tools():
+    """Endpoint to tools page.
+    Parameters
+    ----------
+    Returns
+    -------
+    tools.html: HTML page
+        tools page
+    """
+    websites = manager.get_websites()
+    return render_template_wrapper('tools.html', websites=websites)
+
+@app.route('/uploads/<path:filename>')
+def download_image(filename):
+    return send_from_directory("/lsweb/pupko/websites_figures/", filename, as_attachment=True)
 
 @app.route("/faq")
 def faq():
