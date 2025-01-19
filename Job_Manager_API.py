@@ -613,3 +613,22 @@ class Job_Manager_API:
         -------
         """
         self.__j_manager.clean_internal_state()
+
+    def get_websites(self):
+        """return list of other websites
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        """
+        logger.info(f'in get_websites')
+        try:
+            with open("/lsweb/pupko/websites.json") as f:
+                data = json.load(f)
+            logger.info(data)
+            return data
+        except Exception as e:
+            logger.warning(e)
+        return []
