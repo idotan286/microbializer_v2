@@ -203,7 +203,8 @@ class Job_Manager_Thread_Safe:
             #    shutil.rmtree(folder_path) # delete folder
             elif self.__calc_days_since_modification_of_folder(folder_path) > sc.TIME_TO_KEEP_PROCSES_IDS_FOLDERS and not consts.LOCAL:
                 del self.__processes_state_dict[process_id]
-                shutil.rmtree(folder_path) # delete folder
+                if not flask_interface_consts.CLEAN_OLD_JOBS_DIRECTORIES_FROM_PIPELINE:
+                    shutil.rmtree(folder_path) # delete folder
 
     def __calc_num_running_processes(self):
         """
