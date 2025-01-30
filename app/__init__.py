@@ -371,6 +371,19 @@ def overview():
     url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS
     return render_template_wrapper('overview.html', webserver_address=url)
 
+@app.route("/gallery")
+def gallery():
+    """Endpoint to about page.
+    Parameters
+    ----------
+    Returns
+    -------
+    about.html: HTML page
+        about page
+    """
+    url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS
+    return render_template_wrapper('gallery.html', webserver_address=url)
+
 @app.route("/tools")
 def tools():
     """Endpoint to tools page.

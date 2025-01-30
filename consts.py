@@ -1,11 +1,11 @@
 import os
 
-LOCAL = False
+LOCAL = True
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 WEBSERVER_LOCAL_OUTPUTS = os.path.join(BASE_DIR, 'local_run')
 
-MICROBIALIZER_PIPELINE_LOCAL_PATH = r'C:\repos\microbializer'
+MICROBIALIZER_PIPELINE_LOCAL_PATH = '/var/www/flask/microbializer'
 MICROBIALIZER_PIPELINE_LOCAL_FLASK_PATH = os.path.join(MICROBIALIZER_PIPELINE_LOCAL_PATH, 'pipeline', 'flask')
 MICROBIALIZER_LOCAL_GALLERY_PATH = os.path.join(MICROBIALIZER_PIPELINE_LOCAL_PATH, 'gallery')
 MICROBIALIZER_LOCAL_URL = r'http://127.0.0.1:5000'
