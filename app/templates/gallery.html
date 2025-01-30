@@ -4,52 +4,51 @@
 
 <div class="flex flex-col mx-auto  h-full justify-start items-center">
     <div class="flex flex-col my-4 justify-center items-center">
-        <h1 class="text-9xl text-center  text-white select-none my-5 text-outline">Gallery</h1>
+        <h1 class="text-9xl text-center  text-white select-none my-5 text-outline">Gallery - Run Examples</h1>
 				
-		<h2 class="text-5xl text-white select-none my-5 text-outline">Microbializer Run Examples</h2>
+		<h2 class="text-5xl text-white select-none my-5 text-outline w-3/4">To demonstrate the utility of the M1CR0B1AL1Z3R 2.0 web server, we present a detailed analysis of Chlamydia species</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            To demonstrate the utility of the M1CR0B1AL1Z3R 2.0 web server, we present a detailed analysis of Chlamydia species. <br><br>
-            [1] M1CR0B1AL1Z3R 2.0 was used to analyze the genomes of 40 <i>Chlamydia</i> strains, and one <i>Waddlia chondrophila</i> which served as an outgroup (run A - 41 genomes (gallery/chlamydia_run_a/genomes.zip) in total). The run was conducted using the following parameters: <br><br>
-            &#x25cf; Input FASTA files type: genomes (since the input Fasta files contain the full genomes of the strains, and not only ORFs) <br><br>
-            &#x25cf; Minimum sequence identity (protein level) for homologs detection: 40.0 <br><br>
-            &#x25cf;Minimum sequence coverage (protein-level) for homologs detection: 70.0 <br><br>
-            &#x25cf;Minimum percent of strains required to consider an orthogroup as part of the core genome: 100.0 <br><br>
-            &#x25cf;Root the species tree according to this outgroup: Waddlia chondrophila WSU 86-1044 <br><br>
-            &#x25cf;Apply bootstrap over the species tree: True <br><br>
-            &#x25cf;Filter out contigs/ORFs of plasmids: False <br><br>
+            [A] M1CR0B1AL1Z3R 2.0 was used to analyze the genomes of 40 <i>Chlamydia</i> strains, and one <i>Waddlia chondrophila</i> which served as an outgroup (run A - 41 genomes in total, can download <a class="text-blue-600 underline decoration-solid" href="download_page/chlamydia_run_a" target="_blank">here</a>). The run was conducted using the following parameters: <br><br>
+            &#x25cf; Input FASTA files type: genomes (since the input Fasta files contain the full genomes of the strains, and not only ORFs) <br>
+            &#x25cf; Minimum sequence identity (protein level) for homologs detection: 40.0 <br>
+            &#x25cf;Minimum sequence coverage (protein-level) for homologs detection: 70.0 <br>
+            &#x25cf;Minimum percent of strains required to consider an orthogroup as part of the core genome: 100.0 <br>
+            &#x25cf;Root the species tree according to this outgroup: Waddlia chondrophila WSU 86-1044 <br>
+            &#x25cf;Apply bootstrap over the species tree: True <br>
+            &#x25cf;Filter out contigs/ORFs of plasmids: False <br>
             &#x25cf;Add orphan genes to orthogroups table: False <br><br>
-            The results can be found <a class="text-blue-600 underline decoration-solid" href="results/example" target="_blank">here</a><br><br>
-            To demonstrate the effect of optional parameters, a second analysis was performed, excluding Waddlia chondrophila as an outgroup (run B - 40 genomes (gallery/chlamydia_run_b/genomes.zip) in total). This run parameters were:<br><br>
-            &#x25cf; Input FASTA files type: genomes<br><br>
-            &#x25cf; Minimum sequence identity (protein-level) for homologs detection: 60.0<br><br>
-            &#x25cf; Minimum sequence coverage (protein-level) for homologs detection: 80.0<br><br>
-            &#x25cf; Minimum percent of strains required to consider an orthogroup as part of the core genome: 100.0<br><br>
-            &#x25cf; Root the species tree according to this outgroup: No outgroup<br><br>
-            &#x25cf; Apply bootstrap over the species tree: False<br><br>
-            &#x25cf; Filter out contigs/orfs of plasmids: True (in this run we chose to remove records of plasmids from the input files before the analysis)<br><br>
+            The results can be found <a class="text-blue-600 underline decoration-solid" href="results/chlamydia_run_a" target="_blank">here</a>.<br><br>
+            [B] To demonstrate the effect of optional parameters, a second analysis was performed, excluding Waddlia chondrophila as an outgroup (run B - 40 genomes in total, can download <a class="text-blue-600 underline decoration-solid" href="download_page/chlamydia_run_b" target="_blank">here</a>). This run parameters were:<br><br>
+            &#x25cf; Input FASTA files type: genomes<br>
+            &#x25cf; Minimum sequence identity (protein-level) for homologs detection: 60.0<br>
+            &#x25cf; Minimum sequence coverage (protein-level) for homologs detection: 80.0<br>
+            &#x25cf; Minimum percent of strains required to consider an orthogroup as part of the core genome: 100.0<br>
+            &#x25cf; Root the species tree according to this outgroup: No outgroup<br>
+            &#x25cf; Apply bootstrap over the species tree: False<br>
+            &#x25cf; Filter out contigs/orfs of plasmids: True (in this run we chose to remove records of plasmids from the input files before the analysis)<br>
             &#x25cf; Add orphan genes to orthogroups table: True<br><br>
             This analysis narrows the focus to relationships within Chlamydia species. We chose to increase the sequence identity and coverage thresholds for homologs detection, and thus we expect to get orthogroups that are more conserved with a smaller number of genes in each group. We also decided to explore strain-specific variations through orphan genes, hence we chose to include them as orthogroups (each contains a single gene) in the orthogroups table.<br><br>
-            The results of run B are available here (gallery/chlamydia_run_b/M1CR0B1AL1Z3R_outputs.zip).<br><br>
+            The results of run B are available here <a class="text-blue-600 underline decoration-solid" href="results/chlamydia_run_b" target="_blank">here</a>.<br><br>
 
         </p>
         
         <h2 class="text-5xl text-center  text-white select-none my-5 text-outline">Exploring the results </h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            <b>[1a] Distribution of ORF count per genome</b><br>
+            <b>[1] Distribution of ORF count per genome</b><br>
             Results from run A demonstrates that most Chlamydia genomes have ORF counts clustered around 900: <br><br> 
             <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/orfs_counts.png')}}"><br>
             This result is consistent with their relatively small genomes due to reductive evolution, where Chlamydia has lost enzymes and metabolic pathways for nutrients that are readily available from the host cell (Sigalova et al., 2019). The outgroup genome of Waddlia chondrophila deviates significantly, with ORF counts of ~1,900. 
         </p>
         
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            <b>[1b] Average Nucleotide Identity (ANI) analysis</b><br>
+            <b>[2] Average Nucleotide Identity (ANI) analysis</b><br>
             The heatmap below represents the results of pairwise ANI comparisons of all genomes in run A:<br><br>
             <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/ani_map.png')}}">
             High ANI values (red) that are close to 100%, indicate strain pairs with high genetic similarity. The heatmap shows clusters of closely related strains or species within the same lineage (e.g., <i>Chlamydia trachomatis</i> strains clustering together). Intermediate ANI values (yellow/ light orange) in the range ~85–95% suggest moderate genetic divergence, potentially representing distinct, yet closely related species within the <i>Chlamydia</i> genus (e.g., <i>Chlamydia psittaci</i> and <i>Chlamydia abortus</i>). Low ANI values (green) below 85% denote significant divergence, highlighting strains more distantly related within the <i>Chlamydia</i> genus. This analysis provides insights into the phylogenetic relationships within the <i>Chlamydia</i> genus, supporting species classification and comparative genomic studies. 
         </p>
         
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            <b>[1c] Orthogroups</b><br>
+            <b>[3] Orthogroups</b><br>
             The histogram of orthogroups sizes from run A, derived from the orthogroups CSV file table, visually represents the distribution of orthology group sizes across the dataset. The annotated version of the table contains two annotations: the first is functional and is based on the KEGG Orthology (KO) database. The second is the mean Codon Adaptation Index (CAI) score of all ORFs in the orthogroup (Sharp et al., 1987). The annotated table is also sorted by this value, from highest to lowest.
              <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/groups_sizes_a.png')}}"><br>
             The histogram reveals a conserved core genome within the Chlamydia genus, including the outgroup Waddlia chondrophila, with 384 core genes shared across all 41 analyzed genomes. This reflects the high gene conservation typical of closely related genomes. The intermediate distribution represents genes shared among subsets of genomes, suggesting conserved functions within specific lineages or species. Genes found in a few genomes likely indicate accessory genes or those acquired through horizontal gene transfer, potentially linked to niche-specific adaptations or environmental pressures on certain strains.<br><br>
@@ -59,7 +58,7 @@
 		</p>
         
 		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-			<b>[1d] Orphan genes analysis</b><br>
+			<b>[4] Orphan genes analysis</b><br>
             The figure below from run A, shows the distribution of orphan gene counts across genomes, emphasizing genes that do not belong to any orthology group. <br><br>
             <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/orphan_genes_count_a.png')}}"><br>
             As reflected in the distribution, most genomes have a low orphan gene count, while a few show a higher count. The highest count (1,474 orphan genes) belongs to the outgroup, Waddlia chondrophila. The variability in counts among different Chlamydia species could signify differences in host specificity, pathogenicity, environmental adaptation, etc.<br><br>
@@ -68,12 +67,12 @@
             Stricter criteria for homolog detection increase the likelihood of genes with moderate or low similarity to others to be classified as orphans, as they no longer meet the threshold to be grouped into orthology groups.
 		</p>
 		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-			<b>[1e] Genome completeness</b><br>
+			<b>[5] Genome completeness</b><br>
             <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/genomes_completeness.png')}}"><br>
             The distribution of Genome BUSCO completeness scores from run A suggests that most genomes analyzed are highly complete, with most scores clustered between 92.0 and 93.0. This indicates that the genomes are well-assembled and contain most of the expected single-copy orthologs, reflecting good quality and reliability for comparative analyses. The slight tail toward higher scores, up to 96.0, may represent a subset of exceptionally complete genomes, possibly due to higher sequencing or assembly quality. Overall, this distribution highlights the dataset's reliability for genomic studies while reflecting variability that may stem from sequencing depth, assembly techniques, or biological differences between the organisms.
 		</p>
 		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            <b>[1f] Genome numeric representation</b><br>
+            <b>[6] Genome numeric representation</b><br>
             This output helps to identify translocations and segment inversions among core genes across different genomes. The first genome in the file from run A, Chlamydia abortus strain 162STDY5437294, was used as a reference and its core genes (genes which are part of the core genome of the analyzed dataset) were numbered according to their order on the chromosome.<br><br>
             The reference genome of Chlamydia abortus strain 162STDY5437294 was represented numerically as follows:<br>
             <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/reference_genome_short_a.png')}}"><br>
@@ -82,7 +81,7 @@
             In this representation, the core genes highlighted in red have been translocated to different positions in the genome of <i>C. trachomatis</i> strain tet9a when compared to the reference genome of C. abortus strain 162STDY5437294.
         </p>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            <b>[1g] Phylogenetic tree</b><br>
+            <b>[7] Phylogenetic tree</b><br>
             The phylogenetic species tree from run A (that included the outgroup) is as follows:<br><br>
             <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/final_species_tree_a.png')}}"><br>
             Excluding W. chondrophila, which served as an outgroup for rooting, the most divergent genomes in the tree are <i>Chlamydia serpentis</i> and <i>Chlamydia pecorum</i>, as indicated by the relatively long branches leading to these species. Consistent with their divergence from the main group of isolates, both species exhibit low ANI values in all pairwise comparisons, except when compared to themselves. Bootstrap values for each branch are highlighted in red.<br><br>
