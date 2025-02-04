@@ -355,8 +355,7 @@ def about():
     about.html: HTML page
         about page
     """
-    url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS
-    return render_template_wrapper('about.html', webserver_address=url, contact_info=UI_CONSTS.ERROR_CONTACT_INFO)
+    return render_template_wrapper('about.html', contact_info=UI_CONSTS.ERROR_CONTACT_INFO)
 
 @app.route("/overview")
 def overview():
@@ -368,8 +367,19 @@ def overview():
     about.html: HTML page
         about page
     """
-    url = consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS
-    return render_template_wrapper('overview.html', webserver_address=url)
+    return render_template_wrapper('overview.html')
+
+@app.route("/gallery")
+def gallery():
+    """Endpoint to about page.
+    Parameters
+    ----------
+    Returns
+    -------
+    about.html: HTML page
+        about page
+    """
+    return render_template_wrapper('gallery.html')
 
 @app.route("/tools")
 def tools():
@@ -400,28 +410,6 @@ def faq():
     """
     return render_template_wrapper('faq.html')
     
-@app.route("/results/example", methods=['GET', 'POST'])
-def example():
-    """Endpoint to example page.
-    Parameters
-    ----------
-    Returns
-    -------
-    results.html: HTML page
-        example page
-    """
-    histogram_data, max_num_of_rows, newick_tree_str = manager.get_example_data()
-    
-    summary_stats = manager.get_summary_stats('example')
-    
-    return render_template_wrapper('results.html', 
-        histogram_data=json.dumps(histogram_data), 
-        tree_str=json.dumps(newick_tree_str),
-        max_num_of_rows=max_num_of_rows,
-        summary_stats=summary_stats,
-        process_id='example'
-    )
-
 @app.route("/debug/killswitch", methods=['GET', 'POST'])
 def killswitch():
     """Endpoint to kill switch. 
