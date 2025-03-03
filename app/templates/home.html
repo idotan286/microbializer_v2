@@ -14,7 +14,9 @@
             <h1 class="text-5xl text-center select-none">A web server for analyzing bacterial genomics data. Easily.</h1>
         </div>
         <p class="w-1/2 text-center text-1 p-5 m-8 rounded-md text-black bg-white bg-opacity-75 select-none" id="page_liscene">
-          Our website provides free access to all users, including commercial users. See terms of use <a class="text-blue-600 underline decoration-solid" href="{{webserver_address}}/about#terms_of_use">here</a>
+          Our website provides free access to all users, including commercial users. See terms of use <a class="text-blue-600 underline decoration-solid" href="{{webserver_address}}/about#terms_of_use">here</a>.
+          <br>
+          Our website does not use any cookies on its own. However, it uses <a class="text-blue-600 underline decoration-solid" href="https://developers.google.com/recaptcha/docs/faq#does-recaptcha-use-cookies" target="_blank">Google reCAPTCHA</a> for security purposes, which may use cookies.
         </p>
         <div class="h-32 flex flex-col justify-end transition-all duration-500 ease-in-out" id="job_button">
           <label
@@ -63,20 +65,20 @@
               </div>
             </div>
             <div id="file_div" class="hidden flex flex-col justify-center">
-                <div class="flex flex-row justify-start items-center ">
+              <div class="flex flex-row justify-start items-center ">
                 <div class="flex flex-col">
                   <p class="mx-8 text-2xl select-none">Select a zipped / tar.gz folder:</p>
                   <p class="mx-8 text-md select-none">
                     An example for an input file can be downloaded <a class="text-blue-600 underline decoration-solid" href="download_page/chlamydia_run_a">here</a> - download the 'Inputs (zip)' file
                   </p>
                 </div>
-                  <label for="theFile" id="upload_button0" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white  text-black hover:bg-lime-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
-                    <span class="select-none"><i id="file_icon0" class="fa fa-upload" style="font-size:24px"></i></span>
-                    <span id="file_name0" class="select-none text-white text-xs"></span>
-                    <input  class="hidden" id="theFile" type="file" name=file accept="{{extensions}}" required/>
+                <label for="theFile" id="upload_button0" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white  text-black hover:bg-lime-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
+                  <span class="select-none"><i id="file_icon0" class="fa fa-upload" style="font-size:24px"></i></span>
+                  <span id="file_name0" class="select-none text-white text-xs"></span>
+                  <input  class="hidden" id="theFile" type="file" name=file accept="{{extensions}}" required/>
                     
-                  </label>
-                </div>
+                </label>
+              </div>
             </div>
             <div id="is_advanced_div" class="hidden flex flex-row justify-center">
                 <div>
