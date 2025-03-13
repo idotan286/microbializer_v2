@@ -36,14 +36,10 @@ class Job_Manager_API:
 
         Parameters
         ----------
-        max_number_of_process : int
-            Max number of process that can run simultaneously
         upload_root_path: str
             A path to the saved files. Each process in there creates it's own folder
         input_file_names: lst
             The names of the input files (the file which the user uploaded). This is a list as 1 or 2 files might be uploaded
-        func2update_html: function
-            What function should be called once the state is updated
 
         Returns
         -------
@@ -65,18 +61,16 @@ class Job_Manager_API:
             for file_name, (path, description) in paths.items():
                 self.__relative_files2download_and_paths[file_name] = path
 
-    def __build_and_send_mail(self, process_id, subject, content, email_addresses):
+    def __build_and_send_mail(self, subject, content, email_addresses):
         """Sends mail to user
 
         Parameters
         ----------
-        process_id : str
-            The ID of the process
         subject: str
             email subject
         content: str
             email content
-        email_address: str
+        email_addresses: list[str]
             where to send the email
 
         Returns
@@ -237,7 +231,8 @@ class Job_Manager_API:
             if email_address != None:
                 email_addresses.append(email_address)
 
-            self.__build_and_send_mail(process_id, EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name), EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id), email_addresses)
+            self.__build_and_send_mail(EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name),
+                                       EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id), email_addresses)
             return True
         logger.warning(f'process_id = {process_id}, can\'t add process: is_valid_email = {is_valid_email}')
         return False

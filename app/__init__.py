@@ -20,7 +20,7 @@ from flask_interface_consts import WEBSERVER_PROJECT_ROOT_DIR
 if consts.LOCAL:
     UPLOAD_FOLDERS_ROOT_PATH = consts.MICROBIALIZER_LOCAL_USER_RESULTS
 else:
-    UPLOAD_FOLDERS_ROOT_PATH = f'{WEBSERVER_PROJECT_ROOT_DIR}/user_results/' # path to folder to save results
+    UPLOAD_FOLDERS_ROOT_PATH = f'{WEBSERVER_PROJECT_ROOT_DIR}/user_results/'  # path to folder to save results
 
 
 def render_template_wrapper(*args, **kwargs):
@@ -28,8 +28,10 @@ def render_template_wrapper(*args, **kwargs):
     img_url = url_for('static', filename=f'images/background/{choice(names)}')
     return render_template(*args, **kwargs, file_name=img_url)
 
+
 #TODO think about it
 warnings.filterwarnings("ignore")
+
 
 # force use of HTTPS protocol, should be removed once the server is developed
 class ReverseProxied(object):
@@ -41,15 +43,16 @@ class ReverseProxied(object):
         # environ['wsgi.url_scheme'] = 'http'
         return self.app(environ, start_response)
 
+
 app = Flask(__name__)
 app.wsgi_app = ReverseProxied(app.wsgi_app)
 
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') # security key
-app.config['PASSPHRASE_KILL'] = os.environ.get('PASSPHRASE_KILL') # password to kill server
-app.config['PASSPHRASE_CLEAN'] = os.environ.get('PASSPHRASE_CLEAN') # password to clean job dictionary
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  # security key
+app.config['PASSPHRASE_KILL'] = os.environ.get('PASSPHRASE_KILL')  # password to kill server
+app.config['PASSPHRASE_CLEAN'] = os.environ.get('PASSPHRASE_CLEAN')  # password to clean job dictionary
 
-app.config['UPLOAD_FOLDERS_ROOT_PATH'] = UPLOAD_FOLDERS_ROOT_PATH # path to folder to save results
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000 * 1000 # MAX file size to upload
+app.config['UPLOAD_FOLDERS_ROOT_PATH'] = UPLOAD_FOLDERS_ROOT_PATH  # path to folder to save results
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000 * 1000  # MAX file size to upload
 
 
 manager = Job_Manager_API(UPLOAD_FOLDERS_ROOT_PATH, [USER_FILE_NAME_ZIP, USER_FILE_NAME_TAR])
@@ -70,6 +73,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in UI_CONSTS.ALLOWED_EXTENSIONS
 
+
 @app.route('/process_state/<process_id>')
 def process_state(process_id):
     """End point to track process state.
@@ -89,7 +93,7 @@ def process_state(process_id):
         if the process is finished
     """
     job_state = manager.get_process_state(process_id)
-    if job_state == None:
+    if job_state is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
     
     if job_state == State.Crashed:
@@ -110,6 +114,7 @@ def process_state(process_id):
     else:
         return redirect(url_for('results', process_id=process_id))
 
+
 @app.route('/download_page/<process_id>', methods=['GET', 'POST'])
 def download_page(process_id):
     """Endpoint to download the results file
@@ -125,24 +130,25 @@ def download_page(process_id):
         When using the POST request type
     """
     dict_of_files_to_export = manager.get_files_dict(process_id)
-    if dict_of_files_to_export == None:
+    if dict_of_files_to_export is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
     summary_stats = manager.get_summary_stats(process_id)
     job_description = '' 
     if consts.ARG_DISPLAY_JOB_NAME in summary_stats and summary_stats[consts.ARG_DISPLAY_JOB_NAME]:
         job_description = f'(Job name: {summary_stats[consts.ARG_DISPLAY_JOB_NAME]})'
-    return render_template_wrapper('download_page.html', paths2download=dict_of_files_to_export, process_id=process_id, job_description=job_description)
+    return render_template_wrapper('download_page.html', paths2download=dict_of_files_to_export, process_id=process_id,
+                                   job_description=job_description)
+
 
 @app.route('/download/<process_id>/<file_name>', methods=['GET'])
 def download(process_id, file_name):
     logger.info(f'process_id, file_name = {process_id}, {file_name}')
     file_path = manager.get_file(process_id, file_name)
     logger.info(f'file_path = {file_path}')
-    if file_path == None:
+    if file_path is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.FILE_NOT_FOUND.name))
         
     return send_file(file_path, as_attachment=True, mimetype='application/octet-stream')
-
 
 
 @app.route('/get_table/<process_id>', methods=['GET'])
@@ -151,10 +157,11 @@ def get_table(process_id):
     limit_og = int(request.args.get('limit'))
     logger.info(f'limit_og = {limit_og}, offset_og = {offset_og}')
     orthologous_data = manager.get_orthologous_data(process_id, offset_og, limit_og)
-    if orthologous_data == None:
+    if orthologous_data is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
         
     return json.dumps(orthologous_data)
+
 
 @app.route('/results/<process_id>', methods=['GET', 'POST'])
 def results(process_id):
@@ -170,16 +177,16 @@ def results(process_id):
         the page contains the reads matrix to display to the user
     """
     histogram_data = manager.get_historgram_data(process_id)
-    if histogram_data == None:
+    if histogram_data is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.HISTOGRAM_DATA_IS_NULL.name))
 
     max_num_of_rows = manager.get_max_rows_orthologous(process_id)
 
-    if max_num_of_rows == None:
+    if max_num_of_rows is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.ORTHOLOGOUS_DATA_IS_NULL.name))
 
     newick_tree_str = manager.get_newick_tree(process_id)
-    if newick_tree_str == None:
+    if newick_tree_str is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
 
     summary_stats = manager.get_summary_stats(process_id)
@@ -190,6 +197,7 @@ def results(process_id):
         summary_stats=summary_stats, 
         process_id=process_id
     )
+
 
 @app.route('/error/<error_type>')
 def error(error_type):
@@ -206,9 +214,13 @@ def error(error_type):
     # checking if error_type exists in error enum
     contact_info = UI_CONSTS.ERROR_CONTACT_INFO
     try:
-        return render_template_wrapper('error_page.html', error_text=UI_CONSTS.UI_Errors[error_type].value, contact_info=contact_info)
+        return render_template_wrapper('error_page.html', error_text=UI_CONSTS.UI_Errors[error_type].value,
+                                       contact_info=contact_info)
     except:
-        return render_template_wrapper('error_page.html', error_text=f'Unknown error, \"{error_type}\" is not a valid error code', contact_info=contact_info)
+        return render_template_wrapper('error_page.html',
+                                       error_text=f'Unknown error, \"{error_type}\" is not a valid error code',
+                                       contact_info=contact_info)
+
 
 @app.route('/error_from_job/<process_id>')
 def error_from_job(process_id):
@@ -226,6 +238,7 @@ def error_from_job(process_id):
     contact_info = UI_CONSTS.ERROR_CONTACT_INFO
     error_text = manager.get_process_error(process_id)
     return render_template_wrapper('error_page.html', error_text=error_text, contact_info=contact_info)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -251,14 +264,14 @@ def home():
         logger.info(f'request.form = {request.form}')
         if 2 < len(files):
             return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.INVALID_FILES_NUMBER.name))
-        if files[-1].filename == '': #if nothing was insereted to second input then remove it from the files list
+        if files[-1].filename == '':  # if nothing was inserted to second input then remove it from the files list
             files = files[:-1]
         logger.info(f'files = {files}')
         for file in files:
             if file.filename == '' or not file or not allowed_file(file.filename):
                 return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.INVALID_FILE_EXTENTION.name))
         email_address, job_name, job_arguemnts = manager.parse_form_inputs(request.form)
-        if email_address == None:
+        if email_address is None:
             logger.warning(f'email_address not available')
             return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.INVALID_MAIL.name))
         new_process_id = manager.get_new_process_id()
@@ -267,7 +280,7 @@ def home():
         for file_idx, file in enumerate(files):
             logger.info(f'file number = {file_idx} uploaded = {file}, email_address = {email_address}')
             filename = secure_filename(file.filename)
-            if filename.endswith('zip'): #zipped file
+            if filename.endswith('zip'):  # zipped file
                 file.save(os.path.join(folder2save_file, USER_FILE_NAME_ZIP))
             elif filename.endswith('tar.gz'):
                 file.save(os.path.join(folder2save_file, USER_FILE_NAME_TAR))
@@ -291,8 +304,8 @@ def home():
             args_display_core_minimal_percentage=consts.ARG_DISPLAY_CORE_MINIMAL_PERCENTAGE,
             args_display_outgroup=consts.ARG_DISPLAY_OUTGROUP,
             args_display_bootstrap=consts.ARG_DISPLAY_BOOTSTRAP,
-            args_display_add_orphan_genes_to_ogs=consts.ARG_DISPLAY_ADD_ORPHAN_GENES_TO_OGS
-    )
+            args_display_add_orphan_genes_to_ogs=consts.ARG_DISPLAY_ADD_ORPHAN_GENES_TO_OGS)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -320,6 +333,7 @@ def about():
     """
     return render_template_wrapper('about.html', contact_info=UI_CONSTS.ERROR_CONTACT_INFO)
 
+
 @app.route("/overview")
 def overview():
     """Endpoint to about page.
@@ -332,6 +346,7 @@ def overview():
     """
     return render_template_wrapper('overview.html')
 
+
 @app.route("/gallery")
 def gallery():
     """Endpoint to about page.
@@ -343,6 +358,7 @@ def gallery():
         about page
     """
     return render_template_wrapper('gallery.html')
+
 
 @app.route("/tools")
 def tools():
@@ -357,9 +373,11 @@ def tools():
     websites = manager.get_websites()
     return render_template_wrapper('tools.html', websites=websites)
 
+
 @app.route('/uploads/<path:filename>')
 def download_image(filename):
     return send_from_directory("/lsweb/pupko/websites_figures/", filename, as_attachment=True)
+
 
 @app.route("/faq")
 def faq():
@@ -372,7 +390,8 @@ def faq():
         about page
     """
     return render_template_wrapper('faq.html')
-    
+
+
 @app.route("/debug/killswitch", methods=['GET', 'POST'])
 def killswitch():
     """Endpoint to kill switch. 
