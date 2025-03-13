@@ -1,10 +1,9 @@
 import os
 import warnings
-import time
 import sys
 from random import choice
 
-from flask import Flask, flash, request, redirect, url_for, render_template, Response, jsonify, send_file, json, send_from_directory
+from flask import Flask, request, redirect, url_for, render_template, send_file, json, send_from_directory
 from werkzeug.utils import secure_filename
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -15,7 +14,7 @@ if consts.LOCAL:
 
 from utils import logger
 from Job_Manager_API import Job_Manager_API
-from SharedConsts import UI_CONSTS, CUSTOM_DB_NAME, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, MAX_NUMBER_PROCESS, WEBSERVER_ADDRESS
+from SharedConsts import UI_CONSTS, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, WEBSERVER_ADDRESS
 from flask_interface_consts import WEBSERVER_PROJECT_ROOT_DIR
 
 if consts.LOCAL:
@@ -39,7 +38,6 @@ class ReverseProxied(object):
 
     def __call__(self, environ, start_response):
         environ['wsgi.url_scheme'] = 'https'
-        # todo remove when server is ready
         # environ['wsgi.url_scheme'] = 'http'
         return self.app(environ, start_response)
 
@@ -52,44 +50,9 @@ app.config['PASSPHRASE_CLEAN'] = os.environ.get('PASSPHRASE_CLEAN') # password t
 
 app.config['UPLOAD_FOLDERS_ROOT_PATH'] = UPLOAD_FOLDERS_ROOT_PATH # path to folder to save results
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000 * 1000 # MAX file size to upload
-process_id2update = []
-
-def update_html(process_id, state):
-    """Gets the process_ids that will need to be updated
-    Parameters
-    ----------
-    process_id : str
-        The ID of the process to update
-    state : State (Enum from SharedConst)
-        The new state of the process to be updated
-    Returns
-    -------
-    None
-    """
-    #logger.info(f'process_id = {process_id} state = {state}')
-    if process_id:
-        process_id2update.append(process_id)
 
 
-@app.route("/process_page_update/<process_id>")
-def update_process_page(process_id):
-    """The endpoint where the clients can find if need to be reloaded
-    Parameters
-    ----------
-    process_id : str
-        The ID of the process to update
-    Returns
-    -------
-    is_reload: str
-        A string that will indicate if reload is needed. "" indicates no reload is needed
-    """
-    if process_id in process_id2update:
-        process_id2update.remove(process_id)
-        return UI_CONSTS.TEXT_TO_RELOAD_HTML
-    return ""
-
-
-manager = Job_Manager_API(MAX_NUMBER_PROCESS, UPLOAD_FOLDERS_ROOT_PATH, [USER_FILE_NAME_ZIP, USER_FILE_NAME_TAR], update_html)
+manager = Job_Manager_API(UPLOAD_FOLDERS_ROOT_PATH, [USER_FILE_NAME_ZIP, USER_FILE_NAME_TAR])
 
 
 def allowed_file(filename):
@@ -431,6 +394,4 @@ def killswitch():
             # should check which process group we are in.
             import signal, os
             os.kill(os.getpid(), signal.SIGINT)
-        if passphrase == app.config['PASSPHRASE_CLEAN']:
-            manager.clean_internal_state()
     return render_template_wrapper('debug.html')

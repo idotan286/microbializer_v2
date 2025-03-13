@@ -46,4 +46,3 @@ class Handler:
         run_parameters['logger'] = logger
         logger.debug(f'{run_parameters}')
         return submit_job(**run_parameters)
-

@@ -4,15 +4,15 @@ import uuid
 import json
 import pandas as pd
 from InputValidator import InputValidator
-from Job_Manager_Thread_Safe_Microbializer import Job_Manager_Thread_Safe_Microbializer
+from Handlers.JobHandler import Handler
 from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
 import consts
 
-from flask_interface_consts import IDENTITY_CUTOFF, \
+from flask_interface_consts import IDENTITY_CUTOFF, JOB_NAME, EMAIL, MICROBIALIZER_PROCESSOR_JOB_PREFIX, \
     CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
     COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESSBAR_FILE_NAME, \
-    ADDITIONAL_OWNER_EMAILS, SEND_EMAIL_WHEN_JOB_FINISHED_FROM_PIPELINE, WEBSERVER_PROJECT_ROOT_DIR
+    ADDITIONAL_OWNER_EMAILS, SEND_EMAIL_WHEN_JOB_FINISHED_FROM_PIPELINE, WEBSERVER_PROJECT_ROOT_DIR, FINISHED_JOB_FILE_PATH
 from SharedConsts import EMAIL_CONSTS, State, OWNER_EMAIL
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
 
@@ -31,7 +31,7 @@ class Job_Manager_API:
     -------
     implemented below
     """
-    def __init__(self, max_number_of_process: int, upload_root_path: str, input_file_names: list, func2update_html):
+    def __init__(self, upload_root_path: str, input_file_names: list):
         """Creates the Job_Manager_API instances
 
         Parameters
@@ -50,12 +50,11 @@ class Job_Manager_API:
         manager: Job_Manager_API
             instance of Job_Manager_API
         """
-        self.__input_file_name = input_file_names[0]
-        self.__input_file_name2 = input_file_names[1]
+        self.__input_file_names = input_file_names
         self.__upload_root_path = upload_root_path
-        self.__j_manager = Job_Manager_Thread_Safe_Microbializer(max_number_of_process, upload_root_path, input_file_names, self.__process_state_changed)
+        self.__handler = Handler()
         self.input_validator = InputValidator() # creates the input_validator
-        self.__func2update_html = func2update_html
+
         if consts.LOCAL:
             self.gallery_path = consts.MICROBIALIZER_LOCAL_GALLERY_PATH
         else:
@@ -99,41 +98,6 @@ class Job_Manager_API:
                 logger.info(f'sent email to {email_address} with subject {subject}')
             except:
                 logger.exception(f'failed to send email to {email_address}')
-            
-    def __process_state_changed(self, process_id, state, email_address, job_name, job_prefix):
-        """When the process state is changed, this function is called (this funciton is called for the Kraken and post process types).
-
-        Parameters
-        ----------
-        process_id : str
-            The ID of the process
-        state: State (Enum)
-            the new state of the process
-        email_address: str
-            where to send the email
-        job_name: str
-            The job name (optional) inserted by the user
-        job_prefix: str
-            To distinguish between processes types
-
-        Returns
-        -------
-        """
-        if not SEND_EMAIL_WHEN_JOB_FINISHED_FROM_PIPELINE:
-            email_addresses = [OWNER_EMAIL]
-            email_addresses.extend(ADDITIONAL_OWNER_EMAILS)
-            if email_address is not None:
-                email_addresses.append(email_address)
-            else:
-                logger.warning(f'process_id = {process_id} email_address is None, state = {state}, job_name = {job_name}')          
-            
-            # sends mail once the job finished or crashes
-            if state == State.Finished:
-                self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), EMAIL_CONSTS.CONTENT_PROCESS_FINISHED.format(process_id=process_id), email_addresses)
-            elif state == State.Crashed:
-                self.__build_and_send_mail(process_id, EMAIL_CONSTS.create_title(state, job_name), EMAIL_CONSTS.CONTENT_PROCESS_CRASHED.format(process_id=process_id), email_addresses)
-
-        self.__func2update_html(process_id, state)
 
     def __delete_folder(self, process_id):
         """Deletes folder.
@@ -189,9 +153,9 @@ class Job_Manager_API:
         if not os.path.isdir(parent_folder):
             logger.warning(f'process_id = {process_id} doen\'t have a dir')
             return False
-        file2check = os.path.join(parent_folder, self.__input_file_name)
+        file2check = os.path.join(parent_folder, self.__input_file_names[0])
         file2check = self.__find_file_path(file2check)
-        file2check2 = os.path.join(parent_folder, self.__input_file_name2) # for paired reads
+        file2check2 = os.path.join(parent_folder, self.__input_file_names[1]) # for paired reads
         file2check2 = self.__find_file_path(file2check2)
         # test file in the input_validator
         if not file2check2: # not paired reads
@@ -266,7 +230,7 @@ class Job_Manager_API:
         # validating file and email
         if is_valid_email:
             # adding the process
-            self.__j_manager.add_process(process_id, email_address, job_name, job_arguemnts)
+            self.__add_process(process_id, email_address, job_name, job_arguemnts)
             
             email_addresses = [OWNER_EMAIL]
             email_addresses.extend(ADDITIONAL_OWNER_EMAILS)
@@ -277,7 +241,65 @@ class Job_Manager_API:
             return True
         logger.warning(f'process_id = {process_id}, can\'t add process: is_valid_email = {is_valid_email}')
         return False
-        
+
+    def __get_files_in_folder(self, process_folder_path):
+        """
+        Returns a list with files from the user
+        ** Specific to this webserver
+        Parameters
+        ----------
+        process_folder_path : str
+            A path to save the donwloaded genomes
+
+        Returns
+        -------
+        files_list: str
+            A list with files from the user based on the self.__input_file_names
+        """
+        files_list = []  # list of files to fltr
+        for file_name in self.__input_file_names:
+            file2fltr = os.path.join(process_folder_path, file_name)
+            # check if file exists, if so adds to list
+            if os.path.isfile(file2fltr) or os.path.isfile(str(file2fltr) + '.gz'):
+                files_list.append(file2fltr)
+        return files_list
+
+    def __add_process(self, process_id: str, email_address, job_name: str, job_arguemnts):
+        """
+        adds a kraken process
+        ** Specific to this webserver
+
+        Parameters
+        ----------
+        process_id : str
+            The ID of the process
+        email_address: str
+            email address
+        job_name: str
+            The job name (optional) inserted by the user. If none is inserted then job_name = ""
+        job_arguemnts: dict
+            Job arguemnts to run with
+
+        Returns
+        -------
+        """
+        logger.info(f'process_id = {process_id}, email_address = {email_address}, job_name = {job_name}')
+
+        process_folder_path = os.path.join(self.__upload_root_path, process_id)
+        try:
+            logger.info(f'process_folder_path = {process_folder_path}')
+            files2fltr = self.__get_files_in_folder(process_folder_path)
+
+            if job_name:
+                job_arguemnts[JOB_NAME] = job_name
+            if email_address:
+                job_arguemnts[EMAIL] = email_address
+            pbs_id = self.__handler.submit_micro_job(files2fltr, job_arguemnts)
+            logger.debug(
+                f'process_id = {process_id} job_prefix = {MICROBIALIZER_PROCESSOR_JOB_PREFIX} pbs_id = {pbs_id}, process has started')
+        except Exception as e:
+            logger.exception(e)
+
     def get_files_dict(self, process_id: str):
         """After the post process has finished (and the user already filtred his reads), this will return the path to the result file
 
@@ -331,7 +353,18 @@ class Job_Manager_API:
         Returns
         -------
         """
-        return self.__j_manager.get_process_state(process_id)
+        parent_folder = self.get_process_folder(process_id)
+        if not os.path.isdir(parent_folder):
+            return None
+
+        if os.path.isfile(os.path.join(parent_folder, ERROR_FILE_PATH)):
+            return State.Crashed
+        if os.path.isfile(os.path.join(parent_folder, FINISHED_JOB_FILE_PATH)):
+            return State.Finished
+        if os.path.isfile(os.path.join(parent_folder, PROGRESSBAR_FILE_NAME)):
+            return State.Running
+        else:
+            return State.Waiting
 
     def get_process_error(self, process_id):
         """Given process_id returns the error txt
@@ -345,7 +378,7 @@ class Job_Manager_API:
         -------
         error text
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        parent_folder = self.get_process_folder(process_id)
         if os.path.isdir(parent_folder):
             error_file = os.path.join(parent_folder, ERROR_FILE_PATH)
             if os.path.isfile(error_file):
@@ -517,8 +550,7 @@ class Job_Manager_API:
         parent_folder = self.get_process_folder(process_id)
         if not os.path.isdir(parent_folder):
             return None
-        
-        data = {}
+
         data_path = os.path.join(parent_folder, SPECIES_TREE_NEWICK)
         if os.path.isfile(data_path):
             with open(data_path, 'r') as f:
@@ -539,7 +571,7 @@ class Job_Manager_API:
         progress_status: str
             which stages and done
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        parent_folder = self.get_process_folder(process_id)
         if not os.path.isdir(parent_folder):
             return None
         
@@ -554,40 +586,6 @@ class Job_Manager_API:
             return progressbar
         
         return []
-        
-    def get_all_outputs_path(self, process_id: str):
-        """get path to all outputs
-
-        Parameters
-        ----------
-        process_id: str
-            The ID of the process
-        
-        Returns
-        -------
-        tree: path
-            path to zip file
-        """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
-        if not os.path.isdir(parent_folder):
-            return None
-        
-        data_path = os.path.join(parent_folder, ALL_OUTPUTS_ZIPPED)
-        if os.path.isfile(data_path):
-            return data_path
-        
-        return None
-    
-    def clean_internal_state(self):
-        """clean job state dictionary
-
-        Parameters
-        ----------
-
-        Returns
-        -------
-        """
-        self.__j_manager.clean_internal_state()
 
     def get_websites(self):
         """return list of other websites
