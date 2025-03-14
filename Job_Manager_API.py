@@ -359,7 +359,7 @@ class Job_Manager_API:
         if os.path.isfile(os.path.join(parent_folder, PROGRESSBAR_FILE_NAME)):
             return State.Running
         else:
-            return State.Waiting
+            return State.Init
 
     def get_process_error(self, process_id):
         """Given process_id returns the error txt

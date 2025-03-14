@@ -98,7 +98,9 @@ def process_state(process_id):
     
     if job_state == State.Crashed:
         return redirect(url_for('error_from_job', process_id=process_id))
-    if job_state != State.Finished:
+    if job_state == State.Finished:
+        return redirect(url_for('results', process_id=process_id))
+    else:
         # here we decide what GIF will be displayed to the user
         progressbar = manager.get_progress_bar(process_id)                                                  
         kwargs = {
@@ -111,8 +113,6 @@ def process_state(process_id):
             "progressbar": progressbar                         
         }
         return render_template_wrapper('process_running.html', **kwargs)
-    else:
-        return redirect(url_for('results', process_id=process_id))
 
 
 @app.route('/download_page/<process_id>', methods=['GET', 'POST'])
