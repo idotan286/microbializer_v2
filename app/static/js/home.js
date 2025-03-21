@@ -272,5 +272,30 @@ theFile.addEventListener('input', (event) => {
     formForward(PageStates.SettingConfiguration);
 });
 
+function getCookie(name) {
+    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
+
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + "; path=/" + expires;
+}
+
+function acceptCookies() {
+    setCookie("cookieConsent", "true", 365);
+    document.getElementById("cookie-banner").style.display = "none";
+}
+
+window.onload = function () {
+    if (!getCookie("cookieConsent")) {
+        document.getElementById("cookie-banner").style.display = "block";
+    }
+};
 
 
