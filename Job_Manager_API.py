@@ -12,8 +12,8 @@ from flask_interface_consts import IDENTITY_CUTOFF, \
     CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
     DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
     COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ALL_OUTPUTS_ZIPPED, ERROR_FILE_PATH, PROGRESSBAR_FILE_NAME, \
-    OWNER_EMAIL, ADDITIONAL_OWNER_EMAILS, SEND_EMAIL_WHEN_JOB_FINISHED_FROM_PIPELINE, WEBSERVER_PROJECT_ROOT_DIR
-from SharedConsts import WEBSERVER_ADDRESS, EMAIL_CONSTS, State
+    ADDITIONAL_OWNER_EMAILS, SEND_EMAIL_WHEN_JOB_FINISHED_FROM_PIPELINE, WEBSERVER_PROJECT_ROOT_DIR
+from SharedConsts import EMAIL_CONSTS, State, OWNER_EMAIL
 logger.setLevel(LOGGER_LEVEL_JOB_MANAGE_API)
 
 
@@ -57,9 +57,10 @@ class Job_Manager_API:
         self.input_validator = InputValidator() # creates the input_validator
         self.__func2update_html = func2update_html
         if consts.LOCAL:
-            self.EXAMPLE_FOLDER_PATH = os.path.join(consts.MICROBIALIZER_LOCAL_GALLERY_PATH, 'chlamydia_run_a')
+            self.gallery_path = consts.MICROBIALIZER_LOCAL_GALLERY_PATH
         else:
-            self.EXAMPLE_FOLDER_PATH = os.path.join(WEBSERVER_PROJECT_ROOT_DIR, 'gallery', 'chlamydia_run_a')
+            self.gallery_path = os.path.join(WEBSERVER_PROJECT_ROOT_DIR, 'gallery')
+
         self.__relative_files2download_and_paths = {}
         for title, paths in PATHS_TO_DOWNLOAD.items():
             for file_name, (path, description) in paths.items():
@@ -290,8 +291,8 @@ class Job_Manager_API:
         dict_of_files_to_export: dict
             Dict of (title, path) for files to download
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
-        if os.path.exists(parent_folder) or process_id == 'example':
+        parent_folder = self.get_process_folder(process_id)
+        if os.path.exists(parent_folder):
             return PATHS_TO_DOWNLOAD
 
         return None
@@ -312,10 +313,7 @@ class Job_Manager_API:
         """
         if not file_name in self.__relative_files2download_and_paths:
             return None
-        if process_id != 'example':
-            parent_folder = os.path.join(self.__upload_root_path, process_id)
-        else:
-            parent_folder = self.EXAMPLE_FOLDER_PATH
+        parent_folder = self.get_process_folder(process_id)
             
         path2file = os.path.join(parent_folder, self.__relative_files2download_and_paths[file_name])
         if not os.path.exists(path2file):
@@ -356,24 +354,6 @@ class Job_Manager_API:
                 return "error file does not exists"
         logger.warning(f'process_id = {process_id} don\'t have a folder')
         return "no process ID folder"
-       
-    def get_example_data(self):
-        parent_folder = self.EXAMPLE_FOLDER_PATH
-        
-        data = {}
-        for key, value in DATA_2_VIEW_IN_HISTOGRAM.items():
-            data_path = os.path.join(parent_folder, value)
-            if os.path.isfile(data_path):
-                with open(data_path, 'r') as f:
-                    data[key] = json.load(f)
-        data_path = os.path.join(parent_folder, OG_TABLE)
-        df = pd.read_csv(data_path)
-        max_rows = len(df.index)
-        data_path = os.path.join(parent_folder, SPECIES_TREE_NEWICK)
-        if os.path.isfile(data_path):
-            with open(data_path, 'r') as f:
-                tree = f.read().replace('\n', '')
-        return data, max_rows, tree
         
     def parse_form_inputs(self, form_dict: dict):
         """Parse the form of the user.
@@ -420,10 +400,7 @@ class Job_Manager_API:
             dict of dict were key is the tilte of the data and the data is a dict:
                     were the key is the genomes and the value are scalars
         """
-        if process_id != 'example':
-            parent_folder = os.path.join(self.__upload_root_path, process_id)
-        else:
-            parent_folder = self.EXAMPLE_FOLDER_PATH
+        parent_folder = self.get_process_folder(process_id)
         
         if not os.path.isdir(parent_folder):
             return {}
@@ -451,7 +428,7 @@ class Job_Manager_API:
             dict of dict were key is the tilte of the data and the data is a dict:
                     were the key is the genomes and the value are scalars
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        parent_folder = self.get_process_folder(process_id)
         if not os.path.isdir(parent_folder):
             return None
         
@@ -484,9 +461,7 @@ class Job_Manager_API:
             dict of dict were key is the tilte of the data and the data is a dict:
                     were the key is the genomes and the value are scalars
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
-        if 'example' in process_id:
-            parent_folder = self.EXAMPLE_FOLDER_PATH
+        parent_folder = self.get_process_folder(process_id)
         if not os.path.isdir(parent_folder):
             return None
         
@@ -515,7 +490,7 @@ class Job_Manager_API:
         max_rows: ind
             max_number of rows for offset
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        parent_folder = self.get_process_folder(process_id)
         if not os.path.isdir(parent_folder):
             return None
 
@@ -539,7 +514,7 @@ class Job_Manager_API:
         tree: str
             the phylogenetic tree
         """
-        parent_folder = os.path.join(self.__upload_root_path, process_id)
+        parent_folder = self.get_process_folder(process_id)
         if not os.path.isdir(parent_folder):
             return None
         
@@ -613,3 +588,30 @@ class Job_Manager_API:
         -------
         """
         self.__j_manager.clean_internal_state()
+
+    def get_websites(self):
+        """return list of other websites
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        """
+        logger.info(f'in get_websites')
+        try:
+            with open("/lsweb/pupko/websites.json") as f:
+                data = json.load(f)
+            logger.info(data)
+            return data
+        except Exception as e:
+            logger.warning(e)
+        return []
+
+    def get_process_folder(self, process_id: str):
+        if process_id in ['chlamydia_run_a', 'chlamydia_run_b']:
+            process_folder = os.path.join(self.gallery_path, process_id)
+        else:
+            process_folder = os.path.join(self.__upload_root_path, process_id)
+        
+        return process_folder

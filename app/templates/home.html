@@ -10,11 +10,13 @@
 
     <div class="flex flex-col mx-auto  h-full justify-center items-center">
         <div class="flex-0 h-64 my-8 text-white text-outline" id="page_title" >
-            <h1 class="text-9xl text-center select-none my-5 ">Microbializer</h1>
+            <h1 class="text-9xl text-center select-none my-5 ">M1CR0B1AL1Z3R</h1>
             <h1 class="text-5xl text-center select-none">A web server for analyzing bacterial genomics data. Easily.</h1>
         </div>
         <p class="w-1/2 text-center text-1 p-5 m-8 rounded-md text-black bg-white bg-opacity-75 select-none" id="page_liscene">
-          Our website provides free access to all users, including commercial users. See terms of use <a class="text-blue-600 underline decoration-solid" href="{{webserver_address}}/about#terms_of_use">here</a>
+          Our website provides free access to all users, including commercial users. See terms of use <a class="text-blue-600 underline decoration-solid" href="{{webserver_address}}/about#terms_of_use">here</a>.
+          <br>
+          Our website does not use any cookies on its own. However, it uses <a class="text-blue-600 underline decoration-solid" href="https://developers.google.com/recaptcha/docs/faq#does-recaptcha-use-cookies" target="_blank">Google reCAPTCHA</a> for security purposes, which may use cookies.
         </p>
         <div class="h-32 flex flex-col justify-end transition-all duration-500 ease-in-out" id="job_button">
           <label
@@ -63,15 +65,20 @@
               </div>
             </div>
             <div id="file_div" class="hidden flex flex-col justify-center">
-                <div class="flex flex-row justify-start items-center ">
-                  <p class="text-2xl mx-8 select-none">Select a zipped / tar.gz folder:</p>
-                  <label for="theFile" id="upload_button0" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white  text-black hover:bg-lime-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
-                    <span class="select-none"><i id="file_icon0" class="fa fa-upload" style="font-size:24px"></i></span>
-                    <span id="file_name0" class="select-none text-white text-xs"></span>
-                    <input  class="hidden" id="theFile" type="file" name=file accept="{{extensions}}" required/>
-                    
-                  </label>
+              <div class="flex flex-row justify-start items-center ">
+                <div class="flex flex-col">
+                  <p class="mx-8 text-2xl select-none">Select a zipped / tar.gz folder:</p>
+                  <p class="mx-8 text-md select-none">
+                    An example for an input file can be downloaded <a class="text-blue-600 underline decoration-solid" href="download_page/chlamydia_run_a">here</a> - download the 'Inputs (zip)' file
+                  </p>
                 </div>
+                <label for="theFile" id="upload_button0" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white  text-black hover:bg-lime-600 hover:text-white  ease-linear  transition-all  duration-150  mx-8  my-4 cursor-pointer">
+                  <span class="select-none"><i id="file_icon0" class="fa fa-upload" style="font-size:24px"></i></span>
+                  <span id="file_name0" class="select-none text-white text-xs"></span>
+                  <input  class="hidden" id="theFile" type="file" name=file accept="{{extensions}}" required/>
+                    
+                </label>
+              </div>
             </div>
             <div id="is_advanced_div" class="hidden flex flex-row justify-center">
                 <div>
@@ -284,19 +291,29 @@
         <div id="after_post" class="hidden flex flex-row h-48 my-8 justify-end items-center">
           <h1 id="progress-bar" class="text-center text-outline text-white animate-pulse text-4xl select-none"></h1>
         </div>
-        <div class="flex flex-row justify-end items-center" id="nav_btns">
-          <a  href="/about" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
-            About
-          </a>
-          <a  href="/overview" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
-            Overview
-          </a>
-		  <a  href="/faq" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
-            FAQ
-          </a>
-          <a  href="/results/example" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
-            Example
-          </a>
+        <div id="nav_btns">
+          <div class="flex flex-row justify-center items-center">
+            <a  href="/about" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
+              About
+            </a>
+            <a  href="/overview" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
+              Overview
+            </a>
+            <a  href="/faq" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
+              FAQ
+            </a>
+            <a  href="/results/chlamydia_run_a" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
+              Example
+            </a>
+            <a  href="/gallery" rel="noopener noreferrer" class="w-24  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
+              Gallery
+            </a>
+          </div>
+          <div class="flex flex-row justify-center items-center py-6">
+            <a  href="/tools" rel="noopener noreferrer" class="w-36  flex flex-col  items-center  px-4  py-3  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear  transition-all  duration-150  mx-2  my-3 cursor-pointer select-none">
+              Other Lab Tools
+            </a>
+          </div>
         </div>
     </div>
 {% endblock %}
