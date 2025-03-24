@@ -206,16 +206,19 @@ function showSummaryPage() {
 
   
   const submit_button = document.getElementById("submit_button");
-  submit_button.classList.remove("hover:bg-lime-600", "hover:text-white", "text-green-600", "cursor-pointer")
+  submit_button.classList.remove("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
   submit_button.classList.add("bg-gray-600","text-white")
   
   help_text.innerText = HELP_TEXT_SUMMARY_PAGE.trim()
   // should be removed from here once the recaptcha is ready (and then will be callaed from enablePostForm
+  submit_button.classList.remove("bg-gray-600","text-white")
+  submit_button.classList.add("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
+  submit_button.addEventListener("click", postForm)
 }
 
 function enablePostForm(event) {
   submit_button.classList.remove("bg-gray-600","text-white")
-  submit_button.classList.add("hover:bg-lime-600", "hover:text-white", "text-green-600", "cursor-pointer")
+  submit_button.classList.add("hover:bg-green-600","hover:text-white", "text-green-600", "cursor-pointer")
   submit_button.addEventListener("click", postForm)
 }
 
@@ -269,5 +272,28 @@ theFile.addEventListener('input', (event) => {
     formForward(PageStates.SettingConfiguration);
 });
 
+function getCookie(name) {
+    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
 
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + "; path=/" + expires;
+}
 
+function acceptCookies() {
+    setCookie("cookieConsent", "true", 365);
+    document.getElementById("cookie-banner").style.display = "none";
+}
+
+window.onload = function () {
+    if (!getCookie("cookieConsent")) {
+        document.getElementById("cookie-banner").style.display = "block";
+    }
+};

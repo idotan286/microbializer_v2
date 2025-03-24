@@ -3,11 +3,10 @@
 
 {% block head %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{url_for('static',filename='css/cookie_consent.css')}}">
 {% endblock %}
 
 {% block body %}
-
-
     <div class="flex flex-col mx-auto  h-full justify-center items-center">
         <div class="flex-0 h-64 my-8 text-white text-outline" id="page_title" >
             <h1 class="text-9xl text-center select-none my-5 ">M1CR0B1AL1Z3R</h1>
@@ -16,7 +15,7 @@
         <p class="w-1/2 text-center text-1 p-5 m-8 rounded-md text-black bg-white bg-opacity-75 select-none" id="page_liscene">
           Our website provides free access to all users, including commercial users. See terms of use <a class="text-blue-600 underline decoration-solid" href="{{webserver_address}}/about#terms_of_use">here</a>.
           <br>
-          Our website does not use any cookies on its own. However, it uses <a class="text-blue-600 underline decoration-solid" href="https://developers.google.com/recaptcha/docs/faq#does-recaptcha-use-cookies" target="_blank">Google reCAPTCHA</a> for security purposes, which may use cookies.
+          Our website uses essential cookies to ensure proper functionality and security.
         </p>
         <div class="h-32 flex flex-col justify-end transition-all duration-500 ease-in-out" id="job_button">
           <label
@@ -264,18 +263,14 @@
                     <span id="user_is_orpan" class="select-none text-white"></span>
                   </label>
               </div>
+              <!---<div 
+                  class="g-recaptcha" 
+                  data-sitekey="6Ld7NqghAAAAAPYzTu5Hzd4MSiEYnPTmnftj7hZB"
+                  data-callback="enablePostForm"
+              ></div> ---->
             </div>
-            <div class="flex flex-row justify-between items-center ">
-              <div 
-              class="g-recaptcha" 
-              data-sitekey="6LdxrIgqAAAAAIYmarLM0UJ7AXdBUBfKM4u4iVLt"
-              data-callback="enablePostForm"
-              ></div>
-  
-              <label id="submit_button" class="w-64  flex flex-col  items-center  px-4  py-6  bg-slate-500	  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800 text-black hover:bg-lime-600 hover:text-white ease-linear font-bold transition-all  duration-150  mx-8  my-4 cursor-pointer">
-                <span class="select-none">Submit</span></label>
-            </div>
-
+            <label id="submit_button" class="w-64  flex flex-col  items-center  px-4  py-6  bg-white  rounded-md  shadow-lg  tracking-wide  uppercase  border border-lime-800  bg-white-600 text-black hover:bg-lime-600 hover:text-white ease-linear font-bold transition-all  duration-150  mx-8  my-4 cursor-pointer">
+              <span class="select-none">Submit</span></label>
             </div>
             
           </form>
@@ -320,12 +315,15 @@
           </div>
         </div>
     </div>
+    <div id="cookie-banner">
+      This website uses essential cookies to ensure proper functionality and security.
+      <button onclick="acceptCookies()">Accept</button>
+    </div>
 {% endblock %}
   
 {% block scripts %}
 <script src="{{url_for('static',filename='js/consts.js')}}"></script>
 <script src="{{url_for('static',filename='js/home.js')}}"></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
   initScript(parseInt("{{max_custom}}"), "{{species_prefix}}", "{{accession_prefix}}");
 </script>
