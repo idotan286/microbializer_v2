@@ -14,7 +14,7 @@ if consts.LOCAL:
 
 from utils import logger
 from Job_Manager_API import Job_Manager_API
-from SharedConsts import UI_CONSTS, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, WEBSERVER_ADDRESS
+from SharedConsts import UI_CONSTS, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, WEBSERVER_ADDRESS, ALLOWED_EXTENSIONS
 from flask_interface_consts import WEBSERVER_PROJECT_ROOT_DIR
 
 if consts.LOCAL:
@@ -71,7 +71,7 @@ def allowed_file(filename):
     """
     logger.debug(f'filename = {filename}')
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in UI_CONSTS.ALLOWED_EXTENSIONS
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route('/process_state/<process_id>')
@@ -291,7 +291,7 @@ def home():
             return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.CORRUPTED_FILE.name))
         logger.info(f'process added man_results = {man_results}, redirecting url')
         return redirect(url_for('process_state', process_id=new_process_id))
-    extensions=",".join(UI_CONSTS.ALLOWED_EXTENSIONS)
+    extensions=",".join(ALLOWED_EXTENSIONS)
     return render_template_wrapper('home.html', 
             extensions=extensions,
             webserver_address=consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS,
