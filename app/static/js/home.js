@@ -238,11 +238,11 @@ function postForm() {
         if (event.loaded <= file1Size) {
             var percent = Math.round(event.loaded / (file1Size) * 100);
         //   document.getElementById('progress-bar').style.width = percent + '%';
-            document.getElementById('progress-bar').innerHTML = 'Your sequences are being uploaded. Do not close this window. Uploaded: ' + percent + '%';
+            document.getElementById('progress-bar').innerHTML = 'Your file is being uploaded. DO NOT close or refresh the window. Uploaded: ' + percent + '%';
         }
         if(event.loaded == event.total){
         //   document.getElementById('progress-bar').style.width = '100%';
-            document.getElementById('progress-bar').innerHTML = 'Your file has been uploaded. We are processing and validating your file. Don\'t close or refresh the window. This may take an hour for a small number of genomes and up to several days for a large one.';
+            document.getElementById('progress-bar').innerHTML = 'Your file has been uploaded. We are processing and validating your file. DO NOT close or refresh the window.';
         }
     });
 
