@@ -8,8 +8,7 @@
 
 {% block body %}
     <div class="flex flex-col mx-auto  h-full justify-center items-center">
-      <div class="flex-0 h-16 my-8 text-white text-outline" id="page_title" >
-        <h1 class="text-5xl text-center select-none text-red-500">NOTICE: Due to IT problems, the webserver is temporarily unable to receive new job submissions. It will be resolved soon.</h1>
+        <div class="flex-0 h-64 my-8 text-white text-outline" id="page_title" >
             <h1 class="text-9xl text-center select-none my-5 ">M1CR0B1AL1Z3R</h1>
             <h1 class="text-5xl text-center select-none">A web server for analyzing bacterial genomics data. Easily.</h1>
         </div>
@@ -18,7 +17,7 @@
           <br>
           Our website uses essential cookies to ensure proper functionality and security.
         </p>
-        <!-- <div class="h-32 flex flex-col justify-end transition-all duration-500 ease-in-out" id="job_button">
+        <div class="h-32 flex flex-col justify-end transition-all duration-500 ease-in-out" id="job_button">
           <label
             class="
               w-64
@@ -44,7 +43,7 @@
               my-4
           " onclick="buttonClick()">
           <span class="mt-2 text-base leading-normal select-none animate-bounce ">Submit Job</span>
-        </div> -->
+        </div>
         
         <div id="formdiv" class="relative bg-opacity-75 h-128 py-3 border-2 border-white-400 bg-white rounded-lg transition-opacity opacity-0 duration-500 ease-in-out hidden">
           <form class="flex flex-col justify-center items-center mx-2" id="theForm" method="POST" enctype="multipart/form-data">
