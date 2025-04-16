@@ -84,18 +84,7 @@
 			*Minimal percentage for core: 50% (only three genes that are shared by 100% were detected)
 			<br>
         </p> -->
-		
-        <h2 class="text-4xl text-center  text-white select-none my-5 text-outline">Why does the orthogroup inference step take so long?</h2>
-        <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
-            The first step in orthogroup inference is homologs detection. When searching for homologs, all of the genes in each 
-			genome are queried against all other genes in all other genomes, making it the most computationally intensive step. 
-			Even though M1CR0B1AL1Z3R uses MMSEQS2, the fastest algorithm currently available for this task
-			(<a class="text-blue-600 underline decoration-solid" href="https://doi.org/10.1038/nbt.3988" target="_blank">Steinegger M. & Soding J., <i>Nat Biotechnol</i>, 2017</a>)
-			and despite the fact that it uses parallelization for this computational step, it might take over 12 hours for a 
-			dataset containing ~150 genomes.
-			<br>
-        </p>
-        
+
         <a name="homolog_inference"></a>
         <h2 class="text-4xl text-center  text-white select-none my-5 text-outline">How reliable is the orthogroup inference step and is there a way to improve it?</h2>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
