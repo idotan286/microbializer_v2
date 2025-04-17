@@ -121,9 +121,11 @@
 			<br><br>
 			&#x25cf; Folder 04_orphan_genes: A file for each genome containing a list of the orphan genes of that genome (genes that don't have any orthologs in other genomes). Orphan genes may be single-copy, meaning that they have only one copy in the gneome, or multi-copy, meaning that they have multiple copies in the genome (and in that case they are part of an "orphan orthogroup" - orthgroup that contains genes from a single genome).
 			<br><br>
-			&#x25cf; Folder 05a_orthogroups: The orthogroups: (1) in a table (csv) format, where each row is an orthogroup and each column is a genome. (2) an annotated table similar to (1) with the addition of KEGG Orthology annotations for each orthogroup as well as the average Codon Adaptation Index (CAI) of all the genes in the orthogroup. The annotated table is sorted by the average CAI value of the orthogroups, from highest to lowest. (3) A phyletic pattern matrix (a table where row i is a genome, column j is an orthogroup and the i,j entry contains 1 if the orthogroup j contains a member of genome i, o.w., 0).
+			&#x25cf; Folder 05a_orthogroups: The orthogroups: (1) in a table (csv) format, where each row is an orthogroup and each column is a genome. (2) an annotated table similar to (1) with the addition of KEGG Orthology annotations for each orthogroup as well as the average Codon Adaptation Index (CAI) of all the genes in the orthogroup. The annotated table is sorted by the average CAI value of the orthogroups, from highest to lowest. (3) the orthogroups in OrthoXML format.
 			<br><br>
-			&#x25cf; Folder 05b_orthogroups_sizes: A bar plot of the orthogroups sizes frequency.
+			&#x25cf; Folder 05b_orthogroups_sizes: A csv file with the size of each orthogroup (in terms of number of genomes, and total number of genes), and a bar plot of the orthogroups sizes frequency (in terms of number of genomes).
+			<br><br>
+            &#x25cf; Folder 05c_orthogroups_visualizations: (1) A phyletic pattern matrix (a table where row i is a genome, column j is an orthogroup and the i,j entry contains 1 if the orthogroup j contains a member of genome i, o.w., 0). (2) A binary presence/absence matrix of the phyletic pattern matrix, enhanced with a hierarchical clustering of the genomes. (3) a 2D-UMAP projection of the genomes (where each genome is represented by a binary vector of its orthogroups membership), enhanced with a clustering of the genomes using HDBSCAN. In the clusters outputs, cluster number -1 represents genomes that were not assigned to any cluster.
 			<br><br>
 			&#x25cf; Folder 06a_orthogroups_dna: A fasta file for each orthogroup containing the UNALIGNED DNA sequences of the members.
 			<br><br>
@@ -139,7 +141,7 @@
 			<br><br>
 			&#x25cf; Folder 08_genome_numeric_representation: A genome numeric representation of the core genome/proteome. This is a fasta file, where the first genome is used as reference and all core genes are numbered according to their order in it. For each other genome, the core genes ids (defined by the reference genome) are written in the order they appear in the genome. This representation can be used to infer translocation events within genomes and inversions of segments of multiple genes.
 			<br><br>
-			&#x25cf; Folder 09_species_phylogeny: A reliable maximum likelihood species phylogeny tree.
+			&#x25cf; Folder 09_species_phylogeny: A reliable maximum likelihood species phylogeny tree. If an outgroup was specified, then the tree is rooted according to it. Otherwise, the newick format of the tree is unrooted, and the image format is midpoint-rooted.
 			<br><br>
 			&#x25cf; Folder 10_codon_bias: (1) W_vectors.csv - A table of the relative adaptiveness (w vector) of each codon in each genome, as defined by <a class="text-blue-600 underline decoration-solid" href="https://academic.oup.com/nar/article/15/3/1281/1166844" target="_blank">Sharp and Li, 1987</a>. (2) Relative_Adaptiveness_scatter_plot.png - A clustering of the genomes based on their W vectors. (3) CAI_table.csv - A table of the Codon Adaptation Index (CAI) average of each orthogroup. (4) CAI_histogram.png - A histogram of the CAI values of the orthogroups.
 			<br><br>
