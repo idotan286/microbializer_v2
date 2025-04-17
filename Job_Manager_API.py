@@ -56,6 +56,9 @@ class Job_Manager_API:
         else:
             self.gallery_path = os.path.join(WEBSERVER_PROJECT_ROOT_DIR, 'gallery')
 
+        self.galley_directories = [dir_name for dir_name in os.listdir(self.gallery_path)
+                                   if os.path.isdir(os.path.join(self.gallery_path, dir_name))]
+
         self.__relative_files2download_and_paths = {}
         for title, paths in PATHS_TO_DOWNLOAD.items():
             for file_name, (path, description) in paths.items():
@@ -602,7 +605,7 @@ class Job_Manager_API:
         return []
 
     def get_process_folder(self, process_id: str):
-        if process_id in ['chlamydia_run_a', 'chlamydia_run_b']:
+        if process_id in self.galley_directories:
             process_folder = os.path.join(self.gallery_path, process_id)
         else:
             process_folder = os.path.join(self.__upload_root_path, process_id)
