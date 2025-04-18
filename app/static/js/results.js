@@ -19,16 +19,21 @@ bar_chart = new Chart('bar_chart', {
     type: "bar",
     data: {},
     options: {
-    responsive: true,
-    plugins: {
-      legend: {
-          display: false
-      },
-      title: {
-          display: false
-      }
+        responsive: true,
+        plugins: {
+            legend: {
+              display: false
+            },
+            title: {
+              display: false
+            }
+        },
+        scales: {
+            y: {
+                min: 0,
+            }
+        }
     }
-  }
 });
 
 
@@ -49,6 +54,15 @@ function updateBarPlot(genomes_data, index){
     }]
     bar_chart.data.labels = labels
     bar_chart.data.datasets = datasets
+
+    // In GC-content and BUSCO, the y-axis shuold be between 0 and 100
+    if (index === 0 || index === 1) {
+        bar_chart.options.scales.y.max = 100;
+    }
+    else {
+        delete bar_chart.options.scales.y.max;
+    }
+
     bar_chart.update()
 }
 
