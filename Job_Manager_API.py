@@ -10,7 +10,7 @@ import consts
 
 from flask_interface_consts import IDENTITY_CUTOFF, JOB_NAME, EMAIL, MICROBIALIZER_PROCESSOR_JOB_PREFIX, \
     CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \
-    DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
+    DATA_2_VIEW_IN_HISTOGRAM, OG_TABLE_PATH_FOR_RESULTS_PAGE, SPECIES_TREE_NEWICK, PATHS_TO_DOWNLOAD, JOB_PARAMETERS_FILE_NAME, \
     COVERAGE_CUTOFF, ADD_ORPHAN_GENES_TO_OGS, INPUT_FASTA_TYPE, ERROR_FILE_PATH, PROGRESSBAR_FILE_NAME, \
     ADDITIONAL_OWNER_EMAILS, WEBSERVER_PROJECT_ROOT_DIR, FINISHED_JOB_FILE_PATH
 from SharedConsts import EMAIL_CONSTS, State, OWNER_EMAIL
@@ -497,7 +497,7 @@ class Job_Manager_API:
             return None
         
         data = {}
-        data_path = os.path.join(parent_folder, OG_TABLE)
+        data_path = os.path.join(parent_folder, OG_TABLE_PATH_FOR_RESULTS_PAGE)
         if os.path.isfile(data_path):
             df = pd.read_csv(data_path, index_col=0, skiprows=offset, nrows=limit)
             # convert not nan values to 1 and nan values to 0
@@ -525,7 +525,7 @@ class Job_Manager_API:
         if not os.path.isdir(parent_folder):
             return None
 
-        data_path = os.path.join(parent_folder, OG_TABLE)
+        data_path = os.path.join(parent_folder, OG_TABLE_PATH_FOR_RESULTS_PAGE)
         if os.path.isfile(data_path):
             df = pd.read_csv(data_path)
             return len(df.index)
