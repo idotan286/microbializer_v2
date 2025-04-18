@@ -500,8 +500,7 @@ class Job_Manager_API:
         data_path = os.path.join(parent_folder, OG_TABLE_PATH_FOR_RESULTS_PAGE)
         if os.path.isfile(data_path):
             df = pd.read_csv(data_path, index_col=0, skiprows=offset, nrows=limit)
-            # convert not nan values to 1 and nan values to 0
-            df = df.notnull().astype("int")
+            df = df.astype(int)
             data = df.to_dict('split')
         
         if len(data.items()):
