@@ -39,8 +39,10 @@ class ReverseProxied(object):
         self.app = app
 
     def __call__(self, environ, start_response):
-        environ['wsgi.url_scheme'] = 'https'
-        # environ['wsgi.url_scheme'] = 'http'
+        if consts.LOCAL:
+            environ['wsgi.url_scheme'] = 'http'
+        else:
+            environ['wsgi.url_scheme'] = 'https'
         return self.app(environ, start_response)
 
 
@@ -129,6 +131,13 @@ def download_page(process_id):
     results: file
         When using the POST request type
     """
+    job_state = manager.get_process_state(process_id)
+    if job_state is None:
+        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
+
+    if job_state == State.Crashed:
+        return redirect(url_for('error_from_job', process_id=process_id))
+
     dict_of_files_to_export = manager.get_files_dict(process_id)
     if dict_of_files_to_export is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
@@ -176,6 +185,13 @@ def results(process_id):
     results.html: HTML page
         the page contains the reads matrix to display to the user
     """
+    job_state = manager.get_process_state(process_id)
+    if job_state is None:
+        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
+
+    if job_state == State.Crashed:
+        return redirect(url_for('error_from_job', process_id=process_id))
+
     histogram_data = manager.get_historgram_data(process_id)
     if histogram_data is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.HISTOGRAM_DATA_IS_NULL.name))
@@ -231,9 +247,13 @@ def error_from_job(process_id):
         The ID of the process
     Returns
     -------
-    error_page.html': HTML page
+    error_page.html: HTML page
         displays the error nicely
     """
+    job_state = manager.get_process_state(process_id)
+    if job_state is None:
+        return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
+
     # checking if error_type exists in error enum
     contact_info = UI_CONSTS.ERROR_CONTACT_INFO
     error_text = manager.get_process_error(process_id)
@@ -294,7 +314,6 @@ def home():
     extensions=",".join(ALLOWED_EXTENSIONS)
     return render_template_wrapper('home.html', 
             extensions=extensions,
-            webserver_address=consts.MICROBIALIZER_LOCAL_URL if consts.LOCAL else WEBSERVER_ADDRESS,
             args_display_job_name=consts.ARG_DISPLAY_JOB_NAME,
             args_display_email=consts.ARG_DISPLAY_EMAIL,
             args_display_inputs_fasta_type=consts.ARG_DISPLAY_INPUTS_FASTA_TYPE,
