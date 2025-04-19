@@ -36,25 +36,28 @@
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
             <b>[1] Distribution of ORF count per genome</b><br>
             Results from run A demonstrates that most Chlamydia genomes have ORF counts clustered around 900: <br><br> 
-            <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/orfs_counts.png')}}"><br>
+            <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/orfs_counts_a.png')}}"><br>
             This result is consistent with their relatively small genomes due to reductive evolution, where Chlamydia has lost enzymes and metabolic pathways for nutrients that are readily available from the host cell (Sigalova et al., 2019). The outgroup genome of Waddlia chondrophila deviates significantly, with ORF counts of ~1,900. 
         </p>
         
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
             <b>[2] Average Nucleotide Identity (ANI) analysis</b><br>
             The heatmap below represents the results of pairwise ANI comparisons of all genomes in run A:<br><br>
-            <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/ani_map.png')}}">
+            <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/ani_map_a.png')}}">
             High ANI values (red) that are close to 100%, indicate strain pairs with high genetic similarity. The heatmap shows clusters of closely related strains or species within the same lineage (e.g., <i>Chlamydia trachomatis</i> strains clustering together). Intermediate ANI values (yellow/ light orange) in the range ~85–95% suggest moderate genetic divergence, potentially representing distinct, yet closely related species within the <i>Chlamydia</i> genus (e.g., <i>Chlamydia psittaci</i> and <i>Chlamydia abortus</i>). Low ANI values (green) below 85% denote significant divergence, highlighting strains more distantly related within the <i>Chlamydia</i> genus. This analysis provides insights into the phylogenetic relationships within the <i>Chlamydia</i> genus, supporting species classification and comparative genomic studies. 
         </p>
         
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
             <b>[3] Orthogroups</b><br>
-            The histogram of orthogroups sizes from run A, derived from the orthogroups CSV file table, visually represents the distribution of orthology group sizes across the dataset. The annotated version of the table contains two annotations: the first is functional and is based on the KEGG Orthology (KO) database. The second is the mean Codon Adaptation Index (CAI) score of all ORFs in the orthogroup (Sharp et al., 1987). The annotated table is also sorted by this value, from highest to lowest.
-             <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/groups_sizes_a.png')}}"><br>
+            The orthogroup table contains for each orthogroup its member genes. The annotated version of the table contains three annotations: first, it shows the orthogroup size in terms of number of genomes and total number of genes, the second one is functional annotation based on the KEGG Orthology (KO) database, and the third is the mean Codon Adaptation Index (CAI) score of all ORFs in the orthogroup (Sharp et al., 1987).<br><br>
+            Another output is the phyletic pattern - a presence/absence matrix of orthogroups across the genomes. The figure below shows the phyletic pattern of orthogroups from run A, which is enhanced with hierarchical clustering of the genomes:<br><br>
+            <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/phyletic_pattern_a.png')}}"><br>
+            The histogram of orthogroups sizes from run A, derived from the orthogroups CSV file table, visually represents the distribution of orthology group sizes across the dataset.
+             <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/orthogroups_sizes_a.png')}}"><br>
             The histogram reveals a conserved core genome within the Chlamydia genus, including the outgroup Waddlia chondrophila, with 384 core genes shared across all 41 analyzed genomes. This reflects the high gene conservation typical of closely related genomes. The intermediate distribution represents genes shared among subsets of genomes, suggesting conserved functions within specific lineages or species. Genes found in a few genomes likely indicate accessory genes or those acquired through horizontal gene transfer, potentially linked to niche-specific adaptations or environmental pressures on certain strains.<br><br>
             The orthogroups size distribution from run B shows a different pattern:<br><br>
-            <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/groups_sizes_b.png')}}"><br>
-            As expected, increasing the sequence identity and coverage thresholds for homologs detection produced smaller orthogroups. This occurs because fewer gene pairs meet the stricter similarity requirements. The high value of OG of size one stems from the fact that in run B we included ORFans.
+            <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/orthogroups_sizes_b.png')}}"><br>
+            As expected, increasing the sequence identity and coverage thresholds for homologs detection produced smaller orthogroups. This occurs because fewer gene pairs meet the stricter similarity requirements. The high value of OG of size one stems from the fact that in run B we chose to include orphan genes as part of the orthogroups table (as indicates in run B parameters).
 		</p>
         
 		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
@@ -68,7 +71,7 @@
 		</p>
 		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
 			<b>[5] Genome completeness</b><br>
-            <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/genomes_completeness.png')}}"><br>
+            <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/genomes_completeness_a.png')}}"><br>
             The distribution of Genome BUSCO completeness scores from run A suggests that most genomes analyzed are highly complete, with most scores clustered between 92.0 and 93.0. This indicates that the genomes are well-assembled and contain most of the expected single-copy orthologs, reflecting good quality and reliability for comparative analyses. The slight tail toward higher scores, up to 96.0, may represent a subset of exceptionally complete genomes, possibly due to higher sequencing or assembly quality. Overall, this distribution highlights the dataset's reliability for genomic studies while reflecting variability that may stem from sequencing depth, assembly techniques, or biological differences between the organisms.
 		</p>
 		<p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
@@ -82,10 +85,10 @@
         </p>
         <p class="w-3/4 text-center text-l p-3 m-4 rounded-md  text-black bg-white bg-opacity-75 text-justify">
             <b>[7] Phylogenetic tree</b><br>
-            The phylogenetic species tree from run A (that included the outgroup) is as follows:<br><br>
+            The phylogenetic species tree from run A (that included the outgroup and was rooted according to it) is as follows:<br><br>
             <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/final_species_tree_a.png')}}"><br>
             Excluding W. chondrophila, which served as an outgroup for rooting, the most divergent genomes in the tree are <i>Chlamydia serpentis</i> and <i>Chlamydia pecorum</i>, as indicated by the relatively long branches leading to these species. Consistent with their divergence from the main group of isolates, both species exhibit low ANI values in all pairwise comparisons, except when compared to themselves. Bootstrap values for each branch are highlighted in red.<br><br>
-            Run B was conducted without an outgroup and without bootstrap values:<br><br>
+            Run B was conducted without a specified outgroup (in this case the tree is midpoint-rooted for the figure) and without bootstrap values:<br><br>
             <img class="w-3/4 text-center p-3 m-4 rounded-md bg-opacity-75" src="{{url_for('static',filename='images/gallery/final_species_tree_b.png')}}"><br>
             This tree, constructed without an outgroup, focuses on internal relationships within Chlamydia species. Without an external taxon to define ancestral traits or lineage age, it highlights subtle genetic differences and close evolutionary connections within the group.
          </p>
