@@ -107,13 +107,18 @@
                             <span class="font-bold">Next</span>
                         </label>
                     </div>
-{#                    <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">#}
-{#                        <span class="font-bold text-1xl text-gray-700 select-none" >?</span>#}
-{#                    </label>#}
-{#                    <div class="opacity-0 absolute bottom-0 left-0 w-auto h-11/12 bg-teal-800 text-white rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-5 pointer-events-none border-black shadow-xl">#}
-{#                        <p id="help_text_orthogroups" class="p-3 text-xl text-justify select-none">#}
-{#                        </p>#}
-{#                    </div>#}
+                    <label class="peer w-6 h-6 bg-white border-2 border-black rounded-full cursor-pointer flex flex-col  items-center justify-center  absolute bottom-0 left-0 mx-2 my-2 tracking-wide ">
+                        <span class="font-bold text-1xl text-gray-700 select-none" >?</span>
+                    </label>
+                    <div class="opacity-0 flex flex-col absolute bottom-0 left-0 w-auto h-11/12 bg-white  text-center rounded-md peer-hover:opacity-100 transition-opacity ease-linear duration-150 m-8 p-2 pointer-events-none border-black border-2 shadow-xl">
+                        <p class="text-2xl text-black pb-2">Legend</p>
+                        <label class="bg-rose-600 w-full p-2"> <span class="text-white"> missing </span>
+                        </label>
+                        <label class="bg-emerald-500 w-full p-2"> <span class="text-white"> present - one gene </span>
+                        </label>
+                        <label class="bg-emerald-700 w-full p-2"> <span class="text-white"> present - multiple genes (paralogs) </span>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>

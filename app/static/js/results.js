@@ -193,9 +193,9 @@ const createTable = async (offset) => {
             td.classList = "bg-rose-600"
               // td.style.cssText += 'background-color:red;'
           } else if (key === 1){
-            td.classList = "bg-emerald-600"
+            td.classList = "bg-emerald-500"
           } else if (key === 2){
-            td.classList = "bg-emerald-600"
+            td.classList = "bg-emerald-700"
           }
           tr.appendChild(td);
       })
