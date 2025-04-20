@@ -4,3 +4,4 @@ wsgi.py
 .idea
 local_run/logs
 SavedObjects
+app/tailwind/node_modules
