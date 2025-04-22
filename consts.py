@@ -10,9 +10,9 @@ MICROBIALIZER_PIPELINE_LOCAL_FLASK_PATH = os.path.join(MICROBIALIZER_PIPELINE_LO
 MICROBIALIZER_LOCAL_GALLERY_PATH = os.path.join(MICROBIALIZER_PIPELINE_LOCAL_PATH, 'gallery')
 MICROBIALIZER_LOCAL_USER_RESULTS = os.path.join(WEBSERVER_LOCAL_OUTPUTS, 'user_results')
 
-ARG_DISPLAY_JOB_NAME = 'Job Name'
+ARG_DISPLAY_JOB_NAME = 'Job name'
 ARG_DISPLAY_EMAIL = 'Email address'
-ARG_DISPLAY_INPUTS_FASTA_TYPE = 'Inputs fasta files type'
+ARG_DISPLAY_INPUTS_FASTA_TYPE = 'Input FASTA files type'
 ARG_DISPLAY_FILTER_OUT_PLASMIDS = 'Filter out contigs / orfs of plasmids'
 ARG_DISPLAY_IDENTITY_CUTOFF = 'Minimum sequence identity (protein-level) for homologs detection'
 ARG_DISPLAY_COVERAGE_CUTOFF = 'Minimum sequence coverage (protein-level) for homologs detection'
