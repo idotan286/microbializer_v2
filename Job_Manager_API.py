@@ -231,7 +231,7 @@ class Job_Manager_API:
             
             email_addresses = [OWNER_EMAIL]
             email_addresses.extend(ADDITIONAL_OWNER_EMAILS)
-            if email_address != None:
+            if email_address:
                 email_addresses.append(email_address)
 
             self.__build_and_send_mail(EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name),
