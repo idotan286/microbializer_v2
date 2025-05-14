@@ -24,8 +24,8 @@ else:
 
 
 def render_template_wrapper(*args, **kwargs):
-    names = os.listdir(os.path.join(app.static_folder, 'images/background'))
-    img_url = url_for('static', filename=f'images/background/{choice(names)}')
+    names = os.listdir(os.path.join(app.static_folder, 'images/background/webp'))
+    img_url = url_for('static', filename=f'images/background/webp/{choice(names)}')
     return render_template(*args, **kwargs, file_name=img_url)
 
 
