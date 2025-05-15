@@ -97,8 +97,26 @@ function makeRadioButton(group, text, is_default, genomes_data, index) {
 const parseNewick = (a) => {for(var e=[],r={},s=a.split(/\s*(;|\(|\)|,|:)\s*/),t=0;t<s.length;t++){var n=s[t];switch(n){case"(":var c={};r.branchset=[c],e.push(r),r=c;break;case",":var c={};e[e.length-1].branchset.push(c),r=c;break;case")":r=e.pop();break;case":":break;default:var h=s[t-1];")"==h||"("==h||","==h?r.name=n:":"==h&&(r.length=parseFloat(n))}}return r}
 
 
+function trimKey(key, maxLength = 20) {
+  return key.length > maxLength ? key.slice(0, maxLength - 3) + "..." : key;
+}
+
+function trimDictionaryKeys(dictOfDicts) {
+  const result = {};
+  for (const outerKey in dictOfDicts) {
+    const innerDict = dictOfDicts[outerKey];
+    const trimmedInnerDict = {};
+    for (const key in innerDict) {
+      const newKey = trimKey(key);
+      trimmedInnerDict[newKey] = innerDict[key];
+    }
+    result[outerKey] = trimmedInnerDict;
+  }
+  return result;
+}
+
 const initResultsScript = (histogram_data, max_num_of_rows_inp, tree_str) => {
-    const json_histogram_data = JSON.parse(histogram_data);
+    const json_histogram_data = trimDictionaryKeys(JSON.parse(histogram_data));
     max_num_of_rows = max_num_of_rows_inp;
     console.log(max_num_of_rows)
     const json_tree_str = JSON.parse(tree_str);
