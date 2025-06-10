@@ -595,7 +595,7 @@ class Job_Manager_API:
         """
         logger.info(f'in get_websites')
         try:
-            with open("/lsweb/pupko/websites.json") as f:
+            with open("/lsweb/pupko/websites.json", encoding='utf-8') as f:
                 data = json.load(f)
             logger.info(data)
             return data

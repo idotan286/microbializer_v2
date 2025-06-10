@@ -1,0 +1,25 @@
+[
+	{
+		"name": "Microbializer",
+		"title": "M1CR0B1AL1Z3R 2.0: an enhanced web server for comparative analysis of bacterial genomes at scale",
+		"year": "2025",
+		"journal": "Nucleic Acids Research",
+		"authors": ["Shimony Y.", "Dotan E.", "Wygoda E.", "Wagner N.", "Lyubman I.", "Ecker N.", "Durante G.", "Mishan G.", "Chang J.", "Avram O.", "Pupko T."],
+		"doi": "https://academic.oup.com/nar/advance-article/doi/10.1093/nar/gkaf413/8131114",
+		"image": "Microbializer.png",
+		"abstract": "Large-scale analyses of bacterial genomic datasets contribute to the comprehensive characterization of complex microbial dynamics among different strains and species. Such analyses often include open reading frame extraction, orthogroup inference, phylogeny reconstruction, and functional annotation of proteins. We have previously developed the M1CR0B1AL1Z3R web server, a “one-stop shop” for conducting comparative analyses of microbial genomes. Here, we present M1CR0B1AL1Z3R 2.0, an enhanced version that includes a new user-friendly web interface and an improved, optimized, and more versatile pipeline. The following features were added: (i) a computationally efficient inference of orthogroups, which allows the analysis of up to 2000 bacterial genomes; (ii) genome completeness analysis; (iii) lists of orphan genes per genome; (iv) genome numeric representation that allows detecting genomic rearrangement events; (v) codon bias analysis; (vi) annotation of orthogroups with KEGG Orthology numbers; and (vii) a map of pairwise average nucleotide identity values. M1CR0B1AL1Z3R 2.0 is freely available at https://microbializer.tau.ac.il/.",
+		"link": "https://microbializer.tau.ac.il/"
+	},
+	{
+		"name": "GenomeFLTR",
+		"title": "GenomeFLTR: filtering reads made easy",
+		"year": "2023",
+		"journal": "Nucleic Acids Research",
+		"authors": ["Dotan E.", "Alburquerque M.", "Wygoda E.", "Huchon D.", "Pupko T."],
+		"doi": "https://academic.oup.com/nar/article/51/W1/W232/7161531",
+		"image": "genomefltr.png",
+		"abstract": "In the last decade, advances in sequencing technology have led to an exponential increase in genomic data. These new data have dramatically changed our understanding of the evolution and function of genes and genomes. Despite improvements in sequencing technologies, identifying contaminated reads remains a complex task for many research groups. Here, we introduce GenomeFLTR, a new web server to filter contaminated reads. Reads are compared against existing sequence databases from various representative organisms to detect potential contaminants. The main features implemented in GenomeFLTR are: (i) automated updating of the relevant databases; (ii) fast comparison of each read against the database; (iii) the ability to create user-specified databases; (iv) a user-friendly interactive dashboard to investigate the origin and frequency of the contaminations; (v) the generation of a contamination-free file. Availability: https://genomefltr.tau.ac.il/.",
+		"link": "https://genomefltr.tau.ac.il/"
+	}
+
+]
