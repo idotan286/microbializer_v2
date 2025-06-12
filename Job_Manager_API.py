@@ -593,15 +593,28 @@ class Job_Manager_API:
         Returns
         -------
         """
+        encodings_to_try = ['utf-8', 'utf-16', 'latin-1', 'windows-1252']
+
+        def load_json_with_fallback(file_path):
+            for enc in encodings_to_try:
+                try:
+                    with open(file_path, encoding=enc) as f:
+                        data = json.load(f)
+                    logger.info(f"Loaded JSON using encoding: {enc}")
+                    logger.info(json.dumps(data, ensure_ascii=False))  # Safely log data
+                    return data
+                except UnicodeDecodeError as e:
+                    logger.warning(f"UnicodeDecodeError with encoding {enc}: {e}")
+                except json.JSONDecodeError as e:
+                    logger.warning(f"JSONDecodeError with encoding {enc}: {e}")
+                except Exception as e:
+                    logger.warning(f"Other error with encoding {enc}: {e}")
+        
+            logger.error("Failed to decode JSON file with all attempted encodings.")
+            return None
+        
         logger.info(f'in get_websites')
-        try:
-            with open("/lsweb/pupko/websites.json", encoding='utf-8') as f:
-                data = json.load(f)
-            logger.info(data)
-            return data
-        except Exception as e:
-            logger.warning(e)
-        return []
+        return load_json_with_fallback("/lsweb/pupko/websites.json")
 
     def get_process_folder(self, process_id: str):
         if process_id in self.galley_directories:
