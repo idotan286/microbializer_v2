@@ -205,6 +205,11 @@ def results(process_id):
     if newick_tree_str is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.NEWICK_DATA_IS_NULL.name))
 
+    # If the newick_file contains an error message, it will not start with a '(', and in that case we don't want to
+    # display it.
+    if newick_tree_str[0] != '(':
+        newick_tree_str = ''
+
     summary_stats = manager.get_summary_stats(process_id)
     return render_template_wrapper('results.html', 
         histogram_data=json.dumps(histogram_data), 
