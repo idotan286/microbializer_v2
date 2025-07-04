@@ -1,0 +1,5 @@
+source /lsweb/pupko/microbializer/miniconda3/etc/profile.d/conda.sh
+conda activate /lsweb/pupko/microbializer/miniconda3/envs/microbializer
+export PATH=$CONDA_PREFIX/bin:$PATH
+python /lsweb/pupko/microbializer/pipeline/steps/orthogroups_visualizations.py /lsweb/pupko/microbializer/user_results/1e1bec97-f954-428c-881c-5e92edfa6421/outputs/steps_results/05_11_sort_orthogroups_by_coordinates/orthogroups.csv /lsweb/pupko/microbializer/user_results/1e1bec97-f954-428c-881c-5e92edfa6421/outputs/steps_results/02_1_orfs/orfs_coordinates /lsweb/pupko/microbializer/user_results/1e1bec97-f954-428c-881c-5e92edfa6421/outputs/steps_results/07_2_orthogroups_visualizations -v False --logs_dir /lsweb/pupko/microbializer/user_results/1e1bec97-f954-428c-881c-5e92edfa6421/outputs/tmp/07_2_orthogroups_visualizations --error_file_path /lsweb/pupko/microbializer/user_results/1e1bec97-f954-428c-881c-5e92edfa6421/M1CR0B1AL1Z3R_outputs/error.txt --job_name orthogroups_visualizations --use_job_manager True --cpus 1
+touch /lsweb/pupko/microbializer/user_results/1e1bec97-f954-428c-881c-5e92edfa6421/outputs/tmp/07_2_orthogroups_visualizations/orthogroups_visualizations.done

@@ -24,6 +24,8 @@ class Handler:
         if isinstance(input_path, str):
             input_path_parent = pathlib.Path(input_path).parent
         elif isinstance(input_path, list):
+            if len(input_path) == 0:
+                raise ValueError('Input file path parameter was an empty list')
             input_path_parent = pathlib.Path(input_path[0]).parent
         else:
             raise ValueError('Input file path parameter was not a list of a string')

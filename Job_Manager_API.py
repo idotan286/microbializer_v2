@@ -168,7 +168,7 @@ class Job_Manager_API:
             logger.warning(f'validation failed file1: {file2check} file2: {file2check2}, deleting folder')
         return False
         
-    def __validate_email_address(self, email_address):
+    def validate_email_address(self, email_address):
         """validate email address.
 
         Parameters
@@ -222,13 +222,21 @@ class Job_Manager_API:
         is_process_added: bool
             True if the process has been added, else False
         """
-        logger.info(f'process_id = {process_id} email_address = {email_address} job_name = {job_name}')
-        is_valid_email = self.__validate_email_address(email_address)
-        # validating file and email
-        if is_valid_email:
-            # adding the process
-            self.__add_process(process_id, email_address, job_name, job_arguemnts)
-            
+        logger.info(f'process_id = {process_id}, email_address = {email_address}, job_name = {job_name}')
+        process_folder_path = os.path.join(self.__upload_root_path, process_id)
+
+        try:
+            logger.info(f'process_folder_path = {process_folder_path}')
+            files2fltr = self.__get_files_in_folder(process_folder_path)
+
+            if job_name:
+                job_arguemnts[JOB_NAME] = job_name
+            if email_address:
+                job_arguemnts[EMAIL] = email_address
+            pbs_id = self.__handler.submit_micro_job(files2fltr, job_arguemnts)
+            logger.debug(
+                f'process_id = {process_id} job_prefix = {MICROBIALIZER_PROCESSOR_JOB_PREFIX} pbs_id = {pbs_id}, process has started')
+
             email_addresses = [OWNER_EMAIL]
             email_addresses.extend(ADDITIONAL_OWNER_EMAILS)
             if email_address:
@@ -237,8 +245,10 @@ class Job_Manager_API:
             self.__build_and_send_mail(EMAIL_CONSTS.SUBMITTED_TITLE.format(job_name=job_name),
                                        EMAIL_CONSTS.SUBMITTED_CONTENT.format(process_id=process_id), email_addresses)
             return True
-        logger.warning(f'process_id = {process_id}, can\'t add process: is_valid_email = {is_valid_email}')
-        return False
+        except Exception as e:
+            logger.exception(e)
+            logger.warning(f'process_id = {process_id}, can\'t add process')
+            return False
 
     def __get_files_in_folder(self, process_folder_path):
         """
@@ -261,42 +271,6 @@ class Job_Manager_API:
             if os.path.isfile(file2fltr) or os.path.isfile(str(file2fltr) + '.gz'):
                 files_list.append(file2fltr)
         return files_list
-
-    def __add_process(self, process_id: str, email_address, job_name: str, job_arguemnts):
-        """
-        adds a kraken process
-        ** Specific to this webserver
-
-        Parameters
-        ----------
-        process_id : str
-            The ID of the process
-        email_address: str
-            email address
-        job_name: str
-            The job name (optional) inserted by the user. If none is inserted then job_name = ""
-        job_arguemnts: dict
-            Job arguemnts to run with
-
-        Returns
-        -------
-        """
-        logger.info(f'process_id = {process_id}, email_address = {email_address}, job_name = {job_name}')
-
-        process_folder_path = os.path.join(self.__upload_root_path, process_id)
-        try:
-            logger.info(f'process_folder_path = {process_folder_path}')
-            files2fltr = self.__get_files_in_folder(process_folder_path)
-
-            if job_name:
-                job_arguemnts[JOB_NAME] = job_name
-            if email_address:
-                job_arguemnts[EMAIL] = email_address
-            pbs_id = self.__handler.submit_micro_job(files2fltr, job_arguemnts)
-            logger.debug(
-                f'process_id = {process_id} job_prefix = {MICROBIALIZER_PROCESSOR_JOB_PREFIX} pbs_id = {pbs_id}, process has started')
-        except Exception as e:
-            logger.exception(e)
 
     def get_files_dict(self, process_id: str):
         """After the post process has finished (and the user already filtred his reads), this will return the path to the result file

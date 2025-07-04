@@ -296,8 +296,9 @@ def home():
             if file.filename == '' or not file or not allowed_file(file.filename):
                 return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.INVALID_FILE_EXTENTION.name))
         email_address, job_name, job_arguemnts = manager.parse_form_inputs(request.form)
-        if email_address is None:
-            logger.warning(f'email_address not available')
+        is_valid_email = manager.validate_email_address(email_address)
+        if not is_valid_email:
+            logger.warning(f'email_address is invalid')
             return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.INVALID_MAIL.name))
         new_process_id = manager.get_new_process_id()
         folder2save_file = os.path.join(app.config['UPLOAD_FOLDERS_ROOT_PATH'], new_process_id)
@@ -310,11 +311,11 @@ def home():
             elif filename.endswith('tar.gz'):
                 file.save(os.path.join(folder2save_file, USER_FILE_NAME_TAR))
             logger.info(f'file number = {file_idx} saved = {file}')
-        man_results = manager.add_process(new_process_id, email_address, job_name, job_arguemnts)
-        if not man_results:
+        add_process_succeeded = manager.add_process(new_process_id, email_address, job_name, job_arguemnts)
+        if not add_process_succeeded:
             logger.warning(f'job_manager_api can\'t add process')
             return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.CORRUPTED_FILE.name))
-        logger.info(f'process added man_results = {man_results}, redirecting url')
+        logger.info(f'process added add_process_succeeded = {add_process_succeeded}, redirecting url')
         return redirect(url_for('process_state', process_id=new_process_id))
     extensions=",".join(ALLOWED_EXTENSIONS)
     return render_template_wrapper('home.html', 
