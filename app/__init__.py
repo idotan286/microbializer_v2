@@ -313,7 +313,6 @@ def home():
             logger.info(f'file number = {file_idx} saved = {file}')
         add_process_succeeded = manager.add_process(new_process_id, email_address, job_name, job_arguemnts)
         if not add_process_succeeded:
-            logger.warning(f'job_manager_api can\'t add process')
             return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.CORRUPTED_FILE.name))
         logger.info(f'process added add_process_succeeded = {add_process_succeeded}, redirecting url')
         return redirect(url_for('process_state', process_id=new_process_id))
