@@ -259,6 +259,9 @@ def error_from_job(process_id):
     if job_state is None:
         return redirect(url_for('error', error_type=UI_CONSTS.UI_Errors.UNKNOWN_PROCESS_ID.name))
 
+    if job_state == State.Finished:
+        return redirect(url_for('results', process_id=process_id))
+
     # checking if error_type exists in error enum
     contact_info = UI_CONSTS.ERROR_CONTACT_INFO
     error_text = manager.get_process_error(process_id)
