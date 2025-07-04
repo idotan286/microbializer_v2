@@ -1,6 +1,6 @@
 import os
 
-LOCAL = True
+LOCAL = False
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 WEBSERVER_LOCAL_OUTPUTS = os.path.join(BASE_DIR, 'local_run')
