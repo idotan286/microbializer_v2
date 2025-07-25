@@ -331,7 +331,8 @@ def home():
             args_display_core_minimal_percentage=consts.ARG_DISPLAY_CORE_MINIMAL_PERCENTAGE,
             args_display_outgroup=consts.ARG_DISPLAY_OUTGROUP,
             args_display_bootstrap=consts.ARG_DISPLAY_BOOTSTRAP,
-            args_display_add_orphan_genes_to_ogs=consts.ARG_DISPLAY_ADD_ORPHAN_GENES_TO_OGS)
+            args_display_add_orphan_genes_to_ogs=consts.ARG_DISPLAY_ADD_ORPHAN_GENES_TO_OGS,
+            can_submit_new_jobs=consts.CAN_SUBMIT_NEW_JOBS)
 
 
 @app.errorhandler(404)

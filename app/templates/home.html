@@ -18,6 +18,7 @@
           Our website uses essential cookies to ensure proper functionality and security.
         </p>
         <div class="h-32 flex flex-col justify-end transition-all duration-500 ease-in-out" id="job_button">
+          {% if can_submit_new_jobs %}
           <label
             class="
               w-64
@@ -42,7 +43,38 @@
               mx-8
               my-4
           " onclick="buttonClick()">
-          <span class="mt-2 text-base leading-normal select-none animate-bounce ">Submit Job</span>
+          <span class="mt-2 text-base leading-normal select-none animate-bounce text-center">Submit Job</span>
+            </label>
+            {% else %}
+                <label
+      class="
+        w-64
+        flex flex-col
+        items-center
+        px-4
+        py-6
+        bg-gray-300
+        rounded-md
+        shadow-md
+        tracking-wide
+        uppercase
+        border-2
+        border border-gray-400
+        text-gray-500
+        cursor-not-allowed
+        font-bold
+        mx-8
+        my-4
+        transition-all
+        duration-150
+        ease-linear
+      "
+    >
+      <span class="mt-2 text-base leading-normal select-none text-center">
+        TEMPORARILY CANNOT SUBMIT NEW JOBS
+      </span>
+    </label>
+  {% endif %}
         </div>
         
         <div id="formdiv" class="relative bg-opacity-75 h-128 py-3 border-2 border-white-400 bg-white rounded-lg transition-opacity opacity-0 duration-500 ease-in-out hidden">
