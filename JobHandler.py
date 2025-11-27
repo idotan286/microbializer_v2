@@ -1,10 +1,19 @@
 import pathlib
 import os
 from utils import logger
+import json
+import sys
+
+import consts
+if consts.LOCAL:
+    sys.path.append(consts.MICROBIALIZER_PIPELINE_LOCAL_FLASK_PATH)
+else:
+    sys.path.append(consts.MICROBIALIZER_PIPELINE_MGMT_FLASK_PATH)
+
 from flask_interface_consts import MICROBIALIZER_PROCESSOR_JOB_PREFIX, MICROBIALIZER_JOB_TEMPLATE, \
     JOB_PARAMETERS_FILE_NAME, RUN_DIR
 from slurm_example import submit_job
-import json
+
 
 
 class Handler:

@@ -6,7 +6,13 @@ import pandas as pd
 from InputValidator import InputValidator
 from JobHandler import Handler
 from utils import send_email, logger, LOGGER_LEVEL_JOB_MANAGE_API
+import sys
+
 import consts
+if consts.LOCAL:
+    sys.path.append(consts.MICROBIALIZER_PIPELINE_LOCAL_FLASK_PATH)
+else:
+    sys.path.append(consts.MICROBIALIZER_PIPELINE_MGMT_FLASK_PATH)
 
 from flask_interface_consts import IDENTITY_CUTOFF, JOB_NAME, EMAIL, MICROBIALIZER_PROCESSOR_JOB_PREFIX, \
     CORE_MINIMAL_PERCENTAGE, BOOTSTRAP, OUTGROUP, FILTER_OUT_PLASMIDS, \

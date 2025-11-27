@@ -11,9 +11,12 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import consts
 if consts.LOCAL:
     sys.path.append(consts.MICROBIALIZER_PIPELINE_LOCAL_FLASK_PATH)
+else:
+    sys.path.append(consts.MICROBIALIZER_PIPELINE_MGMT_FLASK_PATH)
 
 from utils import logger
 from Job_Manager_API import Job_Manager_API
+
 from SharedConsts import UI_CONSTS, State, USER_FILE_NAME_TAR, USER_FILE_NAME_ZIP, WEBSERVER_ADDRESS, ALLOWED_EXTENSIONS
 from flask_interface_consts import WEBSERVER_PROJECT_ROOT_DIR
 

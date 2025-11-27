@@ -1,5 +1,3 @@
-from enum import Enum
-from datetime import datetime
 import logging
 import os
 import sys 
@@ -7,6 +5,9 @@ import sys
 import consts
 if consts.LOCAL:
     sys.path.append(consts.MICROBIALIZER_PIPELINE_LOCAL_FLASK_PATH)
+else:
+    sys.path.append(str(consts.MICROBIALIZER_PIPELINE_MGMT_FLASK_PATH))
+
 from SharedConsts import WEBSERVER_DOMAIN
 
 if consts.LOCAL:
