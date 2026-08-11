@@ -244,7 +244,6 @@ class Job_Manager_API:
                 f'process_id = {process_id} job_prefix = {MICROBIALIZER_PROCESSOR_JOB_PREFIX} pbs_id = {pbs_id}, process has started')
 
             email_addresses = [OWNER_EMAIL]
-            email_addresses.extend(ADDITIONAL_OWNER_EMAILS)
             if email_address:
                 email_addresses.append(email_address)
 
